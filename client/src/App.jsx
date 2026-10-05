@@ -308,7 +308,7 @@ export function App() {
       />
 
       {/* Main Container - Centered Vertically */}
-      <main className="flex-1 max-w-6xl w-full mx-auto px-4 py-4 flex flex-col justify-center items-center relative z-10">
+      <main className="flex-1 max-w-6xl w-full mx-auto px-4 py-4 flex flex-col justify-center items-center relative z-10 my-auto">
         
         {currentStep === 1 && (
           <ScrollIntroView

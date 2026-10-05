@@ -37,7 +37,7 @@ export function Navbar({ siteConfig, onLogoClick }) {
 
         {/* Center: Mathematically Centered Full CA Button */}
         {contractAddress && (
-          <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
             <button
               onClick={handleCopy}
               className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-[#04162e]/70 hover:bg-[#062044]/90 border border-cyan-500/30 hover:border-cyan-400 text-slate-200 transition-all font-mono text-xs shadow-sm"
@@ -56,7 +56,7 @@ export function Navbar({ siteConfig, onLogoClick }) {
           </div>
         )}
 
-        {/* Right: X / Twitter & Connect Wallet Button (TikTok removed) */}
+        {/* Right: X / Twitter & Connect Wallet Button */}
         <div className="flex items-center gap-2.5 z-10">
           <a
             href={twitterUrl}
@@ -72,27 +72,6 @@ export function Navbar({ siteConfig, onLogoClick }) {
         </div>
 
       </div>
-
-      {/* Mobile CA bar under navbar if screen is small */}
-      {contractAddress && (
-        <div className="md:hidden flex justify-center pt-2">
-          <button
-            onClick={handleCopy}
-            className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-[#04162e]/70 border border-cyan-500/30 text-slate-200 font-mono text-[11px] shadow-sm max-w-full"
-            title="Click to copy full CA"
-          >
-            <span className="text-cyan-400 font-bold">CA:</span>
-            <span className="text-white truncate max-w-[200px]">
-              {contractAddress}
-            </span>
-            {copied ? (
-              <Check className="w-3 h-3 text-[#00ffa3] shrink-0" />
-            ) : (
-              <Copy className="w-3 h-3 text-cyan-400 shrink-0" />
-            )}
-          </button>
-        </div>
-      )}
     </header>
   );
 }

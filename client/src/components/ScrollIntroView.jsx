@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Zap, 
   Layers, 
   Droplets, 
   Terminal, 
@@ -14,6 +13,15 @@ import {
 } from 'lucide-react';
 import RotatingText from './RotatingText';
 import BorderGlow from './BorderGlow';
+
+const FishIcon = ({ className = "w-4 h-4" }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M6.5 12c.94-3.46 4.94-6 8.5-6 3.56 0 6.06 2.54 7 6-.94 3.46-3.44 6-7 6s-7.56-2.54-8.5-6Z"/>
+    <path d="M18 12v.5"/>
+    <path d="M16 10h.01"/>
+    <path d="M2 8l4.5 4L2 16"/>
+  </svg>
+);
 
 export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
   const [activeSlide, setActiveSlide] = useState(0);
@@ -124,10 +132,9 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
                   transition={{ duration: 0.28, ease: 'easeOut' }}
                   className="w-full text-center space-y-4 z-10 py-1 flex flex-col items-center justify-center"
                 >
-                  {/* Card Top Center Branding */}
-                  <div className="inline-flex items-center justify-center gap-1.5 px-4 py-1 rounded-full bg-[#04162e]/70 border border-cyan-400/40 backdrop-blur-md shadow-sm">
-                    <span className="text-sm font-black tracking-wider font-heading text-white">AGEN</span>
-                    <span className="text-sm font-black tracking-wider font-heading text-[#00d2ff]">SEA</span>
+                  {/* Card Top Center Branding (Single Word, No Background) */}
+                  <div className="text-base font-black tracking-widest font-heading text-[#00d2ff] uppercase drop-shadow-[0_0_12px_rgba(0,210,255,0.4)]">
+                    AGENSEA
                   </div>
 
                   <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white font-heading tracking-tight leading-[1.12] text-center flex flex-col items-center justify-center w-full">
@@ -163,9 +170,9 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
                   <div className="flex flex-wrap items-center justify-center gap-3.5 pt-2">
                     <button
                       onClick={onLaunchNow}
-                      className="btn-primary text-sm font-bold px-6 py-3 shadow-[0_0_25px_rgba(0,210,255,0.35)] rounded-xl"
+                      className="btn-primary text-sm font-bold px-6 py-3 shadow-[0_0_25px_rgba(0,210,255,0.35)] rounded-xl flex items-center gap-2"
                     >
-                      <Zap className="w-4 h-4" />
+                      <FishIcon className="w-4 h-4" />
                       <span>Spawn Agent Now</span>
                     </button>
 
@@ -212,7 +219,7 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
                       <p className="text-slate-300 text-xs leading-normal">Procedural spectral shaders with custom glowing dorsal fins.</p>
                     </div>
                     <div className="p-3.5 rounded-xl bg-[#04162e]/55 border border-cyan-500/20 backdrop-blur-md hover:border-cyan-400/50 hover:bg-[#062044]/65 transition-all">
-                      <Zap className="w-5 h-5 text-[#38bdf8] mb-1.5" />
+                      <FishIcon className="w-5 h-5 text-[#38bdf8] mb-1.5" />
                       <h4 className="text-white font-bold text-sm mb-0.5 font-heading">Cybernetic Augments</h4>
                       <p className="text-slate-300 text-xs leading-normal">Equip sonar radar, trench armor, and alpha dip snipers.</p>
                     </div>
@@ -247,7 +254,7 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
                       <p className="text-slate-300 text-xs leading-normal">Automated cooldown-governed payouts to connected fish holders.</p>
                     </div>
                     <div className="p-3.5 rounded-xl bg-[#04162e]/55 border border-cyan-500/20 backdrop-blur-md hover:border-cyan-400/50 hover:bg-[#062044]/65 transition-all">
-                      <Zap className="w-5 h-5 text-[#00ffa3] mb-1.5" />
+                      <FishIcon className="w-5 h-5 text-[#00ffa3] mb-1.5" />
                       <h4 className="text-white font-bold text-sm mb-0.5 font-heading">AI Fish Riddle Gates</h4>
                       <p className="text-slate-300 text-xs leading-normal">Marine agents verify natural language answers before release.</p>
                     </div>
@@ -326,9 +333,9 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
                   <div className="flex flex-wrap items-center justify-center gap-3.5 pt-2">
                     <button
                       onClick={onLaunchNow}
-                      className="btn-primary text-sm font-bold px-7 py-3.5 shadow-[0_0_25px_rgba(0,210,255,0.35)] rounded-xl"
+                      className="btn-primary text-sm font-bold px-7 py-3.5 shadow-[0_0_25px_rgba(0,210,255,0.35)] rounded-xl flex items-center gap-2"
                     >
-                      <Zap className="w-4 h-4" />
+                      <FishIcon className="w-4 h-4" />
                       <span>Spawn Your Marine Fish Now</span>
                     </button>
 
