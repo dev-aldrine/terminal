@@ -332,148 +332,161 @@ export function FishStudio({ onSaveFish, selectedSpecies = 'neon_angler', setSel
 
   return (
     <div className="w-full max-w-4xl mx-auto my-auto select-none">
-      <div className="w-full rounded-2xl bg-[#061224]/50 backdrop-blur-xl border border-cyan-400/25 shadow-[0_15px_35px_rgba(0,0,0,0.5),0_0_20px_rgba(0,210,255,0.06)] p-6 space-y-4">
-        
-        {/* Header */}
-        <div className="flex items-center justify-between border-b border-cyan-500/20 pb-3">
-          <div>
-            <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-[#040a16]/80 border border-cyan-400/40 text-[10px] font-mono text-cyan-300 mb-1">
-              <Waves className="w-3 h-3 text-[#00d2ff]" />
-              <span>02 / CYBER-AQUATIC DNA STUDIO</span>
+      <BorderGlow
+        edgeSensitivity={32}
+        glowColor="190 100 65"
+        backgroundColor="#050e1f"
+        borderRadius={20}
+        glowRadius={36}
+        glowIntensity={1.2}
+        coneSpread={28}
+        animated={false}
+        colors={['#00d2ff', '#00ffa3', '#38bdf8']}
+        className="w-full shadow-[0_20px_50px_rgba(0,0,0,0.6),0_0_30px_rgba(0,210,255,0.08)] border border-cyan-400/30"
+      >
+        <div className="w-full p-5 sm:p-6 space-y-4">
+          
+          {/* Header */}
+          <div className="flex items-center justify-between border-b border-cyan-500/25 pb-3">
+            <div>
+              <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-[#020712] border border-cyan-400/50 text-[10px] font-mono text-cyan-300 mb-1">
+                <Waves className="w-3 h-3 text-[#00d2ff]" />
+                <span className="font-semibold">02 / CYBER-AQUATIC FISH DNA STUDIO</span>
+              </div>
+              <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-white font-heading">
+                Configure Degen Fish DNA & Visuals
+              </h2>
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-white font-heading">
-              Configure Creature DNA & Visuals
-            </h2>
+
+            <button
+              onClick={randomizeDNA}
+              className="px-3 py-1.5 rounded-xl bg-[#020712] hover:bg-[#08152b] border border-cyan-500/40 text-cyan-300 text-xs font-mono font-semibold flex items-center gap-1.5 transition-all shadow-sm"
+            >
+              <Dices className="w-3.5 h-3.5" /> Randomize
+            </button>
           </div>
 
-          <button
-            onClick={randomizeDNA}
-            className="px-3 py-1.5 rounded-xl bg-[#040a16]/80 hover:bg-[#08152b] border border-cyan-500/30 text-cyan-300 text-xs font-mono flex items-center gap-1.5 transition-all shadow-sm"
-          >
-            <Dices className="w-3.5 h-3.5" /> Randomize
-          </button>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-center">
-          
-          {/* Left Column: Archetype List */}
-          <div className="lg:col-span-5 space-y-3">
-            <div className="space-y-1.5 max-h-[260px] overflow-y-auto pr-1">
-              {SPECIES_LIST.map((species) => {
-                const isSelected = activeSpecies === species.id;
-                return (
-                  <button
-                    key={species.id}
-                    onClick={() => handleSpeciesChange(species.id)}
-                    className={`w-full text-left p-2.5 rounded-xl border transition-all flex items-center gap-2.5 ${
-                      isSelected
-                        ? 'bg-[#08152b]/90 border-[#00d2ff] shadow-[0_0_15px_rgba(0,210,255,0.2)]'
-                        : 'bg-[#040812]/75 border-cyan-500/15 hover:border-cyan-400/40'
-                    }`}
-                  >
-                    <span className="text-lg p-1.5 rounded-lg bg-[#020610] border border-cyan-500/25 shrink-0">
-                      {species.icon}
-                    </span>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between">
-                        <strong className="text-white text-xs font-heading">{species.name}</strong>
-                        <span className="text-[10px] font-mono text-[#00d2ff] font-semibold">{species.role.split(' ')[0]}</span>
-                      </div>
-                      <p className="text-[10px] text-slate-400 line-clamp-1 leading-tight font-sans mt-0.5">
-                        {species.desc}
-                      </p>
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Controls */}
-            <div className="p-3.5 rounded-xl bg-[#030914]/75 border border-cyan-400/25 backdrop-blur-md space-y-3 font-mono text-xs">
-              <div>
-                <span className="text-slate-300 font-semibold block text-[11px] mb-1.5">
-                  EMISSION AURA
-                </span>
-                <div className="flex items-center gap-2 flex-wrap">
-                  {['#00d2ff', '#00ffa3', '#38bdf8', '#ffb703', '#ff2a85', '#3b82f6'].map((c) => (
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-center">
+            
+            {/* Left Column: Archetype List */}
+            <div className="lg:col-span-5 space-y-3">
+              <div className="space-y-1.5 max-h-[260px] overflow-y-auto pr-1">
+                {SPECIES_LIST.map((species) => {
+                  const isSelected = activeSpecies === species.id;
+                  return (
                     <button
-                      key={c}
-                      onClick={() => setBioColor(c)}
-                      className={`w-6 h-6 rounded-full border-2 transition-transform ${
-                        bioColor === c ? 'scale-125 border-white shadow-[0_0_10px_currentColor]' : 'border-transparent'
-                      }`}
-                      style={{ backgroundColor: c, color: c }}
-                    />
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <span className="text-slate-400 text-[10px] block mb-1.5">AUGMENTATION</span>
-                <div className="grid grid-cols-2 gap-1.5 text-[10px]">
-                  {[
-                    { id: 'sonar_radar', label: 'Sonar Radar', icon: <Radio className="w-3 h-3" /> },
-                    { id: 'laser_sensor', label: 'Laser Sensor', icon: <Eye className="w-3 h-3" /> },
-                    { id: 'plasma_fins', label: 'Plasma Fins', icon: <Zap className="w-3 h-3" /> },
-                    { id: 'neural_core', label: 'Neural Core', icon: <Cpu className="w-3 h-3" /> }
-                  ].map((mod) => (
-                    <button
-                      key={mod.id}
-                      onClick={() => setCyberMod(mod.id)}
-                      className={`p-1.5 rounded-lg border text-left transition-all flex items-center gap-1.5 ${
-                        cyberMod === mod.id
-                          ? 'bg-[#08152b] border-[#00d2ff] text-[#00d2ff] font-bold'
-                          : 'bg-[#040812]/80 border-cyan-500/15 text-slate-400 hover:text-slate-200'
+                      key={species.id}
+                      onClick={() => handleSpeciesChange(species.id)}
+                      className={`w-full text-left p-2.5 rounded-xl border transition-all flex items-center gap-2.5 ${
+                        isSelected
+                          ? 'bg-[#08152b] border-[#00d2ff] shadow-[0_0_15px_rgba(0,210,255,0.25)]'
+                          : 'bg-[#020712] border-cyan-500/20 hover:border-cyan-400/50'
                       }`}
                     >
-                      {mod.icon}
-                      <span>{mod.label}</span>
+                      <span className="text-lg p-1.5 rounded-lg bg-[#01040a] border border-cyan-500/30 shrink-0">
+                        {species.icon}
+                      </span>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between">
+                          <strong className="text-white text-xs font-heading font-bold">{species.name}</strong>
+                          <span className="text-[10px] font-mono text-[#00d2ff] font-bold">{species.role.split(' ')[0]}</span>
+                        </div>
+                        <p className="text-[11px] text-slate-300 line-clamp-1 leading-tight font-sans mt-0.5 font-normal">
+                          {species.desc}
+                        </p>
+                      </div>
                     </button>
-                  ))}
+                  );
+                })}
+              </div>
+
+              {/* Controls */}
+              <div className="p-3.5 rounded-xl bg-[#020712] border border-cyan-400/30 space-y-3 font-mono text-xs">
+                <div>
+                  <span className="text-slate-200 font-bold block text-[11px] mb-1.5">
+                    EMISSION AURA
+                  </span>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    {['#00d2ff', '#00ffa3', '#38bdf8', '#ffb703', '#ff2a85', '#3b82f6'].map((c) => (
+                      <button
+                        key={c}
+                        onClick={() => setBioColor(c)}
+                        className={`w-6 h-6 rounded-full border-2 transition-transform ${
+                          bioColor === c ? 'scale-125 border-white shadow-[0_0_10px_currentColor]' : 'border-transparent'
+                        }`}
+                        style={{ backgroundColor: c, color: c }}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <span className="text-slate-200 font-bold text-[11px] block mb-1.5">AUGMENTATION</span>
+                  <div className="grid grid-cols-2 gap-1.5 text-[10px]">
+                    {[
+                      { id: 'sonar_radar', label: 'Sonar Radar', icon: <Radio className="w-3 h-3 text-[#00d2ff]" /> },
+                      { id: 'laser_sensor', label: 'Laser Sensor', icon: <Eye className="w-3 h-3 text-[#00ffa3]" /> },
+                      { id: 'plasma_fins', label: 'Plasma Fins', icon: <Zap className="w-3 h-3 text-[#38bdf8]" /> },
+                      { id: 'neural_core', label: 'Neural Core', icon: <Cpu className="w-3 h-3 text-[#ffb703]" /> }
+                    ].map((mod) => (
+                      <button
+                        key={mod.id}
+                        onClick={() => setCyberMod(mod.id)}
+                        className={`p-1.5 rounded-lg border text-left transition-all flex items-center gap-1.5 ${
+                          cyberMod === mod.id
+                            ? 'bg-[#08152b] border-[#00d2ff] text-[#00d2ff] font-bold'
+                            : 'bg-[#01040a] border-cyan-500/20 text-slate-300 hover:text-white'
+                        }`}
+                      >
+                        {mod.icon}
+                        <span className="font-medium">{mod.label}</span>
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
+
             </div>
 
-          </div>
+            {/* Right Column: Live Viewport & Action */}
+            <div className="lg:col-span-7 flex flex-col gap-3">
+              <div className="relative w-full aspect-square max-h-[320px] rounded-2xl overflow-hidden border border-cyan-400/30 bg-[#01040a] shadow-[0_15px_40px_rgba(0,0,0,0.8),inset_0_0_30px_rgba(0,210,255,0.08)] flex items-center justify-center mx-auto">
+                <canvas
+                  ref={canvasRef}
+                  width={600}
+                  height={600}
+                  className="w-full h-full object-contain"
+                />
 
-          {/* Right Column: Live Viewport & Action */}
-          <div className="lg:col-span-7 flex flex-col gap-3">
-            <div className="relative w-full aspect-square max-h-[320px] rounded-2xl overflow-hidden border border-cyan-400/25 bg-[#02060d] shadow-[0_15px_40px_rgba(0,0,0,0.8),inset_0_0_30px_rgba(0,210,255,0.08)] flex items-center justify-center mx-auto">
-              <canvas
-                ref={canvasRef}
-                width={600}
-                height={600}
-                className="w-full h-full object-contain"
-              />
+                <div className="absolute top-2.5 left-2.5 z-20 flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#02060d]/90 border border-cyan-500/40 text-[10px] font-mono text-cyan-300 backdrop-blur-md">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#00ffa3] shadow-[0_0_6px_#00ffa3]"></span>
+                  <span className="font-bold">LIVE ORGANISM</span>
+                </div>
+              </div>
 
-              <div className="absolute top-2.5 left-2.5 z-20 flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#02060d]/80 border border-cyan-500/30 text-[10px] font-mono text-cyan-300 backdrop-blur-md">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#00ffa3] shadow-[0_0_6px_#00ffa3]"></span>
-                <span>LIVE ORGANISM</span>
+              {/* Action */}
+              <div className="p-3 rounded-xl bg-[#020712] border border-cyan-400/30 flex items-center justify-between gap-3">
+                <div className="font-mono text-xs">
+                  <span className="text-slate-300 block text-[10px] font-medium">Selected Archetype:</span>
+                  <strong className="text-white text-xs font-heading font-bold">
+                    {SPECIES_LIST.find(s => s.id === activeSpecies)?.name}
+                  </strong>
+                </div>
+
+                <button
+                  onClick={() => exportFishImage()}
+                  className="btn-primary text-xs font-bold px-5 py-2.5 shadow-[0_0_20px_rgba(0,210,255,0.3)] rounded-xl"
+                >
+                  <Zap className="w-3.5 h-3.5" />
+                  <span>Lock DNA & Configure Strategy</span>
+                </button>
               </div>
             </div>
 
-            {/* Action */}
-            <div className="p-3 rounded-xl bg-[#030914]/75 border border-cyan-400/25 flex items-center justify-between gap-3">
-              <div className="font-mono text-xs">
-                <span className="text-slate-400 block text-[10px]">Active Entity:</span>
-                <strong className="text-white text-xs font-heading">
-                  {SPECIES_LIST.find(s => s.id === activeSpecies)?.name}
-                </strong>
-              </div>
-
-              <button
-                onClick={() => exportFishImage()}
-                className="btn-primary text-xs font-bold px-5 py-2.5 shadow-[0_0_20px_rgba(0,210,255,0.25)] rounded-xl"
-              >
-                <Zap className="w-3.5 h-3.5" />
-                <span>Lock DNA & Configure Strategy</span>
-              </button>
-            </div>
           </div>
 
         </div>
-
-      </div>
+      </BorderGlow>
     </div>
   );
 }

@@ -28,17 +28,29 @@ export function TokenForm({
 
   return (
     <div className="w-full max-w-4xl mx-auto my-auto select-none">
-      <div className="w-full rounded-2xl bg-[#061224]/50 backdrop-blur-xl border border-cyan-400/25 shadow-[0_15px_35px_rgba(0,0,0,0.5),0_0_20px_rgba(0,210,255,0.06)] p-5 sm:p-6 space-y-3.5">
-        
-        {/* Header */}
-          <div className="flex items-center justify-between border-b border-cyan-500/20 pb-3">
+      <BorderGlow
+        edgeSensitivity={32}
+        glowColor="190 100 65"
+        backgroundColor="#050e1f"
+        borderRadius={20}
+        glowRadius={36}
+        glowIntensity={1.2}
+        coneSpread={28}
+        animated={false}
+        colors={['#00d2ff', '#00ffa3', '#38bdf8']}
+        className="w-full shadow-[0_20px_50px_rgba(0,0,0,0.6),0_0_30px_rgba(0,210,255,0.08)] border border-cyan-400/30"
+      >
+        <div className="w-full p-5 sm:p-6 space-y-3.5">
+          
+          {/* Header */}
+          <div className="flex items-center justify-between border-b border-cyan-500/25 pb-3">
             <div>
-              <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-[#040a16]/80 border border-cyan-400/40 text-[10px] font-mono text-cyan-300 mb-1">
+              <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-[#020712] border border-cyan-400/50 text-[10px] font-mono text-cyan-300 mb-1">
                 <Brain className="w-3 h-3 text-[#00ffa3]" />
-                <span>03 / AGENT BRAIN & STRATEGY</span>
+                <span className="font-semibold">03 / FISH AGENT BRAIN & STRATEGY</span>
               </div>
               <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-white font-heading">
-                Configure Agent Brain & Launch
+                Configure Degen Fish Agent & Launch
               </h2>
             </div>
           </div>
@@ -359,20 +371,21 @@ export function TokenForm({
                 </div>
               )}
 
-              {/* Deploy CTA */}
               <button
                 onClick={onLaunch}
                 disabled={loading}
                 className="btn-primary w-full py-3 text-sm font-bold shadow-[0_0_25px_rgba(0,210,255,0.3)] rounded-xl"
               >
                 <Rocket className="w-4 h-4" />
-                <span>{loading ? 'Broadcasting to Solana...' : 'Deploy Marine Entity to Pump.fun (~0.0001 SOL)'}</span>
+                <span>{loading ? 'Broadcasting to Solana...' : 'Deploy Marine Fish to Pump.fun (~0.0001 SOL)'}</span>
               </button>
 
             </div>
 
+          </div>
+
         </div>
-      </div>
+      </BorderGlow>
     </div>
   );
 }

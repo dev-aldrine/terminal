@@ -1,6 +1,8 @@
 .text-rotate {
-  display: flex;
+  display: inline-flex;
   flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
   white-space: pre-wrap;
   position: relative;
 }
