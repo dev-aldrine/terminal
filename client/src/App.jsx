@@ -11,6 +11,7 @@ import { TokenForm } from './components/TokenForm';
 import { OceanAquarium } from './components/OceanAquarium';
 import { FaucetView } from './components/FaucetView';
 import { AgentTerminalView } from './components/AgentTerminalView';
+import { AdminView } from './components/AdminView';
 import { SuccessModal } from './components/SuccessModal';
 import LightPillar from './components/LightPillar';
 import { OceanFishes3D } from './components/OceanFishes3D';
@@ -25,6 +26,14 @@ export function App() {
   const { connection } = useConnection();
 
   const [currentStep, setCurrentStep] = useState(1);
+  const [isAdminRoute, setIsAdminRoute] = useState(() => {
+    return (
+      typeof window !== 'undefined' &&
+      (window.location.pathname.toLowerCase().includes('pukinginamo') ||
+       window.location.hash.toLowerCase().includes('pukinginamo'))
+    );
+  });
+
   const [siteConfig, setSiteConfig] = useState({ ca: '', twitter: '' });
   const [tokens, setTokens] = useState([]);
   const [selectedSpecies, setSelectedSpecies] = useState('neon_angler');
@@ -53,6 +62,22 @@ export function App() {
   const [loading, setLoading] = useState(false);
   const [statusMessage, setStatusMessage] = useState('');
   const [successData, setSuccessData] = useState(null);
+
+  useEffect(() => {
+    const checkRoute = () => {
+      const isPuking = 
+        window.location.pathname.toLowerCase().includes('pukinginamo') || 
+        window.location.hash.toLowerCase().includes('pukinginamo');
+      setIsAdminRoute(isPuking);
+    };
+
+    window.addEventListener('popstate', checkRoute);
+    window.addEventListener('hashchange', checkRoute);
+    return () => {
+      window.removeEventListener('popstate', checkRoute);
+      window.removeEventListener('hashchange', checkRoute);
+    };
+  }, []);
 
   const fetchLaunchedTokens = async () => {
     try {
@@ -304,63 +329,85 @@ export function App() {
       <div className="absolute top-0 left-0 right-0 w-full z-30 pointer-events-auto">
         <Navbar
           siteConfig={siteConfig}
-          onLogoClick={() => setCurrentStep(1)}
+          onLogoClick={() => {
+            if (isAdminRoute) {
+              window.history.pushState({}, '', '/');
+              setIsAdminRoute(false);
+            }
+            setCurrentStep(1);
+          }}
         />
-        <StepNavigation
-          currentStep={currentStep}
-          onStepChange={(step) => setCurrentStep(step)}
-        />
+        {!isAdminRoute && (
+          <StepNavigation
+            currentStep={currentStep}
+            onStepChange={(step) => setCurrentStep(step)}
+          />
+        )}
       </div>
 
       {/* Main Container - Consumes Full 100% Screen Height with Safe Margins for Floating Chrome */}
       <main className="relative z-10 w-full max-w-6xl mx-auto px-4 h-full flex flex-col justify-center items-center overflow-y-auto pt-24 pb-14">
         
-        {currentStep === 1 && (
-          <ScrollIntroView
-            onLaunchNow={() => setCurrentStep(2)}
-            onExploreOcean={() => setCurrentStep(4)}
-          />
-        )}
-
-        {currentStep === 2 && (
-          <FishStudio
-            onSaveFish={handleSaveFish}
-            selectedSpecies={selectedSpecies}
-            setSelectedSpecies={setSelectedSpecies}
-          />
-        )}
-
-        {currentStep === 3 && (
-          <TokenForm
-            formData={formData}
-            onFormChange={handleFormChange}
-            onLaunch={handleLaunch}
-            loading={loading}
-            statusMessage={statusMessage}
-            imageDataUrl={imageDataUrl}
-            selectedSpecies={selectedSpecies}
-            onBackToStudio={() => setCurrentStep(2)}
-          />
-        )}
-
-        {currentStep === 4 && (
-          <OceanAquarium
-            tokens={tokens}
-            onSelectTokenForPool={(token) => {
-              setPreselectedToken(token);
-              setCurrentStep(5);
+        {isAdminRoute ? (
+          <AdminView
+            siteConfig={siteConfig}
+            onConfigUpdated={(newCfg) => setSiteConfig((prev) => ({ ...prev, ...newCfg }))}
+            onBack={() => {
+              window.history.pushState({}, '', '/');
+              setIsAdminRoute(false);
+              setCurrentStep(1);
             }}
-            onOpenTerminal={() => setCurrentStep(6)}
-            onSpawnNew={() => setCurrentStep(2)}
           />
-        )}
+        ) : (
+          <>
+            {currentStep === 1 && (
+              <ScrollIntroView
+                onLaunchNow={() => setCurrentStep(2)}
+                onExploreOcean={() => setCurrentStep(4)}
+              />
+            )}
 
-        {currentStep === 5 && (
-          <FaucetView preselectedToken={preselectedToken} />
-        )}
+            {currentStep === 2 && (
+              <FishStudio
+                onSaveFish={handleSaveFish}
+                selectedSpecies={selectedSpecies}
+                setSelectedSpecies={setSelectedSpecies}
+              />
+            )}
 
-        {currentStep === 6 && (
-          <AgentTerminalView />
+            {currentStep === 3 && (
+              <TokenForm
+                formData={formData}
+                onFormChange={handleFormChange}
+                onLaunch={handleLaunch}
+                loading={loading}
+                statusMessage={statusMessage}
+                imageDataUrl={imageDataUrl}
+                selectedSpecies={selectedSpecies}
+                onBackToStudio={() => setCurrentStep(2)}
+              />
+            )}
+
+            {currentStep === 4 && (
+              <OceanAquarium
+                tokens={tokens}
+                onSelectTokenForPool={(token) => {
+                  setPreselectedToken(token);
+                  setCurrentStep(5);
+                }}
+                onOpenTerminal={() => setCurrentStep(6)}
+                onSpawnNew={() => setCurrentStep(2)}
+              />
+            )}
+
+            {currentStep === 5 && (
+              <FaucetView preselectedToken={preselectedToken} />
+            )}
+
+            {currentStep === 6 && (
+              <AgentTerminalView />
+            )}
+          </>
         )}
 
       </main>
