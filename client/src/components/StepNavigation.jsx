@@ -14,7 +14,7 @@ export function StepNavigation({ currentStep, onStepChange }) {
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 py-3 flex justify-center overflow-x-auto">
-      <div className="inline-flex min-w-max p-1 rounded-xl bg-[#090a0d] border border-[#202430]">
+      <div className="inline-flex min-w-max p-1.5 rounded-xl bg-[#090a0d] border border-[#202430]">
         <JellyRadio
           items={steps}
           value={currentStep}
@@ -24,14 +24,14 @@ export function StepNavigation({ currentStep, onStepChange }) {
           textColor="#94a3b8"
           activeTextColor="#090a0d"
           size="md"
-          gap={6}
-          radius={8}
-          swell={0.12}
-          barge={4}
-          shrink={0.04}
-          jelly={0.8}
-          bounce={0.2}
-          stagger={16}
+          gap={8}
+          radius={10}
+          swell={0.2}
+          barge={6}
+          shrink={0.05}
+          jelly={1}
+          bounce={0.28}
+          stagger={22}
           stiffness={580}
         />
       </div>
