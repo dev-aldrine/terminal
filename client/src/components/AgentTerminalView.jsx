@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Terminal, Activity, Radio, Zap, Waves, Sparkles, Shield, Cpu } from 'lucide-react';
-import BorderGlow from './BorderGlow';
+import { Terminal, Activity, Radio, Zap, Waves, Sparkles, Shield, Cpu, Disc, Filter } from 'lucide-react';
 
 export function AgentTerminalView() {
   const [logs, setLogs] = useState([]);
@@ -36,109 +35,103 @@ export function AgentTerminalView() {
   });
 
   return (
-    <div className="w-full max-w-5xl mx-auto my-auto select-none">
-      <BorderGlow
-        edgeSensitivity={32}
-        glowColor="190 100 65"
-        backgroundColor="rgba(3, 14, 33, 0.65)"
-        borderRadius={24}
-        glowRadius={40}
-        glowIntensity={1.2}
-        coneSpread={28}
-        animated={false}
-        colors={['#00d2ff', '#00ffa3', '#38bdf8']}
-        className="w-full shadow-[0_20px_50px_rgba(0,5,20,0.7),0_0_30px_rgba(0,210,255,0.08)] border border-cyan-400/30"
-      >
-        <div className="w-full p-5 sm:p-6 space-y-4">
+    <div className="w-full max-w-5xl mx-auto my-auto select-none py-2">
+      {/* Cyberpunk Deep Trench Radar & Telemetry Console */}
+      <div className="relative rounded-3xl p-6 sm:p-8 bg-gradient-to-b from-[#041024]/90 via-[#020917]/95 to-[#01040a]/98 border border-cyan-500/30 backdrop-blur-2xl shadow-[0_25px_60px_rgba(0,0,0,0.85),0_0_40px_rgba(0,210,255,0.12)] space-y-5">
+        
+        {/* Top Acoustic Radar HUD */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-cyan-500/20">
+          <div className="space-y-1">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#051833]/80 border border-cyan-400/40 text-[11px] font-mono text-cyan-300">
+              <Disc className="w-3.5 h-3.5 text-[#00ffa3] animate-spin" />
+              <span className="tracking-wider uppercase font-bold">06 / ACOUSTIC RADAR TELEMETRY</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-black text-white font-heading tracking-tight flex items-center gap-2.5">
+              <span>Deep Trench Neural Stream</span>
+              <span className="text-xs font-mono font-normal px-2.5 py-0.5 rounded-lg bg-cyan-950/80 border border-cyan-500/30 text-cyan-300">
+                BLOCKS SYNCED
+              </span>
+            </h2>
+          </div>
+
+          <div className="flex items-center gap-2.5 font-mono text-xs">
+            <div className="px-3.5 py-2 rounded-2xl bg-[#04142c] border border-cyan-500/30 text-center">
+              <span className="text-slate-400 block text-[9px]">LIVING SWARM</span>
+              <span className="text-[#00ffa3] font-bold text-sm">{stats.totalSpawned} Living</span>
+            </div>
+            <div className="px-3.5 py-2 rounded-2xl bg-[#04142c] border border-cyan-500/30 text-center">
+              <span className="text-slate-400 block text-[9px]">ACTIVE VAULTS</span>
+              <span className="text-[#00d2ff] font-bold text-sm">{stats.activeFaucets} Streaming</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Channel Filters */}
+        <div className="flex items-center gap-2 overflow-x-auto text-xs font-mono pb-1">
+          {['ALL', 'THOUGHT', 'ACTION', 'SPAWN', 'SIGNAL'].map((type) => (
+            <button
+              key={type}
+              onClick={() => setFilterType(type)}
+              className={`px-3.5 py-1.5 rounded-xl border transition-all shrink-0 font-bold ${
+                filterType === type
+                  ? 'bg-gradient-to-r from-[#00d2ff] to-[#00ffa3] text-[#020712] shadow-[0_0_15px_rgba(0,210,255,0.3)]'
+                  : 'bg-[#020712] border-cyan-500/20 text-slate-400 hover:border-cyan-400/40 hover:text-white'
+              }`}
+            >
+              CHANNEL: {type}
+            </button>
+          ))}
+        </div>
+
+        {/* Terminal Screen Console */}
+        <div className="p-5 rounded-3xl bg-[#01040a] border-2 border-cyan-400/30 shadow-[inset_0_0_30px_rgba(0,210,255,0.06)] space-y-3">
           
-          {/* Header */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-cyan-500/25 pb-3">
-            <div>
-              <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-[#020712] border border-cyan-400/50 text-[10px] font-mono text-cyan-300 mb-1">
-                <Radio className="w-3 h-3 text-[#00ffa3]" />
-                <span className="font-semibold">06 / LIVE ON-CHAIN RADAR TELEMETRY</span>
-              </div>
-              <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-white font-heading">
-                Autonomous Marine Sensory Stream
-              </h2>
-            </div>
-
-            <div className="flex items-center gap-2 font-mono text-xs">
-              <div className="px-3 py-1 rounded-xl bg-[#020712] border border-cyan-500/30 text-center">
-                <span className="text-slate-400 block text-[9px]">ACTIVE SWARM</span>
-                <span className="text-[#00ffa3] font-bold">{stats.totalSpawned} Living</span>
-              </div>
-              <div className="px-3 py-1 rounded-xl bg-[#020712] border border-cyan-500/30 text-center">
-                <span className="text-slate-400 block text-[9px]">TREASURIES</span>
-                <span className="text-[#00d2ff] font-bold">{stats.activeFaucets} Streaming</span>
-              </div>
-            </div>
+          <div className="flex items-center justify-between pb-3 border-b border-cyan-500/20 text-xs font-mono text-slate-400">
+            <span className="text-cyan-300 flex items-center gap-2 font-bold">
+              <Waves className="w-4 h-4 text-[#00d2ff]" /> agensea-sonar://solana-mariana-trench:5001/telemetry
+            </span>
+            <span className="text-[#00ffa3] text-xs flex items-center gap-1.5 font-bold">
+              <span className="w-2 h-2 rounded-full bg-[#00ffa3] shadow-[0_0_8px_#00ffa3] animate-ping"></span>
+              HYDRO-STREAM ACTIVE
+            </span>
           </div>
 
-          {/* Filter Tabs */}
-          <div className="flex items-center gap-2 overflow-x-auto text-xs font-mono pb-1">
-            {['ALL', 'THOUGHT', 'ACTION', 'SPAWN', 'SIGNAL'].map((type) => (
-              <button
-                key={type}
-                onClick={() => setFilterType(type)}
-                className={`px-3 py-1 rounded-xl border transition-all ${
-                  filterType === type
-                    ? 'bg-[#08152b] border-[#00d2ff] text-[#00d2ff] font-bold shadow-[0_0_10px_rgba(0,210,255,0.2)]'
-                    : 'bg-[#020712] border-cyan-500/20 text-slate-300 hover:border-cyan-400/40'
-                }`}
-              >
-                {type}
-              </button>
-            ))}
-          </div>
+          <div className="space-y-2.5 font-mono text-xs max-h-[320px] overflow-y-auto pr-1">
+            {filteredLogs.map((log) => {
+              const timeStr = new Date(log.timestamp).toLocaleTimeString();
+              const badgeColor =
+                log.type === 'THOUGHT' ? 'bg-[#00d2ff]/10 text-[#00d2ff] border-[#00d2ff]/40 shadow-[0_0_8px_rgba(0,210,255,0.2)]' :
+                log.type === 'ACTION' ? 'bg-[#ffb703]/10 text-[#ffb703] border-[#ffb703]/40 shadow-[0_0_8px_rgba(255,183,3,0.2)]' :
+                log.type === 'SPAWN' ? 'bg-[#00ffa3]/10 text-[#00ffa3] border-[#00ffa3]/40 shadow-[0_0_8px_rgba(0,255,163,0.2)]' :
+                'bg-cyan-950 text-cyan-300 border-cyan-500/40';
 
-          {/* Terminal Logs Window */}
-          <div className="p-4 rounded-2xl bg-[#01040a] border border-cyan-400/30 shadow-inner">
-            <div className="flex items-center justify-between pb-2.5 mb-2.5 border-b border-cyan-500/20 text-xs font-mono text-slate-400">
-              <span className="text-cyan-300 flex items-center gap-1.5">
-                <Waves className="w-3.5 h-3.5 text-[#00d2ff]" /> agensea-radar-daemon://solana-mariana-trench
-              </span>
-              <span className="text-[#00ffa3] text-[11px] flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#00ffa3] shadow-[0_0_6px_#00ffa3]"></span> FEED SYNCED
-              </span>
-            </div>
-
-            <div className="space-y-2 font-mono text-xs max-h-[300px] overflow-y-auto pr-1">
-              {filteredLogs.map((log) => {
-                const timeStr = new Date(log.timestamp).toLocaleTimeString();
-                const badgeColor =
-                  log.type === 'THOUGHT' ? 'bg-[#00d2ff]/10 text-[#00d2ff] border-[#00d2ff]/30' :
-                  log.type === 'ACTION' ? 'bg-[#ffb703]/10 text-[#ffb703] border-[#ffb703]/30' :
-                  log.type === 'SPAWN' ? 'bg-[#00ffa3]/10 text-[#00ffa3] border-[#00ffa3]/30' :
-                  'bg-cyan-950 text-cyan-300 border-cyan-500/40';
-
-                return (
-                  <div
-                    key={log.id}
-                    className="p-2.5 rounded-xl bg-[#020712] border border-cyan-500/15 flex flex-col sm:flex-row sm:items-center justify-between gap-2 hover:border-cyan-500/30 transition-all"
-                  >
-                    <div className="flex items-start sm:items-center gap-2.5">
-                      <span className="text-slate-500 text-[10px] shrink-0 pt-0.5 sm:pt-0">{timeStr}</span>
-                      <span className={`px-2 py-0.5 rounded-full border text-[10px] font-bold shrink-0 ${badgeColor}`}>
-                        {log.type}
+              return (
+                <div
+                  key={log.id}
+                  className="p-3 rounded-2xl bg-[#020712] border border-cyan-500/15 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 hover:border-cyan-400/40 transition-all"
+                >
+                  <div className="flex items-start sm:items-center gap-3">
+                    <span className="text-slate-500 text-[10px] shrink-0 font-bold">{timeStr}</span>
+                    <span className={`px-2.5 py-0.5 rounded-full border text-[10px] font-bold shrink-0 ${badgeColor}`}>
+                      {log.type}
+                    </span>
+                    {log.tokenSymbol && (
+                      <span className="text-[#00ffa3] font-bold text-xs shrink-0 font-mono">
+                        ${log.tokenSymbol}
                       </span>
-                      {log.tokenSymbol && (
-                        <span className="text-[#00ffa3] font-bold text-xs shrink-0">
-                          ${log.tokenSymbol}
-                        </span>
-                      )}
-                      <span className="text-slate-200 text-xs leading-relaxed">
-                        {log.message}
-                      </span>
-                    </div>
+                    )}
+                    <span className="text-slate-200 text-xs leading-relaxed">
+                      {log.message}
+                    </span>
                   </div>
-                );
-              })}
-            </div>
+                </div>
+              );
+            })}
           </div>
 
         </div>
-      </BorderGlow>
+
+      </div>
     </div>
   );
 }

@@ -1,6 +1,9 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Sparkles, Dices, Zap, Activity, Waves, Cpu, Eye, Radio, Shield, Droplets, Sliders } from 'lucide-react';
-import BorderGlow from './BorderGlow';
+import { motion } from 'framer-motion';
+import { 
+  Sparkles, Dices, Zap, Activity, Waves, Cpu, Eye, Radio, 
+  Shield, Droplets, Sliders, Play, RefreshCw, Compass, Anchor, Disc
+} from 'lucide-react';
 
 export const SPECIES_LIST = [
   {
@@ -9,7 +12,8 @@ export const SPECIES_LIST = [
     role: 'Dip Sniper & Deep Alpha',
     icon: '🏮',
     color: '#00e5ff',
-    desc: 'Lurks in dark liquidity depths. Uses its luminescent lure to detect stealth whale accumulation.'
+    stats: { stealth: 96, speed: 78, bite: 88, depth: '11,000m' },
+    desc: 'Lurks in pitch-black liquidity trenches. Luminescent lure baits and detects stealth whale accumulation.'
   },
   {
     id: 'cyber_shark',
@@ -17,7 +21,8 @@ export const SPECIES_LIST = [
     role: 'Aggressive Momentum',
     icon: '🦈',
     color: '#00ffa3',
-    desc: 'Apex predator armed with sub-millisecond hunting thrusters. Scents volume candles instantly.'
+    stats: { stealth: 64, speed: 98, bite: 99, depth: '4,500m' },
+    desc: 'Apex trench predator with sub-millisecond hunting thrusters. Scents volume surges across blocks.'
   },
   {
     id: 'bio_jelly',
@@ -25,6 +30,7 @@ export const SPECIES_LIST = [
     role: 'Liquidity Float & Yield',
     icon: '🪼',
     color: '#38bdf8',
+    stats: { stealth: 92, speed: 45, bite: 52, depth: '8,200m' },
     desc: 'Pulsates with cosmic underwater serenity. Absorbs massive volatility shocks with zero slippage.'
   },
   {
@@ -33,6 +39,7 @@ export const SPECIES_LIST = [
     role: 'High-Frequency Surge',
     icon: '⚡',
     color: '#ffb703',
+    stats: { stealth: 82, speed: 94, bite: 76, depth: '6,000m' },
     desc: 'Glides across the ocean floor, discharging micro-transactions on rapid pool imbalance.'
   },
   {
@@ -41,7 +48,8 @@ export const SPECIES_LIST = [
     role: 'Anti-Dump Fortress',
     icon: '🐡',
     color: '#ff2a85',
-    desc: 'Expands into an armored spike shield when sell pressure spikes, defending liquidity floor.'
+    stats: { stealth: 70, speed: 50, bite: 85, depth: '3,200m' },
+    desc: 'Expands into an armored spike shield when sell pressure spikes, defending ecosystem floor.'
   },
   {
     id: 'abyss_whale',
@@ -49,6 +57,7 @@ export const SPECIES_LIST = [
     role: 'Treasury Accumulator',
     icon: '🐋',
     color: '#a855f7',
+    stats: { stealth: 88, speed: 60, bite: 94, depth: '10,500m' },
     desc: 'Colossal ancient entity. Absorbs liquidity depth to anchor long-term ecosystem stability.'
   }
 ];
@@ -64,6 +73,8 @@ export function FishStudio({ onSaveFish, selectedSpecies = 'neon_angler', setSel
   const [swimSpeed, setSwimSpeed] = useState(1.4);
   const [finScale, setFinScale] = useState(1.0);
 
+  const activeData = SPECIES_LIST.find((s) => s.id === activeSpecies) || SPECIES_LIST[0];
+
   const handleSpeciesChange = (speciesId) => {
     setActiveSpecies(speciesId);
     if (setSelectedSpecies) setSelectedSpecies(speciesId);
@@ -74,11 +85,12 @@ export function FishStudio({ onSaveFish, selectedSpecies = 'neon_angler', setSel
   const randomizeDNA = () => {
     const randomSpec = SPECIES_LIST[Math.floor(Math.random() * SPECIES_LIST.length)];
     handleSpeciesChange(randomSpec.id);
-    const colors = ['#00e5ff', '#00ffa3', '#38bdf8', '#ffb703', '#ff2a85', '#3b82f6'];
+    const colors = ['#00e5ff', '#00ffa3', '#38bdf8', '#ffb703', '#ff2a85', '#a855f7'];
     setBioColor(colors[Math.floor(Math.random() * colors.length)]);
     const mods = ['sonar_radar', 'laser_sensor', 'plasma_fins', 'neural_core'];
     setCyberMod(mods[Math.floor(Math.random() * mods.length)]);
     setGlowIntensity(70 + Math.floor(Math.random() * 30));
+    setSwimSpeed(1.0 + Math.random() * 0.8);
   };
 
   const renderFishToCanvas = (targetCtx, width, height, time = 0) => {
@@ -101,8 +113,8 @@ export function FishStudio({ onSaveFish, selectedSpecies = 'neon_angler', setSel
       targetCtx.stroke();
     }
 
-    // Ambient floating bioluminescent particles & bubbles
-    for (let i = 0; i < 22; i++) {
+    // Ambient floating bioluminescent particles
+    for (let i = 0; i < 24; i++) {
       const px = (Math.sin(i * 99 + time * 0.01) * 0.5 + 0.5) * width;
       const py = ((i * 37 + time * (0.3 + (i % 3) * 0.2)) % height);
       const pr = (i % 3) + 1.2;
@@ -256,7 +268,7 @@ export function FishStudio({ onSaveFish, selectedSpecies = 'neon_angler', setSel
       targetCtx.stroke();
     }
 
-    // Glowing Luminescent Eye
+    // Glowing Eye
     targetCtx.beginPath();
     targetCtx.arc(activeSpecies === 'bio_jelly' ? 0 : 50, activeSpecies === 'bio_jelly' ? -35 : -15, 7, 0, Math.PI * 2);
     targetCtx.fillStyle = '#ffffff';
@@ -266,7 +278,7 @@ export function FishStudio({ onSaveFish, selectedSpecies = 'neon_angler', setSel
 
     // Cyber Mod Visual Overlay
     if (cyberMod === 'sonar_radar') {
-      targetCtx.strokeStyle = '#00e5ff';
+      targetCtx.strokeStyle = '#00d2ff';
       targetCtx.lineWidth = 1.5;
       for (let r = 20; r <= 60; r += 20) {
         targetCtx.beginPath();
@@ -319,162 +331,200 @@ export function FishStudio({ onSaveFish, selectedSpecies = 'neon_angler', setSel
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto my-auto select-none">
-      <BorderGlow
-        edgeSensitivity={32}
-        glowColor="190 100 65"
-        backgroundColor="rgba(3, 14, 33, 0.65)"
-        borderRadius={24}
-        glowRadius={40}
-        glowIntensity={1.2}
-        coneSpread={28}
-        animated={false}
-        colors={['#00d2ff', '#00ffa3', '#38bdf8']}
-        className="w-full shadow-[0_20px_50px_rgba(0,5,20,0.7),0_0_30px_rgba(0,210,255,0.08)] border border-cyan-400/30"
-      >
-        <div className="w-full p-5 sm:p-6 space-y-4">
-          
-          {/* Header */}
-          <div className="flex items-center justify-between border-b border-cyan-500/25 pb-3">
-            <div>
-              <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-[#020712] border border-cyan-400/50 text-[10px] font-mono text-cyan-300 mb-1">
-                <Waves className="w-3 h-3 text-[#00d2ff]" />
-                <span className="font-semibold">02 / CYBER-AQUATIC FISH DNA STUDIO</span>
-              </div>
-              <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-white font-heading">
-                Synthesize Autonomous Marine Organism
-              </h2>
+    <div className="w-full max-w-5xl mx-auto my-auto select-none py-2">
+      {/* Glassmorphic Cyber-Aquatic Bio-Chamber */}
+      <div className="relative rounded-3xl p-6 sm:p-8 bg-gradient-to-b from-[#041024]/90 via-[#020917]/95 to-[#01040a]/98 border border-cyan-500/30 backdrop-blur-2xl shadow-[0_25px_60px_rgba(0,0,0,0.85),0_0_40px_rgba(0,210,255,0.12)]">
+        
+        {/* Top Sonar HUD Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-cyan-500/20">
+          <div className="space-y-1">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#051833]/80 border border-cyan-400/40 text-[11px] font-mono text-cyan-300">
+              <span className="w-2 h-2 rounded-full bg-[#00ffa3] animate-pulse"></span>
+              <span className="tracking-wider uppercase font-bold">02 / BIOMARINE GENOME FORGE</span>
             </div>
-
-            <button
-              onClick={randomizeDNA}
-              className="px-3 py-1.5 rounded-xl bg-[#020712] hover:bg-[#08152b] border border-cyan-500/40 text-cyan-300 text-xs font-mono font-semibold flex items-center gap-1.5 transition-all shadow-sm"
-            >
-              <Dices className="w-3.5 h-3.5" /> Randomize DNA
-            </button>
+            <h2 className="text-2xl sm:text-3xl font-black text-white font-heading tracking-tight flex items-center gap-2.5">
+              <span>Synthesize Alpha Organism</span>
+              <span className="text-xs font-mono font-normal px-2.5 py-0.5 rounded-lg bg-cyan-950/80 border border-cyan-500/30 text-cyan-300">
+                DEPTH: {activeData.stats.depth}
+              </span>
+            </h2>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-center">
-            
-            {/* Left Column: Species & Controls */}
-            <div className="lg:col-span-5 space-y-3">
-              <div className="space-y-1.5 max-h-[240px] overflow-y-auto pr-1">
-                {SPECIES_LIST.map((species) => {
-                  const isSelected = activeSpecies === species.id;
+          <button
+            onClick={randomizeDNA}
+            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-[#072448] to-[#04142c] hover:from-[#0b3466] hover:to-[#072248] border border-cyan-400/40 text-cyan-200 text-xs font-mono font-bold transition-all shadow-[0_0_15px_rgba(0,210,255,0.15)] hover:shadow-[0_0_20px_rgba(0,210,255,0.3)] shrink-0"
+          >
+            <Dices className="w-4 h-4 text-[#00ffa3]" />
+            <span>MUTATE DNA</span>
+          </button>
+        </div>
+
+        {/* 3-Column Bio-Deck Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-6 items-stretch">
+          
+          {/* Left Orbital: Species Matrix Selection */}
+          <div className="lg:col-span-4 flex flex-col justify-between space-y-3">
+            <div>
+              <span className="text-[11px] font-mono font-bold text-cyan-300 uppercase tracking-wider block mb-2">
+                Trench Archetype Matrix
+              </span>
+              
+              <div className="space-y-2 max-h-[300px] overflow-y-auto pr-1">
+                {SPECIES_LIST.map((spec) => {
+                  const isSelected = activeSpecies === spec.id;
                   return (
-                    <button
-                      key={species.id}
-                      onClick={() => handleSpeciesChange(species.id)}
-                      className={`w-full text-left p-2.5 rounded-xl border transition-all flex items-center gap-2.5 ${
+                    <div
+                      key={spec.id}
+                      onClick={() => handleSpeciesChange(spec.id)}
+                      className={`p-3 rounded-2xl border transition-all cursor-pointer relative overflow-hidden flex items-center gap-3 ${
                         isSelected
-                          ? 'bg-[#08152b] border-[#00d2ff] shadow-[0_0_15px_rgba(0,210,255,0.25)]'
-                          : 'bg-[#020712] border-cyan-500/20 hover:border-cyan-400/50'
+                          ? 'bg-gradient-to-r from-[#092b52]/90 to-[#04162e]/90 border-cyan-400 shadow-[0_0_20px_rgba(0,210,255,0.25)]'
+                          : 'bg-[#030b18]/70 border-cyan-500/15 hover:border-cyan-400/40 hover:bg-[#051329]/60'
                       }`}
                     >
-                      <span className="text-lg p-1.5 rounded-lg bg-[#01040a] border border-cyan-500/30 shrink-0">
-                        {species.icon}
-                      </span>
+                      <div
+                        className="w-10 h-10 rounded-xl flex items-center justify-center text-xl shrink-0 border"
+                        style={{
+                          backgroundColor: `${spec.color}15`,
+                          borderColor: `${spec.color}40`
+                        }}
+                      >
+                        {spec.icon}
+                      </div>
+
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between">
-                          <strong className="text-white text-xs font-heading font-bold">{species.name}</strong>
-                          <span className="text-[10px] font-mono text-[#00d2ff] font-bold">{species.role.split(' ')[0]}</span>
+                          <h4 className="text-white text-xs font-heading font-bold truncate">{spec.name}</h4>
+                          <span
+                            className="text-[10px] font-mono font-bold"
+                            style={{ color: spec.color }}
+                          >
+                            {spec.role.split(' ')[0]}
+                          </span>
                         </div>
-                        <p className="text-[11px] text-slate-300 line-clamp-1 leading-tight font-sans mt-0.5 font-normal">
-                          {species.desc}
-                        </p>
+                        <p className="text-[11px] text-slate-300 truncate mt-0.5">{spec.desc}</p>
                       </div>
-                    </button>
+
+                      {isSelected && (
+                        <div
+                          className="absolute right-0 top-0 bottom-0 w-1 shadow-[0_0_10px_currentColor]"
+                          style={{ backgroundColor: spec.color, color: spec.color }}
+                        />
+                      )}
+                    </div>
                   );
                 })}
               </div>
-
-              {/* Bio Controls */}
-              <div className="p-3 rounded-xl bg-[#020712] border border-cyan-400/30 space-y-2.5 font-mono text-xs">
-                <div>
-                  <span className="text-slate-200 font-bold block text-[10px] mb-1">
-                    BIOLUMINESCENT SPECTRUM
-                  </span>
-                  <div className="flex items-center gap-2 flex-wrap">
-                    {['#00d2ff', '#00ffa3', '#38bdf8', '#ffb703', '#ff2a85', '#3b82f6'].map((c) => (
-                      <button
-                        key={c}
-                        onClick={() => setBioColor(c)}
-                        className={`w-5 h-5 rounded-full border-2 transition-transform ${
-                          bioColor === c ? 'scale-125 border-white shadow-[0_0_10px_currentColor]' : 'border-transparent'
-                        }`}
-                        style={{ backgroundColor: c, color: c }}
-                      />
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <span className="text-slate-200 font-bold text-[10px] block mb-1">CYBERNETIC IMPLANT</span>
-                  <div className="grid grid-cols-2 gap-1.5 text-[10px]">
-                    {[
-                      { id: 'sonar_radar', label: 'Sonar Radar', icon: <Radio className="w-3 h-3 text-[#00d2ff]" /> },
-                      { id: 'laser_sensor', label: 'Laser Sight', icon: <Eye className="w-3 h-3 text-[#00ffa3]" /> },
-                      { id: 'plasma_fins', label: 'Plasma Fins', icon: <Zap className="w-3 h-3 text-[#38bdf8]" /> },
-                      { id: 'neural_core', label: 'Neural Core', icon: <Cpu className="w-3 h-3 text-[#ffb703]" /> }
-                    ].map((mod) => (
-                      <button
-                        key={mod.id}
-                        onClick={() => setCyberMod(mod.id)}
-                        className={`p-1.5 rounded-lg border text-left transition-all flex items-center gap-1.5 ${
-                          cyberMod === mod.id
-                            ? 'bg-[#08152b] border-[#00d2ff] text-[#00d2ff] font-bold'
-                            : 'bg-[#01040a] border-cyan-500/20 text-slate-300 hover:text-white'
-                        }`}
-                      >
-                        {mod.icon}
-                        <span className="font-medium">{mod.label}</span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
             </div>
 
-            {/* Right Column: Live Organism Canvas & Lock Action */}
-            <div className="lg:col-span-7 flex flex-col gap-3">
-              <div className="relative w-full aspect-square max-h-[300px] rounded-2xl overflow-hidden border border-cyan-400/30 bg-[#01040a] shadow-[0_15px_40px_rgba(0,0,0,0.8),inset_0_0_30px_rgba(0,210,255,0.08)] flex items-center justify-center mx-auto">
-                <canvas
-                  ref={canvasRef}
-                  width={600}
-                  height={600}
-                  className="w-full h-full object-contain"
-                />
-
-                <div className="absolute top-2.5 left-2.5 z-20 flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#02060d]/90 border border-cyan-500/40 text-[10px] font-mono text-cyan-300 backdrop-blur-md">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#00ffa3] shadow-[0_0_6px_#00ffa3]"></span>
-                  <span className="font-bold">SYNTHESIS ACTIVE</span>
+            {/* Tactical Specimen Stats */}
+            <div className="p-3.5 rounded-2xl bg-[#020712]/90 border border-cyan-500/20 font-mono text-xs space-y-2">
+              <span className="text-[10px] text-slate-400 block uppercase font-bold">Specimen Biometrics</span>
+              <div className="grid grid-cols-3 gap-2 text-center">
+                <div className="p-1.5 rounded-lg bg-[#04142c] border border-cyan-500/20">
+                  <span className="text-[9px] text-slate-400 block">STEALTH</span>
+                  <span className="text-[#00ffa3] font-bold text-xs">{activeData.stats.stealth}%</span>
+                </div>
+                <div className="p-1.5 rounded-lg bg-[#04142c] border border-cyan-500/20">
+                  <span className="text-[9px] text-slate-400 block">SPEED</span>
+                  <span className="text-[#00d2ff] font-bold text-xs">{activeData.stats.speed}kn</span>
+                </div>
+                <div className="p-1.5 rounded-lg bg-[#04142c] border border-cyan-500/20">
+                  <span className="text-[9px] text-slate-400 block">ALPHA BITE</span>
+                  <span className="text-[#ffb703] font-bold text-xs">{activeData.stats.bite}/100</span>
                 </div>
               </div>
+            </div>
+          </div>
 
-              {/* Action */}
-              <div className="p-3 rounded-xl bg-[#020712] border border-cyan-400/30 flex items-center justify-between gap-3">
-                <div className="font-mono text-xs">
-                  <span className="text-slate-300 block text-[10px] font-medium">Selected Entity:</span>
-                  <strong className="text-white text-xs font-heading font-bold">
-                    {SPECIES_LIST.find(s => s.id === activeSpecies)?.name}
-                  </strong>
+          {/* Centerpiece: Holographic Living Bio-Chamber */}
+          <div className="lg:col-span-5 flex flex-col items-center justify-center">
+            <div className="relative w-full aspect-square max-w-[340px] rounded-3xl overflow-hidden border-2 border-cyan-400/40 bg-[#01040a] shadow-[0_20px_50px_rgba(0,0,0,0.9),inset_0_0_40px_rgba(0,210,255,0.15)] flex items-center justify-center group">
+              <canvas
+                ref={canvasRef}
+                width={600}
+                height={600}
+                className="w-full h-full object-contain"
+              />
+
+              {/* Holographic HUD Overlays */}
+              <div className="absolute top-3 left-3 flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#02060d]/90 border border-cyan-400/40 text-[10px] font-mono text-cyan-300 backdrop-blur-md">
+                <Disc className="w-3 h-3 text-[#00ffa3] animate-spin" />
+                <span className="font-bold">LIVE TELEMETRY</span>
+              </div>
+
+              <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between px-3 py-1.5 rounded-xl bg-[#02060d]/90 border border-cyan-500/30 text-[11px] font-mono text-slate-300 backdrop-blur-md">
+                <span className="text-white font-bold">{activeData.name}</span>
+                <span className="text-[#00ffa3] font-bold">${activeData.role.split(' ')[0].toUpperCase()}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Orbital: Cybernetic Controls & Synthesize Button */}
+          <div className="lg:col-span-3 flex flex-col justify-between space-y-3">
+            <div className="space-y-3">
+              <span className="text-[11px] font-mono font-bold text-cyan-300 uppercase tracking-wider block">
+                Bioluminescent Aura
+              </span>
+
+              {/* Color Swatches */}
+              <div className="grid grid-cols-3 gap-2">
+                {['#00d2ff', '#00ffa3', '#38bdf8', '#ffb703', '#ff2a85', '#a855f7'].map((c) => (
+                  <button
+                    key={c}
+                    onClick={() => setBioColor(c)}
+                    className={`h-9 rounded-xl border-2 transition-all flex items-center justify-center font-mono text-[10px] font-bold ${
+                      bioColor === c ? 'scale-105 border-white shadow-[0_0_15px_currentColor]' : 'border-cyan-500/20 opacity-70 hover:opacity-100'
+                    }`}
+                    style={{ backgroundColor: `${c}20`, color: c }}
+                  >
+                    {c}
+                  </button>
+                ))}
+              </div>
+
+              {/* Cybernetic Implants */}
+              <div className="space-y-1.5 pt-2">
+                <span className="text-[11px] font-mono font-bold text-cyan-300 uppercase tracking-wider block">
+                  Cyber Implants
+                </span>
+                <div className="grid grid-cols-2 gap-1.5 font-mono text-[10px]">
+                  {[
+                    { id: 'sonar_radar', label: 'Sonar Array', icon: <Radio className="w-3 h-3 text-[#00d2ff]" /> },
+                    { id: 'laser_sensor', label: 'Laser Target', icon: <Eye className="w-3 h-3 text-[#00ffa3]" /> },
+                    { id: 'plasma_fins', label: 'Plasma Fins', icon: <Zap className="w-3 h-3 text-[#38bdf8]" /> },
+                    { id: 'neural_core', label: 'Neural Core', icon: <Cpu className="w-3 h-3 text-[#ffb703]" /> }
+                  ].map((mod) => (
+                    <button
+                      key={mod.id}
+                      onClick={() => setCyberMod(mod.id)}
+                      className={`p-2 rounded-xl border text-left transition-all flex items-center gap-1.5 ${
+                        cyberMod === mod.id
+                          ? 'bg-[#09264c] border-cyan-400 text-cyan-300 font-bold shadow-[0_0_10px_rgba(0,210,255,0.2)]'
+                          : 'bg-[#020712] border-cyan-500/20 text-slate-400 hover:text-white'
+                      }`}
+                    >
+                      {mod.icon}
+                      <span className="truncate">{mod.label}</span>
+                    </button>
+                  ))}
                 </div>
-
-                <button
-                  onClick={() => exportFishImage()}
-                  className="btn-primary text-xs font-bold px-5 py-2.5 shadow-[0_0_20px_rgba(0,210,255,0.3)] rounded-xl"
-                >
-                  <Zap className="w-3.5 h-3.5" />
-                  <span>Lock DNA & Configure Strategy</span>
-                </button>
               </div>
             </div>
 
+            {/* Big Action Button */}
+            <button
+              onClick={() => exportFishImage()}
+              className="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-[#00d2ff] to-[#00ffa3] hover:from-[#38bdf8] hover:to-[#5eead4] text-[#020712] font-heading font-black text-xs sm:text-sm tracking-wide flex items-center justify-center gap-2 shadow-[0_0_30px_rgba(0,210,255,0.4)] hover:shadow-[0_0_40px_rgba(0,255,163,0.6)] transition-all transform active:scale-95 shrink-0"
+            >
+              <Zap className="w-4 h-4 fill-current" />
+              <span>LOCK DNA & DEPLOY STRATEGY</span>
+            </button>
           </div>
 
         </div>
-      </BorderGlow>
+
+      </div>
     </div>
   );
 }
