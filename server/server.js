@@ -564,7 +564,7 @@ app.post('/api/broadcast-tx', async (req, res) => {
  */
 app.get('/api/launched-coins', (req, res) => {
   const db = readDb();
-  res.json({ success: true, tokens: db.tokens });
+  res.json({ success: true, tokens: db.tokens, coins: db.tokens });
 });
 
 /**
@@ -782,7 +782,7 @@ app.get('/api/telemetry', (req, res) => {
   });
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`🌊 AgenSea Autonomous Marine Engine listening on port ${PORT}`);
   console.log(`🚀 IPFS + PumpPortal Trade API + Autonomous Faucet Protocol ready.`);
 });
