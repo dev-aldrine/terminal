@@ -3,43 +3,39 @@ import { motion } from 'framer-motion';
 import { Rocket, Sparkles, RefreshCw, Pen, ExternalLink, Lock } from '@sketchyicons/react';
 import TiltedCard from './TiltedCard';
 
-import spodermanImg from '../../draw/spoderman.jpeg';
-import dogeImg from '../../draw/doge.jpeg';
-import dogwiphapImg from '../../draw/dogwiphap.jpeg';
-
-// Built-in initial sample doodle coins using real drawings from /draw
+// Built-in initial sample marine tokens
 const DEFAULT_COMMUNITY_COINS = [
   {
-    name: 'Spoderman',
-    symbol: 'SPODERMAN',
-    description: 'Pls spoderman no. The classic iconic hand-drawn meme coin on Solana.',
-    mintPublicKey: '7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU',
+    name: 'Neon Angler AI',
+    symbol: 'ANGLER',
+    description: 'Deep-sea autonomous alpha sniper. Lurks in the dark liquidity depths, illuminating hidden gems.',
+    mintPublicKey: 'Ang1er7xJkM9QvW2p8L4s5T3u1Y6z8N0m2B4v6C8d0Ef',
     signature: '5K2bN5sC8F8j3bV9X8Z1Q7M4N2B9V6X3C8Z1Q7M4N2B9V6X3C8Z1Q7M4N2B9V6X3',
-    imageUrl: spodermanImg,
+    imageUrl: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200"><rect width="200" height="200" fill="%23030914"/><circle cx="100" cy="100" r="85" fill="%23051b38" stroke="%2300d2ff" stroke-width="2"/><path d="M40 100 Q70 60 130 85 Q160 100 130 115 Q70 140 40 100 Z" fill="%23072b54" stroke="%2300d2ff" stroke-width="3"/><circle cx="75" cy="90" r="6" fill="%2300ffa3"/></svg>',
     createdAt: new Date(Date.now() - 3600000 * 3).toISOString(),
     initialBuySol: 0.5,
     creator: '9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM',
     isSample: true
   },
   {
-    name: 'Classic Doge',
-    symbol: 'DOGE',
-    description: 'Much drawing, very coin. The legendary hand-drawn Shiba Inu on pump.fun.',
-    mintPublicKey: '9n4nbM75f5Ui33ZbPYXn59EwSgE8CGsHtAeTH5YFeJ9E',
+    name: 'Cyber Megalodon',
+    symbol: 'MEG',
+    description: 'Apex predatory momentum agent. Scents volume surges from 1,000 blocks away.',
+    mintPublicKey: 'Meg4Lod0n9xK1w3P7L5s2T8u4Y0z6N8m1B3v5C7d9Gh',
     signature: '4J8cN4sB7E7j2aU8W7Y0P6L3M1A8U5W2B7Y0P6L3M1A8U5W2B7Y0P6L3M1A8U5W2',
-    imageUrl: dogeImg,
+    imageUrl: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200"><rect width="200" height="200" fill="%23030914"/><circle cx="100" cy="100" r="85" fill="%23051a2e" stroke="%2300ffa3" stroke-width="2"/><path d="M30 100 Q80 50 150 90 Q170 100 150 110 Q80 150 30 100 Z" fill="%23062847" stroke="%2300ffa3" stroke-width="3"/><circle cx="65" cy="90" r="5" fill="%2300ffa3"/></svg>',
     createdAt: new Date(Date.now() - 3600000 * 7).toISOString(),
     initialBuySol: 1.2,
     creator: '4k3Dyjzvzp8eMZWUXbBCjEvwSkkk59S5iCNLY3QrkX6R',
     isSample: true
   },
   {
-    name: 'Dog Wif Hat',
-    symbol: 'DOGWIPHAP',
-    description: 'Literally just a dog wif a hat. Hand-inked directly inside DrawPad studio.',
-    mintPublicKey: '2uT7aV8C9kLmN3P4qRsTuVwXyZ1A2B3C4D5E6F7G8H9J',
+    name: 'Bioluminescent Jelly',
+    symbol: 'JELLY',
+    description: 'Floating passive liquidity harvester. Absorbs volatility shockwaves with zero slippage.',
+    mintPublicKey: 'Je11yF10at3xK8w2P4L9s1T6u3Y8z5N4m0B2v7C9d1Jk',
     signature: '3H7bM3sA6D6i1zT7V6X9O5K2L0Z7T4V1A6X9O5K2L0Z7T4V1A6X9O5K2L0Z7T4V1',
-    imageUrl: dogwiphapImg,
+    imageUrl: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200"><rect width="200" height="200" fill="%23030914"/><circle cx="100" cy="100" r="85" fill="%23061730" stroke="%2338bdf8" stroke-width="2"/><path d="M50 90 Q100 35 150 90 Q130 110 100 105 Q70 110 50 90 Z" fill="%23083363" stroke="%2338bdf8" stroke-width="3"/></svg>',
     createdAt: new Date(Date.now() - 3600000 * 14).toISOString(),
     initialBuySol: 0.25,
     creator: '7F4bM3sA6D6i1zT7V6X9O5K2L0Z7T4V1A6X9O5K2L0Z7',

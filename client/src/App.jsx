@@ -84,7 +84,10 @@ export function App() {
 
     fetchConfig();
     fetchLaunchedTokens();
-    const interval = setInterval(fetchLaunchedTokens, 5000);
+    const interval = setInterval(() => {
+      fetchConfig();
+      fetchLaunchedTokens();
+    }, 3000);
     return () => clearInterval(interval);
   }, []);
 
