@@ -312,8 +312,8 @@ export function App() {
         />
       </div>
 
-      {/* Main Container - Consumes Full 100% Screen Height and Perfectly Centers Card */}
-      <main className="relative z-10 w-full max-w-6xl mx-auto px-4 h-full flex flex-col justify-center items-center overflow-y-auto">
+      {/* Main Container - Consumes Full 100% Screen Height with Safe Margins for Floating Chrome */}
+      <main className="relative z-10 w-full max-w-6xl mx-auto px-4 h-full flex flex-col justify-center items-center overflow-y-auto pt-24 pb-14">
         
         {currentStep === 1 && (
           <ScrollIntroView

@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Sparkles, Dices, RefreshCw, Zap, Activity, Shield, Waves, Cpu, Eye, Radio } from 'lucide-react';
+import { Sparkles, Dices, Zap, Activity, Waves, Cpu, Eye, Radio, Shield, Droplets, Sliders } from 'lucide-react';
 import BorderGlow from './BorderGlow';
 
 export const SPECIES_LIST = [
@@ -9,7 +9,7 @@ export const SPECIES_LIST = [
     role: 'Dip Sniper & Deep Alpha',
     icon: '🏮',
     color: '#00e5ff',
-    desc: 'Lurks in dark liquidity depths. Uses its luminescent lure to detect stealth accumulation.'
+    desc: 'Lurks in dark liquidity depths. Uses its luminescent lure to detect stealth whale accumulation.'
   },
   {
     id: 'cyber_shark',
@@ -25,7 +25,7 @@ export const SPECIES_LIST = [
     role: 'Liquidity Float & Yield',
     icon: '🪼',
     color: '#38bdf8',
-    desc: 'Pulsates with cosmic underwater serenity. Absorbs massive volatility shocks with frictionless slip.'
+    desc: 'Pulsates with cosmic underwater serenity. Absorbs massive volatility shocks with zero slippage.'
   },
   {
     id: 'volt_ray',
@@ -41,7 +41,7 @@ export const SPECIES_LIST = [
     role: 'Anti-Dump Fortress',
     icon: '🐡',
     color: '#ff2a85',
-    desc: 'Expands into an armored spike shield when sell pressure spikes, defending holders.'
+    desc: 'Expands into an armored spike shield when sell pressure spikes, defending liquidity floor.'
   },
   {
     id: 'abyss_whale',
@@ -49,7 +49,7 @@ export const SPECIES_LIST = [
     role: 'Treasury Accumulator',
     icon: '🐋',
     color: '#a855f7',
-    desc: 'Colossal ancient entity. Absorbs liquidity depth to anchor long-term ecosystem floor.'
+    desc: 'Colossal ancient entity. Absorbs liquidity depth to anchor long-term ecosystem stability.'
   }
 ];
 
@@ -59,14 +59,15 @@ export function FishStudio({ onSaveFish, selectedSpecies = 'neon_angler', setSel
   const [activeSpecies, setActiveSpecies] = useState(selectedSpecies || 'neon_angler');
   const [bioColor, setBioColor] = useState('#00e5ff');
   const [secondaryColor, setSecondaryColor] = useState('#071326');
-  const [glowIntensity, setGlowIntensity] = useState(85);
+  const [glowIntensity, setGlowIntensity] = useState(88);
   const [cyberMod, setCyberMod] = useState('sonar_radar');
-  const [swimSpeed, setSwimSpeed] = useState(1.2);
+  const [swimSpeed, setSwimSpeed] = useState(1.4);
+  const [finScale, setFinScale] = useState(1.0);
 
   const handleSpeciesChange = (speciesId) => {
     setActiveSpecies(speciesId);
     if (setSelectedSpecies) setSelectedSpecies(speciesId);
-    const spec = SPECIES_LIST.find(s => s.id === speciesId);
+    const spec = SPECIES_LIST.find((s) => s.id === speciesId);
     if (spec) setBioColor(spec.color);
   };
 
@@ -77,36 +78,37 @@ export function FishStudio({ onSaveFish, selectedSpecies = 'neon_angler', setSel
     setBioColor(colors[Math.floor(Math.random() * colors.length)]);
     const mods = ['sonar_radar', 'laser_sensor', 'plasma_fins', 'neural_core'];
     setCyberMod(mods[Math.floor(Math.random() * mods.length)]);
+    setGlowIntensity(70 + Math.floor(Math.random() * 30));
   };
 
   const renderFishToCanvas = (targetCtx, width, height, time = 0) => {
     targetCtx.clearRect(0, 0, width, height);
 
     // Deep abyss water gradient
-    const bgGradient = targetCtx.createRadialGradient(width / 2, height / 2, 40, width / 2, height / 2, width / 1.3);
-    bgGradient.addColorStop(0, '#0a1526');
-    bgGradient.addColorStop(0.7, '#050b16');
-    bgGradient.addColorStop(1, '#02060d');
+    const bgGradient = targetCtx.createRadialGradient(width / 2, height / 2, 40, width / 2, height / 2, width / 1.2);
+    bgGradient.addColorStop(0, '#0a1628');
+    bgGradient.addColorStop(0.6, '#040b17');
+    bgGradient.addColorStop(1, '#01040a');
     targetCtx.fillStyle = bgGradient;
     targetCtx.fillRect(0, 0, width, height);
 
-    // Subtle water sonar concentric rings
-    targetCtx.strokeStyle = 'rgba(0, 210, 255, 0.05)';
+    // Sonar concentric rings
+    targetCtx.strokeStyle = 'rgba(0, 210, 255, 0.08)';
     targetCtx.lineWidth = 1;
-    for (let r = 50; r < width; r += 70) {
+    for (let r = 50; r < width; r += 65) {
       targetCtx.beginPath();
       targetCtx.arc(width / 2, height / 2, r, 0, Math.PI * 2);
       targetCtx.stroke();
     }
 
     // Ambient floating bioluminescent particles & bubbles
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 22; i++) {
       const px = (Math.sin(i * 99 + time * 0.01) * 0.5 + 0.5) * width;
       const py = ((i * 37 + time * (0.3 + (i % 3) * 0.2)) % height);
-      const pr = (i % 3) + 1;
+      const pr = (i % 3) + 1.2;
       targetCtx.beginPath();
       targetCtx.arc(px, height - py, pr, 0, Math.PI * 2);
-      targetCtx.fillStyle = `rgba(0, 210, 255, ${0.15 + (i % 5) * 0.05})`;
+      targetCtx.fillStyle = `rgba(0, 210, 255, ${0.15 + (i % 5) * 0.06})`;
       targetCtx.fill();
     }
 
@@ -117,18 +119,18 @@ export function FishStudio({ onSaveFish, selectedSpecies = 'neon_angler', setSel
     targetCtx.translate(cx, cy);
 
     targetCtx.shadowColor = bioColor;
-    targetCtx.shadowBlur = (glowIntensity / 100) * 25;
+    targetCtx.shadowBlur = (glowIntensity / 100) * 28;
 
     const bodyGrad = targetCtx.createLinearGradient(-120, -60, 120, 60);
     bodyGrad.addColorStop(0, bioColor);
-    bodyGrad.addColorStop(0.6, secondaryColor);
+    bodyGrad.addColorStop(0.5, secondaryColor);
     bodyGrad.addColorStop(1, '#02060d');
 
     targetCtx.fillStyle = bodyGrad;
     targetCtx.strokeStyle = bioColor;
     targetCtx.lineWidth = 2.5;
 
-    const tailWiggle = Math.sin(time * 0.08 * swimSpeed) * 14;
+    const tailWiggle = Math.sin(time * 0.08 * swimSpeed) * 14 * finScale;
 
     if (activeSpecies === 'neon_angler') {
       targetCtx.beginPath();
@@ -174,7 +176,7 @@ export function FishStudio({ onSaveFish, selectedSpecies = 'neon_angler', setSel
 
       targetCtx.beginPath();
       targetCtx.moveTo(-10, -50);
-      targetCtx.lineTo(-30, -95);
+      targetCtx.lineTo(-30, -95 * finScale);
       targetCtx.lineTo(25, -45);
       targetCtx.closePath();
       targetCtx.fillStyle = bioColor;
@@ -196,7 +198,7 @@ export function FishStudio({ onSaveFish, selectedSpecies = 'neon_angler', setSel
         targetCtx.bezierCurveTo(
           t + Math.sin(time * 0.05 + t) * 20, 40,
           t - Math.sin(time * 0.05 + t) * 20, 90,
-          t + Math.sin(time * 0.05 + t) * 25, 135
+          t + Math.sin(time * 0.05 + t) * 25, 135 * finScale
         );
         targetCtx.strokeStyle = bioColor;
         targetCtx.lineWidth = 2.5;
@@ -206,9 +208,9 @@ export function FishStudio({ onSaveFish, selectedSpecies = 'neon_angler', setSel
     } else if (activeSpecies === 'volt_ray') {
       targetCtx.beginPath();
       targetCtx.moveTo(110, 0);
-      targetCtx.lineTo(0, -95);
+      targetCtx.lineTo(0, -95 * finScale);
       targetCtx.lineTo(-100, 0);
-      targetCtx.lineTo(0, 95);
+      targetCtx.lineTo(0, 95 * finScale);
       targetCtx.closePath();
       targetCtx.fill();
       targetCtx.stroke();
@@ -229,8 +231,8 @@ export function FishStudio({ onSaveFish, selectedSpecies = 'neon_angler', setSel
       for (let a = 0; a < Math.PI * 2; a += Math.PI / 6) {
         const sx = Math.cos(a) * 80;
         const sy = Math.sin(a) * 80;
-        const ex = Math.cos(a) * 110;
-        const ey = Math.sin(a) * 110;
+        const ex = Math.cos(a) * (110 * finScale);
+        const ey = Math.sin(a) * (110 * finScale);
         targetCtx.beginPath();
         targetCtx.moveTo(sx, sy);
         targetCtx.lineTo(ex, ey);
@@ -240,6 +242,7 @@ export function FishStudio({ onSaveFish, selectedSpecies = 'neon_angler', setSel
       }
 
     } else {
+      // Abyss Whale
       targetCtx.beginPath();
       targetCtx.moveTo(130, -10);
       targetCtx.quadraticCurveTo(40, -70, -110, -35);
@@ -253,67 +256,52 @@ export function FishStudio({ onSaveFish, selectedSpecies = 'neon_angler', setSel
       targetCtx.stroke();
     }
 
+    // Glowing Luminescent Eye
+    targetCtx.beginPath();
+    targetCtx.arc(activeSpecies === 'bio_jelly' ? 0 : 50, activeSpecies === 'bio_jelly' ? -35 : -15, 7, 0, Math.PI * 2);
+    targetCtx.fillStyle = '#ffffff';
+    targetCtx.shadowColor = '#00ffa3';
+    targetCtx.shadowBlur = 20;
+    targetCtx.fill();
+
+    // Cyber Mod Visual Overlay
     if (cyberMod === 'sonar_radar') {
-      targetCtx.beginPath();
-      targetCtx.arc(55, -20, 8, 0, Math.PI * 2);
-      targetCtx.fillStyle = '#00d2ff';
-      targetCtx.fill();
-      targetCtx.beginPath();
-      targetCtx.arc(55, -20, 16 + (Math.sin(time * 0.1) * 4), 0, Math.PI * 2);
-      targetCtx.strokeStyle = 'rgba(0, 210, 255, 0.6)';
+      targetCtx.strokeStyle = '#00e5ff';
       targetCtx.lineWidth = 1.5;
-      targetCtx.stroke();
+      for (let r = 20; r <= 60; r += 20) {
+        targetCtx.beginPath();
+        targetCtx.arc(60, 0, r, -Math.PI / 4, Math.PI / 4);
+        targetCtx.stroke();
+      }
     } else if (cyberMod === 'laser_sensor') {
-      targetCtx.beginPath();
-      targetCtx.arc(60, -15, 6, 0, Math.PI * 2);
-      targetCtx.fillStyle = '#ff0055';
-      targetCtx.shadowColor = '#ff0055';
-      targetCtx.shadowBlur = 20;
-      targetCtx.fill();
-      targetCtx.beginPath();
-      targetCtx.moveTo(60, -15);
-      targetCtx.lineTo(160, -15);
-      targetCtx.strokeStyle = 'rgba(255, 0, 85, 0.4)';
+      targetCtx.strokeStyle = '#00ffa3';
       targetCtx.lineWidth = 2;
+      targetCtx.beginPath();
+      targetCtx.moveTo(55, -15);
+      targetCtx.lineTo(160, -15);
       targetCtx.stroke();
-    } else if (cyberMod === 'plasma_fins') {
-      targetCtx.beginPath();
-      targetCtx.moveTo(0, 30);
-      targetCtx.lineTo(-40, 75);
-      targetCtx.lineTo(20, 45);
-      targetCtx.closePath();
-      targetCtx.fillStyle = '#00ffa3';
-      targetCtx.fill();
-    } else if (cyberMod === 'neural_core') {
-      targetCtx.beginPath();
-      targetCtx.arc(0, 0, 14, 0, Math.PI * 2);
-      targetCtx.fillStyle = '#ffffff';
-      targetCtx.shadowColor = bioColor;
-      targetCtx.shadowBlur = 25;
-      targetCtx.fill();
     }
 
     targetCtx.restore();
   };
 
   useEffect(() => {
-    let animId;
-    let t = 0;
+    let animationFrameId;
+    let time = 0;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
 
-    const render = () => {
-      t += 1;
-      renderFishToCanvas(ctx, 600, 600, t);
-      animId = requestAnimationFrame(render);
+    const animate = () => {
+      time += 1;
+      renderFishToCanvas(ctx, canvas.width, canvas.height, time);
+      animationFrameId = requestAnimationFrame(animate);
     };
-    render();
 
-    return () => {
-      if (animId) cancelAnimationFrame(animId);
-    };
-  }, [activeSpecies, bioColor, secondaryColor, glowIntensity, cyberMod, swimSpeed]);
+    animate();
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [activeSpecies, bioColor, secondaryColor, glowIntensity, cyberMod, swimSpeed, finScale]);
 
   const exportFishImage = () => {
     const exportCanvas = document.createElement('canvas');
@@ -354,7 +342,7 @@ export function FishStudio({ onSaveFish, selectedSpecies = 'neon_angler', setSel
                 <span className="font-semibold">02 / CYBER-AQUATIC FISH DNA STUDIO</span>
               </div>
               <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-white font-heading">
-                Configure Degen Fish DNA & Visuals
+                Synthesize Autonomous Marine Organism
               </h2>
             </div>
 
@@ -362,15 +350,15 @@ export function FishStudio({ onSaveFish, selectedSpecies = 'neon_angler', setSel
               onClick={randomizeDNA}
               className="px-3 py-1.5 rounded-xl bg-[#020712] hover:bg-[#08152b] border border-cyan-500/40 text-cyan-300 text-xs font-mono font-semibold flex items-center gap-1.5 transition-all shadow-sm"
             >
-              <Dices className="w-3.5 h-3.5" /> Randomize
+              <Dices className="w-3.5 h-3.5" /> Randomize DNA
             </button>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-center">
             
-            {/* Left Column: Archetype List */}
+            {/* Left Column: Species & Controls */}
             <div className="lg:col-span-5 space-y-3">
-              <div className="space-y-1.5 max-h-[260px] overflow-y-auto pr-1">
+              <div className="space-y-1.5 max-h-[240px] overflow-y-auto pr-1">
                 {SPECIES_LIST.map((species) => {
                   const isSelected = activeSpecies === species.id;
                   return (
@@ -400,18 +388,18 @@ export function FishStudio({ onSaveFish, selectedSpecies = 'neon_angler', setSel
                 })}
               </div>
 
-              {/* Controls */}
-              <div className="p-3.5 rounded-xl bg-[#020712] border border-cyan-400/30 space-y-3 font-mono text-xs">
+              {/* Bio Controls */}
+              <div className="p-3 rounded-xl bg-[#020712] border border-cyan-400/30 space-y-2.5 font-mono text-xs">
                 <div>
-                  <span className="text-slate-200 font-bold block text-[11px] mb-1.5">
-                    EMISSION AURA
+                  <span className="text-slate-200 font-bold block text-[10px] mb-1">
+                    BIOLUMINESCENT SPECTRUM
                   </span>
                   <div className="flex items-center gap-2 flex-wrap">
                     {['#00d2ff', '#00ffa3', '#38bdf8', '#ffb703', '#ff2a85', '#3b82f6'].map((c) => (
                       <button
                         key={c}
                         onClick={() => setBioColor(c)}
-                        className={`w-6 h-6 rounded-full border-2 transition-transform ${
+                        className={`w-5 h-5 rounded-full border-2 transition-transform ${
                           bioColor === c ? 'scale-125 border-white shadow-[0_0_10px_currentColor]' : 'border-transparent'
                         }`}
                         style={{ backgroundColor: c, color: c }}
@@ -421,11 +409,11 @@ export function FishStudio({ onSaveFish, selectedSpecies = 'neon_angler', setSel
                 </div>
 
                 <div>
-                  <span className="text-slate-200 font-bold text-[11px] block mb-1.5">AUGMENTATION</span>
+                  <span className="text-slate-200 font-bold text-[10px] block mb-1">CYBERNETIC IMPLANT</span>
                   <div className="grid grid-cols-2 gap-1.5 text-[10px]">
                     {[
                       { id: 'sonar_radar', label: 'Sonar Radar', icon: <Radio className="w-3 h-3 text-[#00d2ff]" /> },
-                      { id: 'laser_sensor', label: 'Laser Sensor', icon: <Eye className="w-3 h-3 text-[#00ffa3]" /> },
+                      { id: 'laser_sensor', label: 'Laser Sight', icon: <Eye className="w-3 h-3 text-[#00ffa3]" /> },
                       { id: 'plasma_fins', label: 'Plasma Fins', icon: <Zap className="w-3 h-3 text-[#38bdf8]" /> },
                       { id: 'neural_core', label: 'Neural Core', icon: <Cpu className="w-3 h-3 text-[#ffb703]" /> }
                     ].map((mod) => (
@@ -448,9 +436,9 @@ export function FishStudio({ onSaveFish, selectedSpecies = 'neon_angler', setSel
 
             </div>
 
-            {/* Right Column: Live Viewport & Action */}
+            {/* Right Column: Live Organism Canvas & Lock Action */}
             <div className="lg:col-span-7 flex flex-col gap-3">
-              <div className="relative w-full aspect-square max-h-[320px] rounded-2xl overflow-hidden border border-cyan-400/30 bg-[#01040a] shadow-[0_15px_40px_rgba(0,0,0,0.8),inset_0_0_30px_rgba(0,210,255,0.08)] flex items-center justify-center mx-auto">
+              <div className="relative w-full aspect-square max-h-[300px] rounded-2xl overflow-hidden border border-cyan-400/30 bg-[#01040a] shadow-[0_15px_40px_rgba(0,0,0,0.8),inset_0_0_30px_rgba(0,210,255,0.08)] flex items-center justify-center mx-auto">
                 <canvas
                   ref={canvasRef}
                   width={600}
@@ -460,14 +448,14 @@ export function FishStudio({ onSaveFish, selectedSpecies = 'neon_angler', setSel
 
                 <div className="absolute top-2.5 left-2.5 z-20 flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#02060d]/90 border border-cyan-500/40 text-[10px] font-mono text-cyan-300 backdrop-blur-md">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#00ffa3] shadow-[0_0_6px_#00ffa3]"></span>
-                  <span className="font-bold">LIVE ORGANISM</span>
+                  <span className="font-bold">SYNTHESIS ACTIVE</span>
                 </div>
               </div>
 
               {/* Action */}
               <div className="p-3 rounded-xl bg-[#020712] border border-cyan-400/30 flex items-center justify-between gap-3">
                 <div className="font-mono text-xs">
-                  <span className="text-slate-300 block text-[10px] font-medium">Selected Archetype:</span>
+                  <span className="text-slate-300 block text-[10px] font-medium">Selected Entity:</span>
                   <strong className="text-white text-xs font-heading font-bold">
                     {SPECIES_LIST.find(s => s.id === activeSpecies)?.name}
                   </strong>
