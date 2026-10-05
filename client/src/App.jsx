@@ -3,7 +3,7 @@ import { useWallet, useConnection } from '@solana/wallet-adapter-react';
 import { PhantomWalletButton } from './components/PhantomWalletButton';
 import { VersionedTransaction, Transaction, SystemProgram, PublicKey, LAMPORTS_PER_SOL } from '@solana/web3.js';
 import confetti from 'canvas-confetti';
-import { ContractBar } from './components/ContractBar';
+import { Navbar } from './components/Navbar';
 import { StepNavigation } from './components/StepNavigation';
 import { ScrollIntroView } from './components/ScrollIntroView';
 import { FishStudio } from './components/FishStudio';
@@ -295,37 +295,11 @@ export function App() {
         />
       </div>
 
-      {/* Top Banner */}
-      <ContractBar
+      {/* Unified Single Navbar */}
+      <Navbar
         siteConfig={siteConfig}
-        totalSpawned={tokens.length}
-        activePools={tokens.filter((t) => t.faucet?.enabled).length}
+        onLogoClick={() => setCurrentStep(1)}
       />
-
-      {/* Main Navbar */}
-      <header className="w-full border-b border-cyan-500/15 bg-[#030712]/70 backdrop-blur-xl py-3 px-6 sticky top-[33px] z-40">
-        <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
-          
-          <div
-            onClick={() => setCurrentStep(1)}
-            className="flex items-center gap-2.5 cursor-pointer"
-          >
-            <Waves className="w-5 h-5 text-[#00d2ff]" />
-            <div className="flex items-center gap-1.5">
-              <span className="text-base font-extrabold tracking-tight font-heading text-white">AGEN</span>
-              <span className="text-base font-extrabold tracking-tight font-heading text-[#00d2ff]">SEA</span>
-              <span className="text-[10px] font-mono text-cyan-300 ml-1.5 px-2 py-0.5 rounded-full bg-[#071326]/80 border border-cyan-500/30">
-                v2.0
-              </span>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <PhantomWalletButton />
-          </div>
-
-        </div>
-      </header>
 
       {/* Step Navigation */}
       <StepNavigation
