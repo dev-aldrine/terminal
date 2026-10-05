@@ -11,7 +11,6 @@ import {
   Sparkles, 
   Waves
 } from 'lucide-react';
-import RotatingText from './RotatingText';
 
 const FishIcon = ({ className = "w-4 h-4" }) => (
   <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
@@ -22,11 +21,29 @@ const FishIcon = ({ className = "w-4 h-4" }) => (
   </svg>
 );
 
+const ROTATING_TEXTS = [
+  'predatory alpha sharks.',
+  'deep trench sniper fish.',
+  'liquidity hunting piranhas.',
+  'bonding curve killer whales.',
+  'bioluminescent degen jellies.',
+  'toxic stealth barracudas.'
+];
+
 export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
   const [activeSlide, setActiveSlide] = useState(0);
+  const [rotatingIndex, setRotatingIndex] = useState(0);
   const totalSlides = 5;
   const isTransitioningRef = useRef(false);
   const touchStartYRef = useRef(0);
+
+  // Reliable, smooth text rotator
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRotatingIndex((prev) => (prev + 1) % ROTATING_TEXTS.length);
+    }, 2400);
+    return () => clearInterval(interval);
+  }, []);
 
   const nextSlide = () => {
     setActiveSlide((prev) => Math.min(prev + 1, totalSlides - 1));
@@ -102,7 +119,7 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
   }, [activeSlide]);
 
   return (
-    <div className="w-full max-w-5xl mx-auto my-auto select-none px-4 py-6 flex flex-col items-center justify-center min-h-[520px]">
+    <div className="w-full max-w-6xl mx-auto my-auto select-none px-4 py-4 flex flex-col items-center justify-center min-h-[540px]">
       
       {/* Main Floating Minimalist Hero Slide Deck */}
       <div className="relative w-full flex-1 flex flex-col items-center justify-center text-center">
@@ -122,37 +139,30 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
               <img
                 src="/logo.png"
                 alt="AgenSea"
-                className="h-16 sm:h-20 w-auto object-contain mx-auto drop-shadow-[0_0_30px_rgba(0,210,255,0.6)]"
+                className="h-16 sm:h-22 md:h-24 w-auto object-contain mx-auto drop-shadow-[0_0_35px_rgba(0,210,255,0.6)]"
               />
 
               {/* Ultra-Gigantic Minimalist Headline */}
-              <h1 className="text-5xl sm:text-7xl md:text-8xl font-black text-white font-heading tracking-tight leading-[1.05] text-center flex flex-col items-center justify-center w-full drop-shadow-[0_10px_35px_rgba(0,0,0,0.8)]">
+              <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black text-white font-heading tracking-tight leading-[1.04] text-center flex flex-col items-center justify-center w-full drop-shadow-[0_12px_40px_rgba(0,0,0,0.85)]">
                 <span>Spawn autonomous</span>
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00d2ff] via-[#00ffa3] to-[#38bdf8] flex items-center justify-center w-full mt-1.5 drop-shadow-[0_0_40px_rgba(0,210,255,0.5)]">
-                  <RotatingText
-                    texts={[
-                      'predatory alpha sharks.',
-                      'deep trench sniper fish.',
-                      'liquidity hunting piranhas.',
-                      'bonding curve killer whales.',
-                      'bioluminescent degen jellies.',
-                      'toxic stealth barracudas.'
-                    ]}
-                    mainClassName="inline-flex justify-center items-center text-center"
-                    staggerFrom="last"
-                    initial={{ y: "100%" }}
-                    animate={{ y: 0 }}
-                    exit={{ y: "-120%" }}
-                    staggerDuration={0.02}
-                    splitLevelClassName="overflow-hidden pb-1 inline-flex justify-center"
-                    transition={{ type: "spring", damping: 30, stiffness: 400 }}
-                    rotationInterval={2400}
-                  />
+                <span className="relative flex items-center justify-center w-full min-h-[1.25em] mt-1 overflow-hidden">
+                  <AnimatePresence mode="wait">
+                    <motion.span
+                      key={rotatingIndex}
+                      initial={{ y: 60, opacity: 0, filter: 'blur(8px)' }}
+                      animate={{ y: 0, opacity: 1, filter: 'blur(0px)' }}
+                      exit={{ y: -60, opacity: 0, filter: 'blur(8px)' }}
+                      transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
+                      className="text-transparent bg-clip-text bg-gradient-to-r from-[#00d2ff] via-[#00ffa3] to-[#38bdf8] drop-shadow-[0_0_45px_rgba(0,210,255,0.6)] inline-block select-none"
+                    >
+                      {ROTATING_TEXTS[rotatingIndex]}
+                    </motion.span>
+                  </AnimatePresence>
                 </span>
               </h1>
 
               {/* Minimalist Subtitle */}
-              <p className="text-slate-200 text-base sm:text-lg md:text-xl max-w-2xl mx-auto leading-relaxed font-sans font-normal text-center drop-shadow-md">
+              <p className="text-slate-200 text-base sm:text-lg md:text-xl max-w-2xl mx-auto leading-relaxed font-sans font-medium text-center drop-shadow-md">
                 Deploy autonomous marine trading entities on Solana with custom visual DNA, live swimming physics, on-chain thought telemetry, and community treasury faucets.
               </p>
 
@@ -160,7 +170,7 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
               <div className="flex flex-wrap items-center justify-center gap-4 pt-3">
                 <button
                   onClick={onLaunchNow}
-                  className="px-8 py-4 rounded-2xl bg-gradient-to-r from-[#00d2ff] via-[#00ffa3] to-[#38bdf8] text-[#020712] font-heading font-black text-sm sm:text-base tracking-wide flex items-center gap-2.5 shadow-[0_0_35px_rgba(0,210,255,0.5)] hover:shadow-[0_0_50px_rgba(0,255,163,0.7)] hover:scale-105 transition-all transform active:scale-95"
+                  className="px-8 sm:px-10 py-4 sm:py-4.5 rounded-2xl bg-gradient-to-r from-[#00d2ff] via-[#00ffa3] to-[#38bdf8] text-[#020712] font-heading font-black text-sm sm:text-base tracking-wide flex items-center gap-2.5 shadow-[0_0_35px_rgba(0,210,255,0.5)] hover:shadow-[0_0_50px_rgba(0,255,163,0.7)] hover:scale-105 transition-all transform active:scale-95"
                 >
                   <FishIcon className="w-5 h-5 fill-current" />
                   <span>Spawn Agent Now</span>
@@ -168,7 +178,7 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
 
                 <button
                   onClick={onExploreOcean}
-                  className="px-8 py-4 rounded-2xl bg-[#04162e]/60 hover:bg-[#07244e]/80 border border-cyan-400/40 text-cyan-200 font-heading font-bold text-sm sm:text-base tracking-wide flex items-center gap-2.5 backdrop-blur-xl shadow-[0_0_20px_rgba(0,210,255,0.15)] hover:border-cyan-300 hover:scale-105 transition-all transform active:scale-95"
+                  className="px-8 sm:px-10 py-4 sm:py-4.5 rounded-2xl bg-[#04162e]/60 hover:bg-[#07244e]/80 border border-cyan-400/40 text-cyan-200 font-heading font-bold text-sm sm:text-base tracking-wide flex items-center gap-2.5 backdrop-blur-xl shadow-[0_0_20px_rgba(0,210,255,0.15)] hover:border-cyan-300 hover:scale-105 transition-all transform active:scale-95"
                 >
                   <Layers className="w-5 h-5 text-[#00d2ff]" />
                   <span>Enter Living Ocean</span>
@@ -191,18 +201,18 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
                 <span>01 / PREDATORY FISH DNA FORGE</span>
               </div>
 
-              <h2 className="text-4xl sm:text-6xl md:text-7xl font-black text-white font-heading tracking-tight leading-tight drop-shadow-[0_10px_35px_rgba(0,0,0,0.8)]">
+              <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white font-heading tracking-tight leading-tight drop-shadow-[0_10px_35px_rgba(0,0,0,0.8)]">
                 Forge Degen Marine Fish with <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00d2ff] to-[#00ffa3]">
                   Live Swimming Physics
                 </span>
               </h2>
 
-              <p className="text-slate-200 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed font-sans font-normal">
+              <p className="text-slate-200 text-base sm:text-lg md:text-xl max-w-2xl mx-auto leading-relaxed font-sans font-medium">
                 Select from 6 ferocious marine archetypes. Calibrate neon emission cores, equip cybernetic implants, and watch them roam in real-time.
               </p>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl w-full pt-2">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl w-full pt-2">
                 <div className="p-5 rounded-2xl bg-[#030d1e]/60 border border-cyan-500/25 backdrop-blur-xl text-left hover:border-cyan-400/60 transition-all shadow-lg">
                   <Cpu className="w-6 h-6 text-[#00d2ff] mb-2" />
                   <h4 className="text-white font-black text-base font-heading mb-1">6 Marine Archetypes</h4>
@@ -236,18 +246,18 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
                 <span>02 / FISH COMMUNITY TREASURY PROTOCOL</span>
               </div>
 
-              <h2 className="text-4xl sm:text-6xl md:text-7xl font-black text-white font-heading tracking-tight leading-tight drop-shadow-[0_10px_35px_rgba(0,0,0,0.8)]">
+              <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white font-heading tracking-tight leading-tight drop-shadow-[0_10px_35px_rgba(0,0,0,0.8)]">
                 Autonomous Fish Vaults with <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00d2ff] to-[#00ffa3]">
                   AI Cognitive Riddles
                 </span>
               </h2>
 
-              <p className="text-slate-200 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed font-sans font-normal">
+              <p className="text-slate-200 text-base sm:text-lg md:text-xl max-w-2xl mx-auto leading-relaxed font-sans font-medium">
                 Equip your fish token with a community custody vault. Reward diamond hand holders with automated drip payouts, or protect liquidity with interactive AI riddles.
               </p>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl w-full pt-2">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl w-full pt-2">
                 <div className="p-5 rounded-2xl bg-[#030d1e]/60 border border-cyan-500/25 backdrop-blur-xl text-left hover:border-cyan-400/60 transition-all shadow-lg">
                   <Droplets className="w-6 h-6 text-[#00d2ff] mb-2" />
                   <h4 className="text-white font-black text-base font-heading mb-1">Instant Token Drip</h4>
@@ -281,18 +291,18 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
                 <span>03 / THE LIVING DEGEN AQUARIUM</span>
               </div>
 
-              <h2 className="text-4xl sm:text-6xl md:text-7xl font-black text-white font-heading tracking-tight leading-tight drop-shadow-[0_10px_35px_rgba(0,0,0,0.8)]">
+              <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white font-heading tracking-tight leading-tight drop-shadow-[0_10px_35px_rgba(0,0,0,0.8)]">
                 Watch Spawned Fish Co-Exist & <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00d2ff] to-[#00ffa3]">
                   Scale with Market Cap
                 </span>
               </h2>
 
-              <p className="text-slate-200 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed font-sans font-normal">
+              <p className="text-slate-200 text-base sm:text-lg md:text-xl max-w-2xl mx-auto leading-relaxed font-sans font-medium">
                 Step into the shared ocean where every spawned token swims autonomously. Fish size scales dynamically with Pump.fun market cap, and live thought telemetry broadcasts on-chain alpha.
               </p>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl w-full pt-2">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl w-full pt-2">
                 <div className="p-5 rounded-2xl bg-[#030d1e]/60 border border-cyan-500/25 backdrop-blur-xl text-left hover:border-cyan-400/60 transition-all shadow-lg">
                   <Waves className="w-6 h-6 text-[#00d2ff] mb-2" />
                   <h4 className="text-white font-black text-base font-heading mb-1">Market Cap Scaling</h4>
@@ -326,21 +336,21 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
                 <span>READY TO SPAWN</span>
               </div>
 
-              <h2 className="text-5xl sm:text-7xl md:text-8xl font-black text-white font-heading tracking-tight leading-tight drop-shadow-[0_10px_35px_rgba(0,0,0,0.8)]">
+              <h2 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black text-white font-heading tracking-tight leading-tight drop-shadow-[0_10px_35px_rgba(0,0,0,0.8)]">
                 Enter the Trench. <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00d2ff] to-[#00ffa3]">
                   Spawn Your Fish Agent.
                 </span>
               </h2>
 
-              <p className="text-slate-200 text-base sm:text-lg leading-relaxed max-w-xl mx-auto font-sans font-normal">
+              <p className="text-slate-200 text-base sm:text-lg md:text-xl leading-relaxed max-w-xl mx-auto font-sans font-medium">
                 Connect your Phantom wallet, configure your creature visual DNA, and broadcast directly to Pump.fun in seconds.
               </p>
 
               <div className="flex flex-wrap items-center justify-center gap-4 pt-3">
                 <button
                   onClick={onLaunchNow}
-                  className="px-8 py-4 rounded-2xl bg-gradient-to-r from-[#00d2ff] via-[#00ffa3] to-[#38bdf8] text-[#020712] font-heading font-black text-sm sm:text-base tracking-wide flex items-center gap-2.5 shadow-[0_0_35px_rgba(0,210,255,0.5)] hover:shadow-[0_0_50px_rgba(0,255,163,0.7)] hover:scale-105 transition-all transform active:scale-95"
+                  className="px-8 sm:px-10 py-4 sm:py-4.5 rounded-2xl bg-gradient-to-r from-[#00d2ff] via-[#00ffa3] to-[#38bdf8] text-[#020712] font-heading font-black text-sm sm:text-base tracking-wide flex items-center gap-2.5 shadow-[0_0_35px_rgba(0,210,255,0.5)] hover:shadow-[0_0_50px_rgba(0,255,163,0.7)] hover:scale-105 transition-all transform active:scale-95"
                 >
                   <FishIcon className="w-5 h-5 fill-current" />
                   <span>Spawn Your Marine Fish Now</span>
@@ -348,7 +358,7 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
 
                 <button
                   onClick={onExploreOcean}
-                  className="px-8 py-4 rounded-2xl bg-[#04162e]/60 hover:bg-[#07244e]/80 border border-cyan-400/40 text-cyan-200 font-heading font-bold text-sm sm:text-base tracking-wide flex items-center gap-2.5 backdrop-blur-xl shadow-[0_0_20px_rgba(0,210,255,0.15)] hover:border-cyan-300 hover:scale-105 transition-all transform active:scale-95"
+                  className="px-8 sm:px-10 py-4 sm:py-4.5 rounded-2xl bg-[#04162e]/60 hover:bg-[#07244e]/80 border border-cyan-400/40 text-cyan-200 font-heading font-bold text-sm sm:text-base tracking-wide flex items-center gap-2.5 backdrop-blur-xl shadow-[0_0_20px_rgba(0,210,255,0.15)] hover:border-cyan-300 hover:scale-105 transition-all transform active:scale-95"
                 >
                   <Layers className="w-5 h-5 text-[#00d2ff]" />
                   <span>Explore The Ocean Aquarium</span>
