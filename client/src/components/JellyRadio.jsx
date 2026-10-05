@@ -1,7 +1,7 @@
 'use client';
 
 import React, { forwardRef, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { animate, motion, motionValue, useReducedMotion, useTransform } from 'framer-motion';
+import { animate, motion, motionValue, useReducedMotion } from 'framer-motion';
 
 import './JellyRadio.css';
 
@@ -15,10 +15,18 @@ const spring = (k, m, bounce) => ({
   mass: m
 });
 
-const Chip = forwardRef(function Chip({ mv, children, ...rest }, ref) {
-  const transform = useTransform(() => `translateX(${mv.x.get()}px) scale(${mv.sx.get()}, ${mv.sy.get()})`);
+const Chip = forwardRef(function Chip({ mv, children, style = {}, ...rest }, ref) {
   return (
-    <motion.button ref={ref} style={{ transform }} {...rest}>
+    <motion.button
+      ref={ref}
+      style={{
+        x: mv.x,
+        scaleX: mv.sx,
+        scaleY: mv.sy,
+        ...style
+      }}
+      {...rest}
+    >
       {children}
     </motion.button>
   );
@@ -36,12 +44,12 @@ export default function JellyRadio({
   size = 'md',
   gap = 8,
   radius = 8,
-  swell = 0.12,
-  barge = 4,
-  shrink = 0.04,
-  jelly = 0.8,
-  bounce = 0.2,
-  stagger = 18,
+  swell = 0.2,
+  barge = 6,
+  shrink = 0.05,
+  jelly = 1,
+  bounce = 0.28,
+  stagger = 22,
   stiffness = 580,
   disabled = false,
   ariaLabel = 'Navigation Steps',
@@ -130,7 +138,7 @@ export default function JellyRadio({
   useEffect(() => {
     if (applied.current === at) return;
     applied.current = at;
-    apply(at, true);
+    apply(at, false); // Animate smoothly when active step changes
   }, [at]);
 
   useEffect(
@@ -170,7 +178,7 @@ export default function JellyRadio({
     else if (e.key === ' ' || e.key === 'Enter') next = i;
     if (next === null) return;
     e.preventDefault();
-    commit(next, true);
+    commit(next, false);
     chipRefs.current[next]?.focus();
   };
 
@@ -207,7 +215,7 @@ export default function JellyRadio({
           disabled={disabled || !!it.disabled}
           className="jelly-radio__chip"
           data-on={i === at ? 'true' : 'false'}
-          onClick={e => commit(i, e.detail === 0)}
+          onClick={e => commit(i, false)}
           onKeyDown={e => onKeyDown(e, i)}
         >
           <span className="jelly-radio__skin">
