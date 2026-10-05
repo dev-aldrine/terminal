@@ -95,20 +95,20 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
   }, [activeSlide]);
 
   return (
-    <div className="w-full max-w-2xl mx-auto my-auto select-none">
+    <div className="w-full max-w-3xl mx-auto my-auto select-none">
       <BorderGlow
         edgeSensitivity={32}
         glowColor="190 100 65"
-        backgroundColor="#050e1f"
-        borderRadius={22}
-        glowRadius={38}
+        backgroundColor="rgba(3, 14, 33, 0.65)"
+        borderRadius={24}
+        glowRadius={40}
         glowIntensity={1.2}
         coneSpread={28}
         animated={false}
         colors={['#00d2ff', '#00ffa3', '#38bdf8']}
-        className="w-full shadow-[0_20px_50px_rgba(0,0,0,0.6),0_0_30px_rgba(0,210,255,0.08)] border border-cyan-400/30"
+        className="w-full shadow-[0_20px_50px_rgba(0,5,20,0.7),0_0_30px_rgba(0,210,255,0.08)] border border-cyan-400/30"
       >
-        <div className="relative w-full min-h-[350px] flex flex-col justify-between p-6 sm:p-7">
+        <div className="relative w-full min-h-[380px] flex flex-col justify-between p-6 sm:p-8">
           
           {/* Main Slide Deck */}
           <div className="relative flex-1 w-full flex items-center justify-center py-2">
@@ -122,11 +122,11 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -12 }}
                   transition={{ duration: 0.28, ease: 'easeOut' }}
-                  className="w-full text-center space-y-4 z-10 py-1 flex flex-col items-center justify-center"
+                  className="w-full text-center space-y-4 z-10 py-2 flex flex-col items-center justify-center"
                 >
-                  <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white font-heading tracking-tight leading-[1.1] text-center flex flex-col items-center justify-center w-full">
+                  <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white font-heading tracking-tight leading-[1.12] text-center flex flex-col items-center justify-center w-full">
                     <span>Spawn autonomous</span>
-                    <span className="text-[#00d2ff] flex items-center justify-center w-full mt-0.5">
+                    <span className="text-[#00d2ff] flex items-center justify-center w-full mt-1">
                       <RotatingText
                         texts={[
                           'predatory alpha sharks.',
@@ -165,7 +165,7 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
 
                     <button
                       onClick={onExploreOcean}
-                      className="btn-secondary text-sm font-semibold px-6 py-3 bg-[#030d1d] border-cyan-500/40 hover:border-cyan-400 text-slate-100 rounded-xl"
+                      className="btn-secondary text-sm font-semibold px-6 py-3 bg-[#04162e]/70 backdrop-blur-md border-cyan-500/40 hover:border-cyan-400 hover:bg-[#062044]/80 text-slate-100 rounded-xl"
                     >
                       <Layers className="w-4 h-4 text-cyan-400" />
                       <span>Enter Ocean Ecosystem</span>
@@ -182,33 +182,33 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -12 }}
                   transition={{ duration: 0.28, ease: 'easeOut' }}
-                  className="w-full text-left space-y-3.5 z-10"
+                  className="w-full text-left space-y-4 z-10"
                 >
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#020712] border border-cyan-400/50 text-xs font-mono text-[#00d2ff]">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#04162e]/70 border border-cyan-400/40 text-xs font-mono text-[#00d2ff] backdrop-blur-md">
                     <span>01 / PREDATORY FISH DNA FORGE</span>
                   </div>
                   <h2 className="text-3xl sm:text-4xl font-extrabold text-white font-heading tracking-tight leading-tight">
                     Forge Degen Marine Fish with <br /><span className="text-[#00d2ff]">Live Swimming Physics</span>
                   </h2>
                   <p className="text-slate-200 text-sm leading-relaxed font-medium">
-                    Select from 6 ferocious marine fish archetypes (Cyber Megalodons, Neon Anglers, Degen Jellies, Trench Whales). Calibrate neon emission cores, equip cybernetic implants, and watch them hunt.
+                    Select from 6 ferocious marine fish archetypes. Calibrate neon emission cores, equip cybernetic implants, and watch them hunt in real-time.
                   </p>
 
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 pt-1">
-                    <div className="p-3.5 rounded-xl bg-[#020815] border border-cyan-400/30">
-                      <Cpu className="w-4.5 h-4.5 text-[#00d2ff] mb-1.5" />
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1">
+                    <div className="p-3.5 rounded-xl bg-[#04162e]/55 border border-cyan-500/20 backdrop-blur-md hover:border-cyan-400/50 hover:bg-[#062044]/65 transition-all">
+                      <Cpu className="w-5 h-5 text-[#00d2ff] mb-1.5" />
                       <h4 className="text-white font-bold text-sm mb-0.5 font-heading">6 Fish Archetypes</h4>
-                      <p className="text-slate-300 text-xs leading-tight">Tailored mathematical profiles for volume snipers & alpha hunters.</p>
+                      <p className="text-slate-300 text-xs leading-normal">Tailored mathematical profiles for volume snipers & alpha hunters.</p>
                     </div>
-                    <div className="p-3.5 rounded-xl bg-[#020815] border border-cyan-400/30">
-                      <Sparkles className="w-4.5 h-4.5 text-[#00ffa3] mb-1.5" />
+                    <div className="p-3.5 rounded-xl bg-[#04162e]/55 border border-cyan-500/20 backdrop-blur-md hover:border-cyan-400/50 hover:bg-[#062044]/65 transition-all">
+                      <Sparkles className="w-5 h-5 text-[#00ffa3] mb-1.5" />
                       <h4 className="text-white font-bold text-sm mb-0.5 font-heading">Neon Emission Aura</h4>
-                      <p className="text-slate-300 text-xs leading-tight">Procedural spectral shaders with custom glowing dorsal fins.</p>
+                      <p className="text-slate-300 text-xs leading-normal">Procedural spectral shaders with custom glowing dorsal fins.</p>
                     </div>
-                    <div className="p-3.5 rounded-xl bg-[#020815] border border-cyan-400/30">
-                      <Zap className="w-4.5 h-4.5 text-[#38bdf8] mb-1.5" />
+                    <div className="p-3.5 rounded-xl bg-[#04162e]/55 border border-cyan-500/20 backdrop-blur-md hover:border-cyan-400/50 hover:bg-[#062044]/65 transition-all">
+                      <Zap className="w-5 h-5 text-[#38bdf8] mb-1.5" />
                       <h4 className="text-white font-bold text-sm mb-0.5 font-heading">Cybernetic Augments</h4>
-                      <p className="text-slate-300 text-xs leading-tight">Equip sonar radar, trench armor, and alpha dip snipers.</p>
+                      <p className="text-slate-300 text-xs leading-normal">Equip sonar radar, trench armor, and alpha dip snipers.</p>
                     </div>
                   </div>
                 </motion.div>
@@ -222,9 +222,9 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -12 }}
                   transition={{ duration: 0.28, ease: 'easeOut' }}
-                  className="w-full text-left space-y-3.5 z-10"
+                  className="w-full text-left space-y-4 z-10"
                 >
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#020712] border border-cyan-400/50 text-xs font-mono text-[#00d2ff]">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#04162e]/70 border border-cyan-400/40 text-xs font-mono text-[#00d2ff] backdrop-blur-md">
                     <span>02 / FISH COMMUNITY TREASURY PROTOCOL</span>
                   </div>
                   <h2 className="text-3xl sm:text-4xl font-extrabold text-white font-heading tracking-tight leading-tight">
@@ -234,21 +234,21 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
                     Equip your fish token with a community treasury pool. Reward diamond hand holders with automated drip payouts, or protect liquidity with interactive AI riddles.
                   </p>
 
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 pt-1">
-                    <div className="p-3.5 rounded-xl bg-[#020815] border border-cyan-400/30">
-                      <Droplets className="w-4.5 h-4.5 text-[#00d2ff] mb-1.5" />
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1">
+                    <div className="p-3.5 rounded-xl bg-[#04162e]/55 border border-cyan-500/20 backdrop-blur-md hover:border-cyan-400/50 hover:bg-[#062044]/65 transition-all">
+                      <Droplets className="w-5 h-5 text-[#00d2ff] mb-1.5" />
                       <h4 className="text-white font-bold text-sm mb-0.5 font-heading">Instant Token Drip</h4>
-                      <p className="text-slate-300 text-xs leading-tight">Automated cooldown-governed payouts to connected fish holders.</p>
+                      <p className="text-slate-300 text-xs leading-normal">Automated cooldown-governed payouts to connected fish holders.</p>
                     </div>
-                    <div className="p-3.5 rounded-xl bg-[#020815] border border-cyan-400/30">
-                      <Zap className="w-4.5 h-4.5 text-[#00ffa3] mb-1.5" />
+                    <div className="p-3.5 rounded-xl bg-[#04162e]/55 border border-cyan-500/20 backdrop-blur-md hover:border-cyan-400/50 hover:bg-[#062044]/65 transition-all">
+                      <Zap className="w-5 h-5 text-[#00ffa3] mb-1.5" />
                       <h4 className="text-white font-bold text-sm mb-0.5 font-heading">AI Fish Riddle Gates</h4>
-                      <p className="text-slate-300 text-xs leading-tight">Marine agents verify natural language answers before release.</p>
+                      <p className="text-slate-300 text-xs leading-normal">Marine agents verify natural language answers before release.</p>
                     </div>
-                    <div className="p-3.5 rounded-xl bg-[#020815] border border-cyan-400/30">
-                      <Shield className="w-4.5 h-4.5 text-[#ffb703] mb-1.5" />
+                    <div className="p-3.5 rounded-xl bg-[#04162e]/55 border border-cyan-500/20 backdrop-blur-md hover:border-cyan-400/50 hover:bg-[#062044]/65 transition-all">
+                      <Shield className="w-5 h-5 text-[#ffb703] mb-1.5" />
                       <h4 className="text-white font-bold text-sm mb-0.5 font-heading">Anti-Bot Defenses</h4>
-                      <p className="text-slate-300 text-xs leading-tight">Cooldown thresholds to prevent sniper bot extraction.</p>
+                      <p className="text-slate-300 text-xs leading-normal">Cooldown thresholds to prevent sniper bot extraction.</p>
                     </div>
                   </div>
                 </motion.div>
@@ -262,9 +262,9 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -12 }}
                   transition={{ duration: 0.28, ease: 'easeOut' }}
-                  className="w-full text-left space-y-3.5 z-10"
+                  className="w-full text-left space-y-4 z-10"
                 >
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#020712] border border-cyan-400/50 text-xs font-mono text-[#00d2ff]">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#04162e]/70 border border-cyan-400/40 text-xs font-mono text-[#00d2ff] backdrop-blur-md">
                     <span>03 / THE LIVING DEGEN AQUARIUM</span>
                   </div>
                   <h2 className="text-3xl sm:text-4xl font-extrabold text-white font-heading tracking-tight leading-tight">
@@ -274,21 +274,21 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
                     Step into the shared ocean where every spawned token swims autonomously. Fish size scales dynamically with Pump.fun market cap, and live thought telemetry broadcasts on-chain alpha.
                   </p>
 
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 pt-1">
-                    <div className="p-3.5 rounded-xl bg-[#020815] border border-cyan-400/30">
-                      <Waves className="w-4.5 h-4.5 text-[#00d2ff] mb-1.5" />
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1">
+                    <div className="p-3.5 rounded-xl bg-[#04162e]/55 border border-cyan-500/20 backdrop-blur-md hover:border-cyan-400/50 hover:bg-[#062044]/65 transition-all">
+                      <Waves className="w-5 h-5 text-[#00d2ff] mb-1.5" />
                       <h4 className="text-white font-bold text-sm mb-0.5 font-heading">Market Cap Scaling</h4>
-                      <p className="text-slate-300 text-xs leading-tight">Fish grow into gigantic leviathans as bonding curves fill up.</p>
+                      <p className="text-slate-300 text-xs leading-normal">Fish grow into gigantic leviathans as bonding curves fill up.</p>
                     </div>
-                    <div className="p-3.5 rounded-xl bg-[#020815] border border-cyan-400/30">
-                      <Terminal className="w-4.5 h-4.5 text-[#00ffa3] mb-1.5" />
+                    <div className="p-3.5 rounded-xl bg-[#04162e]/55 border border-cyan-500/20 backdrop-blur-md hover:border-cyan-400/50 hover:bg-[#062044]/65 transition-all">
+                      <Terminal className="w-5 h-5 text-[#00ffa3] mb-1.5" />
                       <h4 className="text-white font-bold text-sm mb-0.5 font-heading">Alpha Thought Streams</h4>
-                      <p className="text-slate-300 text-xs leading-tight">Live telemetry feeds broadcast autonomous trading signals.</p>
+                      <p className="text-slate-300 text-xs leading-normal">Live telemetry feeds broadcast autonomous trading signals.</p>
                     </div>
-                    <div className="p-3.5 rounded-xl bg-[#020815] border border-cyan-400/30">
-                      <Sparkles className="w-4.5 h-4.5 text-[#38bdf8] mb-1.5" />
+                    <div className="p-3.5 rounded-xl bg-[#04162e]/55 border border-cyan-500/20 backdrop-blur-md hover:border-cyan-400/50 hover:bg-[#062044]/65 transition-all">
+                      <Sparkles className="w-5 h-5 text-[#38bdf8] mb-1.5" />
                       <h4 className="text-white font-bold text-sm mb-0.5 font-heading">Sonar Whale Radar</h4>
-                      <p className="text-slate-300 text-xs leading-tight">Real-time alerts for massive SOL buys in the deep trench.</p>
+                      <p className="text-slate-300 text-xs leading-normal">Real-time alerts for massive SOL buys in the deep trench.</p>
                     </div>
                   </div>
                 </motion.div>
@@ -304,7 +304,7 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
                   transition={{ duration: 0.28, ease: 'easeOut' }}
                   className="w-full text-center space-y-4 z-10 py-2 flex flex-col items-center justify-center"
                 >
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#020712] border border-cyan-400/50 text-xs font-mono text-[#00d2ff]">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#04162e]/70 border border-cyan-400/40 text-xs font-mono text-[#00d2ff] backdrop-blur-md">
                     <span>READY TO SPAWN</span>
                   </div>
 
@@ -328,7 +328,7 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
 
                     <button
                       onClick={onExploreOcean}
-                      className="btn-secondary text-sm font-semibold px-7 py-3.5 bg-[#030d1d] border-cyan-500/40 hover:border-cyan-400 text-slate-100 rounded-xl"
+                      className="btn-secondary text-sm font-semibold px-7 py-3.5 bg-[#04162e]/70 backdrop-blur-md border-cyan-500/40 hover:border-cyan-400 hover:bg-[#062044]/80 text-slate-100 rounded-xl"
                     >
                       <Layers className="w-4 h-4 text-cyan-400" />
                       <span>Explore The Ocean Aquarium</span>
@@ -361,7 +361,7 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
                 onClick={prevSlide}
                 disabled={activeSlide === 0}
                 className={`p-2 rounded-lg border transition-all ${
-                  activeSlide === 0 ? 'opacity-30 cursor-not-allowed border-transparent text-slate-600' : 'bg-[#020712] border-cyan-500/40 hover:border-cyan-400 text-slate-200'
+                  activeSlide === 0 ? 'opacity-30 cursor-not-allowed border-transparent text-slate-600' : 'bg-[#04162e]/80 border-cyan-500/40 hover:border-cyan-400 text-slate-200'
                 }`}
               >
                 <ArrowUp className="w-4 h-4" />
@@ -370,7 +370,7 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
                 onClick={nextSlide}
                 disabled={activeSlide === totalSlides - 1}
                 className={`p-2 rounded-lg border transition-all ${
-                  activeSlide === totalSlides - 1 ? 'opacity-30 cursor-not-allowed border-transparent text-slate-600' : 'bg-[#020712] border-cyan-500/40 hover:border-cyan-400 text-slate-200'
+                  activeSlide === totalSlides - 1 ? 'opacity-30 cursor-not-allowed border-transparent text-slate-600' : 'bg-[#04162e]/80 border-cyan-500/40 hover:border-cyan-400 text-slate-200'
                 }`}
               >
                 <ArrowDown className="w-4 h-4" />

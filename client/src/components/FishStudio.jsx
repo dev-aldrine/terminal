@@ -335,14 +335,14 @@ export function FishStudio({ onSaveFish, selectedSpecies = 'neon_angler', setSel
       <BorderGlow
         edgeSensitivity={32}
         glowColor="190 100 65"
-        backgroundColor="#050e1f"
-        borderRadius={20}
-        glowRadius={36}
+        backgroundColor="rgba(3, 14, 33, 0.65)"
+        borderRadius={24}
+        glowRadius={40}
         glowIntensity={1.2}
         coneSpread={28}
         animated={false}
         colors={['#00d2ff', '#00ffa3', '#38bdf8']}
-        className="w-full shadow-[0_20px_50px_rgba(0,0,0,0.6),0_0_30px_rgba(0,210,255,0.08)] border border-cyan-400/30"
+        className="w-full shadow-[0_20px_50px_rgba(0,5,20,0.7),0_0_30px_rgba(0,210,255,0.08)] border border-cyan-400/30"
       >
         <div className="w-full p-5 sm:p-6 space-y-4">
           
