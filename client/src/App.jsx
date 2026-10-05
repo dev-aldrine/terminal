@@ -303,7 +303,7 @@ export function App() {
       />
 
       {/* Main Navbar */}
-      <header className="w-full border-b border-white/[0.08] bg-[#05080f]/95 backdrop-blur-md py-3 px-6 sticky top-[33px] z-40">
+      <header className="w-full border-b border-cyan-500/15 bg-[#030712]/70 backdrop-blur-xl py-3 px-6 sticky top-[33px] z-40">
         <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
           
           <div
@@ -313,8 +313,8 @@ export function App() {
             <Waves className="w-5 h-5 text-[#00d2ff]" />
             <div className="flex items-center gap-1.5">
               <span className="text-base font-extrabold tracking-tight font-heading text-white">AGEN</span>
-              <span className="text-base font-extrabold tracking-tight font-heading text-[#00e5ff]">SEA</span>
-              <span className="text-[10px] font-mono text-slate-400 ml-1.5 px-1.5 py-0.5 rounded bg-[#0c1322] border border-white/[0.08]">
+              <span className="text-base font-extrabold tracking-tight font-heading text-[#00d2ff]">SEA</span>
+              <span className="text-[10px] font-mono text-cyan-300 ml-1.5 px-2 py-0.5 rounded-full bg-[#071326]/80 border border-cyan-500/30">
                 v2.0
               </span>
             </div>
@@ -333,8 +333,8 @@ export function App() {
         onStepChange={(step) => setCurrentStep(step)}
       />
 
-      {/* Main Container */}
-      <main className="flex-1 max-w-6xl w-full mx-auto px-4 pb-16">
+      {/* Main Container - Centered Vertically */}
+      <main className="flex-1 max-w-6xl w-full mx-auto px-4 py-4 flex flex-col justify-center items-center relative z-10">
         
         {currentStep === 1 && (
           <ScrollIntroView
@@ -398,12 +398,12 @@ export function App() {
       )}
 
       {/* Footer */}
-      <footer className="w-full border-t border-white/[0.08] py-4 px-4 bg-[#05080f] text-xs font-mono text-slate-500">
+      <footer className="w-full border-t border-cyan-500/15 py-3.5 px-4 bg-[#030712]/70 backdrop-blur-xl text-xs font-mono text-slate-400 relative z-20">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
           <p>© 2026 AgenSea. Autonomous Marine Intelligence on Solana Pump.fun.</p>
           <div className="flex items-center gap-4 text-slate-400">
-            <span className="hover:text-[#00e5ff] cursor-pointer" onClick={() => setCurrentStep(1)}>Overview</span>
-            <span className="hover:text-[#00e5ff] cursor-pointer" onClick={() => setCurrentStep(4)}>The Ocean</span>
+            <span className="hover:text-[#00d2ff] cursor-pointer" onClick={() => setCurrentStep(1)}>Overview</span>
+            <span className="hover:text-[#00d2ff] cursor-pointer" onClick={() => setCurrentStep(4)}>The Ocean</span>
             <span className="hover:text-[#00e5ff] cursor-pointer" onClick={() => setCurrentStep(5)}>Treasury</span>
             <span className="hover:text-[#00e5ff] cursor-pointer" onClick={() => setCurrentStep(6)}>Radar</span>
           </div>

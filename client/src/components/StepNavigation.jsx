@@ -13,13 +13,13 @@ export function StepNavigation({ currentStep, onStepChange }) {
   ];
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 py-3 flex justify-center overflow-x-auto">
-      <div className="inline-flex min-w-max p-1.5 rounded-2xl bg-[#090a0d] border border-[#202430]/80 shadow-sm">
+    <div className="w-full max-w-7xl mx-auto px-4 py-2 flex justify-center overflow-x-auto relative z-20">
+      <div className="inline-flex min-w-max p-1.5 rounded-2xl bg-[#070e1b]/75 border border-cyan-500/25 backdrop-blur-2xl shadow-[0_8px_30px_rgba(0,0,0,0.5),0_0_20px_rgba(0,210,255,0.08)]">
         <JellyRadio
           items={steps}
           value={currentStep}
           onChange={(val) => onStepChange(Number(val))}
-          chipColor="#141720"
+          chipColor="#040914"
           activeColor="#00d2ff"
           textColor="#94a3b8"
           activeTextColor="#090a0d"
