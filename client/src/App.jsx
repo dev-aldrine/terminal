@@ -13,6 +13,8 @@ import { FaucetView } from './components/FaucetView';
 import { AgentTerminalView } from './components/AgentTerminalView';
 import { SuccessModal } from './components/SuccessModal';
 
+import { Waves } from 'lucide-react';
+
 const GAS_FEE_SOL = 0.0001; // ~0.0001 SOL network gas
 const TREASURY_WALLET = '7jMX3CSDvXu3DfKewrepvAyYTGZ4h1VWRzuDB14tPau4';
 
@@ -290,7 +292,7 @@ export function App() {
             onClick={() => setCurrentStep(1)}
             className="flex items-center gap-2.5 cursor-pointer"
           >
-            <span className="text-xl">🌊</span>
+            <Waves className="w-5 h-5 text-[#00d2ff]" />
             <div className="flex items-center gap-1.5">
               <span className="text-base font-extrabold tracking-tight font-heading text-white">AGEN</span>
               <span className="text-base font-extrabold tracking-tight font-heading text-[#00e5ff]">SEA</span>

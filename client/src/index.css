@@ -286,10 +286,10 @@ body {
 }
 
 .btn-primary {
-  background: #f1f5f9;
+  background: #00d2ff;
   color: #090a0d;
   font-family: var(--font-heading);
-  font-weight: 600;
+  font-weight: 700;
   font-size: 13px;
   border-radius: 6px;
   padding: 8px 18px;
@@ -298,13 +298,14 @@ body {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  border: 1px solid transparent;
+  border: 1px solid #00d2ff;
   cursor: pointer;
 }
 
 .btn-primary:hover {
-  background: #ffffff;
-  color: #000000;
+  background: #38bdf8;
+  border-color: #38bdf8;
+  color: #090a0d;
   transform: translateY(-1px);
 }
 

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
-import { Lock, Check, ArrowLeft, RefreshCw, Sparkles, Copy, ShieldAlert } from '@sketchyicons/react';
+import { Lock, Check, ArrowLeft, RefreshCw, Sparkles, Copy, ShieldCheck, AlertCircle } from 'lucide-react';
 import { PhantomWalletButton } from './PhantomWalletButton';
-import logoImg from '../assets/logo.png';
 
 const AUTHORIZED_ADMIN_WALLET = '7jMX3CSDvXu3DfKewrepvAyYTGZ4h1VWRzuDB14tPau4';
 
@@ -22,7 +21,6 @@ export const AdminView = ({ onBack }) => {
 
   const isAuthorizedWallet = connected && publicKey && publicKey.toBase58() === AUTHORIZED_ADMIN_WALLET;
 
-  // Fetch current config on load
   useEffect(() => {
     fetchConfig();
   }, []);
@@ -52,7 +50,7 @@ export const AdminView = ({ onBack }) => {
       sessionStorage.setItem('drawpad_admin_auth', 'true');
       setErrorMsg('');
     } else {
-      setErrorMsg('Incorrect admin password! Please check again.');
+      setErrorMsg('Incorrect admin password. Please try again.');
     }
   };
 
@@ -103,102 +101,66 @@ export const AdminView = ({ onBack }) => {
   };
 
   return (
-    <div
-      style={{
-        width: '100%',
-        maxWidth: '680px',
-        margin: '20px auto',
-        padding: '24px',
-        background: '#ffffff',
-        border: '3px solid #1a1a1e',
-        borderRadius: '16px 14px 18px 15px',
-        boxShadow: '6px 6px 0px #1a1a1e',
-        position: 'relative',
-        zIndex: 20
-      }}
-      className="sketch-card"
-    >
+    <div className="w-full max-w-2xl mx-auto my-6 p-6 sm:p-8 bg-[#0f1117] border border-[#202430] rounded-xl shadow-2xl relative z-20">
+      
       {/* Header */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px', borderBottom: '2px dashed #cbd5e1', paddingBottom: '14px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <img src={logoImg} alt="Logo" style={{ width: '32px', height: '32px' }} />
-          <div>
-            <h2 style={{ margin: 0, fontSize: '24px', fontFamily: 'var(--font-heading)', color: '#1a1a1e' }}>
-              DrawPad <span style={{ background: '#fef08a', padding: '2px 8px', borderRadius: '6px', border: '1.5px solid #1a1a1e' }}>Admin Portal</span>
-            </h2>
-            <div style={{ fontSize: '13px', color: '#64748b', fontFamily: 'var(--font-mono)' }}>
-              slug: /pukinginamo
-            </div>
+      <div className="flex items-center justify-between pb-5 mb-6 border-b border-[#202430]">
+        <div>
+          <h2 className="text-xl font-heading font-bold text-white tracking-tight flex items-center gap-2">
+            AgenSea <span className="px-2 py-0.5 rounded text-xs font-mono bg-[#141720] border border-[#202430] text-[#00d2ff]">Admin Protocol</span>
+          </h2>
+          <div className="text-xs text-slate-500 font-mono mt-1">
+            route: /pukinginamo
           </div>
         </div>
 
         <button
           type="button"
           onClick={onBack}
-          className="sketch-btn"
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '6px',
-            padding: '6px 14px',
-            background: '#f1f5f9',
-            border: '2px solid #1a1a1e',
-            borderRadius: '8px',
-            fontSize: '14px',
-            fontWeight: '700',
-            fontFamily: 'var(--font-handwriting)',
-            cursor: 'pointer'
-          }}
+          className="btn-secondary text-xs"
         >
-          <ArrowLeft size={16} />
-          <span>Back to App</span>
+          <ArrowLeft className="w-3.5 h-3.5" />
+          <span>Back to Terminal</span>
         </button>
       </div>
 
       {/* Wallet Authorization & Password Gate */}
       {!isUnlocked ? (
-        <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '16px', padding: '20px 0' }}>
-          <div style={{ textAlign: 'center', marginBottom: '10px' }}>
-            <div style={{ display: 'inline-flex', padding: '12px', background: isAuthorizedWallet ? '#dcfce7' : '#fee2e2', borderRadius: '50%', border: '2px solid #1a1a1e', marginBottom: '8px' }}>
-              <Lock size={28} color={isAuthorizedWallet ? '#16a34a' : '#dc2626'} />
+        <form onSubmit={handleLogin} className="space-y-5 py-2">
+          <div className="text-center space-y-2">
+            <div className="inline-flex p-3 rounded-xl bg-[#141720] border border-[#202430] text-[#00d2ff]">
+              <Lock className="w-6 h-6" />
             </div>
-            <h3 style={{ margin: '6px 0', fontSize: '20px', fontFamily: 'var(--font-heading)' }}>
-              Wallet-Gated Admin Access
+            <h3 className="text-lg font-heading font-bold text-white">
+              Wallet-Gated Admin Control
             </h3>
-            <p style={{ margin: 0, color: '#64748b', fontSize: '14px' }}>
-              Authorized Admin Wallet: <code style={{ background: '#fef08a', padding: '1px 6px', borderRadius: '4px', border: '1px solid #1a1a1e', fontWeight: 'bold' }}>{AUTHORIZED_ADMIN_WALLET.slice(0, 4)}...{AUTHORIZED_ADMIN_WALLET.slice(-4)}</code>
+            <p className="text-xs text-slate-400 font-mono">
+              Authorized Authority: <span className="text-[#00d2ff] bg-[#141720] px-1.5 py-0.5 rounded border border-[#202430]">{AUTHORIZED_ADMIN_WALLET.slice(0, 4)}...{AUTHORIZED_ADMIN_WALLET.slice(-4)}</span>
             </p>
           </div>
 
           {/* Wallet Connection Status */}
-          <div style={{ padding: '12px 14px', background: isAuthorizedWallet ? '#f0fdf4' : connected ? '#fef2f2' : '#f8fafc', border: '2px solid #1a1a1e', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px' }}>
+          <div className="p-4 rounded-lg bg-[#141720] border border-[#202430] flex items-center justify-between flex-wrap gap-3">
             <div>
-              <div style={{ fontSize: '13px', fontWeight: '800', color: '#64748b' }}>Connected Wallet:</div>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '13px', fontWeight: '700', color: isAuthorizedWallet ? '#15803d' : '#1a1a1e' }}>
+              <div className="text-[11px] font-mono text-slate-500 uppercase tracking-wider">Connected Wallet</div>
+              <div className="font-mono text-xs font-semibold text-slate-200 mt-0.5">
                 {connected ? `${publicKey.toBase58().slice(0, 6)}...${publicKey.toBase58().slice(-6)}` : 'No wallet connected'}
               </div>
             </div>
-            {!isAuthorizedWallet && (
+            {!isAuthorizedWallet ? (
               <PhantomWalletButton />
-            )}
-            {isAuthorizedWallet && (
-              <span style={{ background: '#bbf7d0', border: '1.5px solid #16a34a', borderRadius: '6px', padding: '2px 8px', fontSize: '12px', fontWeight: '800', color: '#166534' }}>
-                ✓ Authorized Admin
+            ) : (
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-emerald-950/60 border border-emerald-500/30 text-emerald-400 font-mono text-xs font-semibold">
+                <ShieldCheck className="w-3.5 h-3.5" /> Authorized Admin
               </span>
             )}
           </div>
 
-          {connected && !isAuthorizedWallet && (
-            <div style={{ padding: '10px 12px', background: '#fef2f2', border: '1.5px solid #ef4444', borderRadius: '8px', color: '#b91c1c', fontSize: '14px', fontWeight: '700' }}>
-              ⛔ Access Denied: Connected wallet is not authorized. Please switch to <code>{AUTHORIZED_ADMIN_WALLET}</code> in your Phantom wallet.
-            </div>
-          )}
-
           {isAuthorizedWallet && (
-            <>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                <label style={{ fontSize: '15px', fontWeight: '800', fontFamily: 'var(--font-handwriting)' }}>
-                  Admin Password (2FA):
+            <div className="space-y-4 pt-2">
+              <div className="space-y-1.5">
+                <label className="text-xs font-mono text-slate-300 font-semibold">
+                  Admin Passkey (2FA):
                 </label>
                 <input
                   type="password"
@@ -206,63 +168,45 @@ export const AdminView = ({ onBack }) => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   autoFocus
-                  style={{
-                    padding: '10px 14px',
-                    border: '2px solid #1a1a1e',
-                    borderRadius: '8px',
-                    fontSize: '16px',
-                    fontFamily: 'var(--font-mono)',
-                    outline: 'none',
-                    boxShadow: 'inset 1.5px 1.5px 0px rgba(0,0,0,0.08)'
-                  }}
+                  className="w-full px-3.5 py-2.5 bg-[#090a0d] border border-[#202430] focus:border-[#00d2ff] rounded-lg text-sm font-mono text-slate-100 outline-none transition-colors"
                 />
               </div>
 
               {errorMsg && (
-                <div style={{ padding: '10px', background: '#fef2f2', border: '1.5px solid #ef4444', borderRadius: '8px', color: '#b91c1c', fontSize: '14px', fontWeight: '700' }}>
-                  ⚠️ {errorMsg}
+                <div className="p-3 rounded-lg bg-rose-950/40 border border-rose-500/30 text-rose-400 text-xs font-mono flex items-center gap-2">
+                  <AlertCircle className="w-4 h-4 shrink-0" />
+                  <span>{errorMsg}</span>
                 </div>
               )}
 
               <button
                 type="submit"
-                className="sketch-btn"
-                style={{
-                  padding: '12px',
-                  background: 'var(--marker-cyan, #a5f3fc)',
-                  border: '2.5px solid #1a1a1e',
-                  borderRadius: '10px',
-                  fontSize: '16px',
-                  fontWeight: '800',
-                  fontFamily: 'var(--font-heading)',
-                  cursor: 'pointer',
-                  boxShadow: '2px 2px 0px #1a1a1e'
-                }}
+                className="w-full btn-accent justify-center py-2.5"
               >
-                Unlock Admin Dashboard 🔓
+                Authenticate Dashboard
               </button>
-            </>
+            </div>
           )}
         </form>
       ) : (
         /* Authenticated Admin Form */
-        <form onSubmit={handleSave} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ fontSize: '14px', color: '#16a34a', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <Sparkles size={16} /> Authenticated Session
+        <form onSubmit={handleSave} className="space-y-5">
+          <div className="flex justify-between items-center pb-2 border-b border-[#202430] text-xs font-mono">
+            <span className="text-emerald-400 font-semibold flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5" /> Active Authenticated Session
             </span>
             <button
               type="button"
               onClick={handleLogout}
-              style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontSize: '13px', fontWeight: '700', textDecoration: 'underline' }}
+              className="text-rose-400 hover:text-rose-300 transition-colors"
             >
               Lock / Logout
             </button>
           </div>
 
           {/* CA Field */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-            <label style={{ fontSize: '16px', fontWeight: '800', fontFamily: 'var(--font-handwriting)' }}>
+          <div className="space-y-1.5">
+            <label className="text-xs font-mono text-slate-300 font-semibold">
               1. Solana Contract Address (CA):
             </label>
             <input
@@ -270,136 +214,97 @@ export const AdminView = ({ onBack }) => {
               placeholder="e.g. 7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU"
               value={ca}
               onChange={(e) => setCa(e.target.value)}
-              style={{
-                padding: '10px 14px',
-                border: '2px solid #1a1a1e',
-                borderRadius: '8px',
-                fontSize: '14px',
-                fontFamily: 'var(--font-mono)',
-                outline: 'none',
-                boxShadow: 'inset 1.5px 1.5px 0px rgba(0,0,0,0.08)'
-              }}
+              className="w-full px-3.5 py-2.5 bg-[#090a0d] border border-[#202430] focus:border-[#00d2ff] rounded-lg text-xs font-mono text-slate-100 outline-none transition-colors"
             />
-            <span style={{ fontSize: '12px', color: '#64748b' }}>
-              This will update the live copyable CA ticker shown right under the navbar for all visitors.
+            <span className="text-[11px] text-slate-500 block font-mono">
+              Updates the global full CA banner and ticker across the entire terminal.
             </span>
           </div>
 
           {/* Twitter Field */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-            <label style={{ fontSize: '16px', fontWeight: '800', fontFamily: 'var(--font-handwriting)' }}>
-              2. Official 𝕏 (Twitter) Link / Handle:
+          <div className="space-y-1.5">
+            <label className="text-xs font-mono text-slate-300 font-semibold">
+              2. Official X (Twitter) Link / Handle:
             </label>
             <input
               type="text"
-              placeholder="e.g. https://x.com/drawpad_sol or @drawpad_sol"
+              placeholder="e.g. https://x.com/agensea_sol or @agensea_sol"
               value={twitter}
               onChange={(e) => setTwitter(e.target.value)}
-              style={{
-                padding: '10px 14px',
-                border: '2px solid #1a1a1e',
-                borderRadius: '8px',
-                fontSize: '14px',
-                fontFamily: 'var(--font-mono)',
-                outline: 'none',
-                boxShadow: 'inset 1.5px 1.5px 0px rgba(0,0,0,0.08)'
-              }}
+              className="w-full px-3.5 py-2.5 bg-[#090a0d] border border-[#202430] focus:border-[#00d2ff] rounded-lg text-xs font-mono text-slate-100 outline-none transition-colors"
             />
-            <span style={{ fontSize: '12px', color: '#64748b' }}>
-              Adds a quick link to your official 𝕏 directly in the header banner.
+            <span className="text-[11px] text-slate-500 block font-mono">
+              Links your official X community in the header and radar.
             </span>
           </div>
 
           {/* Pinata IPFS JWT Field */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-            <label style={{ fontSize: '16px', fontWeight: '800', fontFamily: 'var(--font-handwriting)' }}>
-              3. Pinata IPFS JWT (Optional / Recommended for PumpPortal):
+          <div className="space-y-1.5">
+            <label className="text-xs font-mono text-slate-300 font-semibold">
+              3. Pinata IPFS JWT (Optional):
             </label>
             <input
               type="password"
-              placeholder="Paste your Pinata JWT secret key..."
+              placeholder="Paste Pinata JWT secret key..."
               value={pinataJwt}
               onChange={(e) => setPinataJwt(e.target.value)}
-              style={{
-                padding: '10px 14px',
-                border: '2px solid #1a1a1e',
-                borderRadius: '8px',
-                fontSize: '14px',
-                fontFamily: 'var(--font-mono)',
-                outline: 'none',
-                boxShadow: 'inset 1.5px 1.5px 0px rgba(0,0,0,0.08)'
-              }}
+              className="w-full px-3.5 py-2.5 bg-[#090a0d] border border-[#202430] focus:border-[#00d2ff] rounded-lg text-xs font-mono text-slate-100 outline-none transition-colors"
             />
-            <span style={{ fontSize: '12px', color: '#64748b' }}>
-              Used to pin hand-drawn token artwork and metadata JSON to IPFS for zero-fee PumpPortal token creation.
+            <span className="text-[11px] text-slate-500 block font-mono">
+              Used to pin creature vector metadata to IPFS for PumpPortal genesis.
             </span>
           </div>
 
           {/* Live Preview Box */}
-          <div style={{ background: '#f8fafc', border: '1.5px dashed #94a3b8', borderRadius: '10px', padding: '12px' }}>
-            <div style={{ fontSize: '12px', fontWeight: '800', color: '#64748b', marginBottom: '8px', textTransform: 'uppercase' }}>
+          <div className="p-3.5 rounded-lg bg-[#141720] border border-[#202430] space-y-2">
+            <div className="text-[10px] font-mono text-slate-500 uppercase tracking-wider">
               Live Banner Preview:
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 12px', background: '#fff', border: '2px solid #1a1a1e', borderRadius: '8px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span style={{ background: '#fef08a', padding: '2px 6px', border: '1px solid #1a1a1e', borderRadius: '4px', fontSize: '12px', fontWeight: '800' }}>CA</span>
-                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '13px', color: ca ? '#0f172a' : '#94a3b8' }}>
+            <div className="p-2.5 rounded bg-[#090a0d] border border-[#202430] flex items-center justify-between gap-3 text-xs font-mono">
+              <div className="flex items-center gap-2 min-w-0">
+                <span className="px-1.5 py-0.5 rounded bg-[#141720] border border-[#202430] text-[#00d2ff] font-bold text-[10px]">CA</span>
+                <span className="text-slate-300 truncate">
                   {ca || 'No Contract Address set yet'}
                 </span>
               </div>
               {twitter && (
-                <span style={{ fontSize: '12px', fontWeight: '700', background: '#000', color: '#fff', padding: '2px 8px', borderRadius: '4px' }}>
-                  𝕏 Linked
+                <span className="text-[10px] text-[#00d2ff] bg-[#141720] px-2 py-0.5 rounded border border-[#202430] shrink-0">
+                  X Linked
                 </span>
               )}
             </div>
           </div>
 
           {errorMsg && (
-            <div style={{ padding: '10px', background: '#fef2f2', border: '1.5px solid #ef4444', borderRadius: '8px', color: '#b91c1c', fontSize: '14px', fontWeight: '700' }}>
-              ⚠️ {errorMsg}
+            <div className="p-3 rounded-lg bg-rose-950/40 border border-rose-500/30 text-rose-400 text-xs font-mono flex items-center gap-2">
+              <AlertCircle className="w-4 h-4 shrink-0" />
+              <span>{errorMsg}</span>
             </div>
           )}
 
           {saveSuccess && (
-            <div style={{ padding: '12px', background: '#dcfce7', border: '2px solid #16a34a', borderRadius: '8px', color: '#15803d', fontSize: '15px', fontWeight: '800', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <Check size={20} color="#16a34a" />
-              <span>Settings saved successfully! Updated live for all users.</span>
+            <div className="p-3 rounded-lg bg-emerald-950/40 border border-emerald-500/30 text-emerald-400 text-xs font-mono flex items-center gap-2">
+              <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+              <span>Settings saved successfully. Published live to all terminals.</span>
             </div>
           )}
 
           {/* Action Buttons */}
-          <div style={{ display: 'flex', gap: '10px', marginTop: '6px' }}>
+          <div className="pt-2">
             <button
               type="submit"
               disabled={isLoading}
-              className="sketch-btn"
-              style={{
-                flex: 1,
-                padding: '12px',
-                background: '#bbf7d0',
-                border: '2.5px solid #1a1a1e',
-                borderRadius: '10px',
-                fontSize: '17px',
-                fontWeight: '800',
-                fontFamily: 'var(--font-heading)',
-                cursor: isLoading ? 'not-allowed' : 'pointer',
-                boxShadow: '2px 2px 0px #1a1a1e',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '8px'
-              }}
+              className="w-full btn-accent justify-center py-2.5 text-xs font-semibold"
             >
               {isLoading ? (
                 <>
-                  <RefreshCw size={18} className="animate-spin" />
-                  <span>Saving...</span>
+                  <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                  <span>Saving Configuration...</span>
                 </>
               ) : (
                 <>
-                  <Check size={18} />
-                  <span>Publish & Update Live 🚀</span>
+                  <Check className="w-3.5 h-3.5" />
+                  <span>Publish & Save Global Settings</span>
                 </>
               )}
             </button>

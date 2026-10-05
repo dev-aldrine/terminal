@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { useWalletModal } from '@solana/wallet-adapter-react-ui';
-import { Wallet, LogOut, Copy, Check } from '@sketchyicons/react';
+import { Wallet, LogOut, Copy, Check } from 'lucide-react';
 
 export const PhantomWalletButton = () => {
   const { wallet, wallets, select, connect, disconnect, connected, connecting, disconnecting, publicKey } = useWallet();
@@ -65,36 +65,22 @@ export const PhantomWalletButton = () => {
   };
 
   const truncatedAddress = publicKey
-    ? `${publicKey.toBase58().slice(0, 4)}..${publicKey.toBase58().slice(-4)}`
+    ? `${publicKey.toBase58().slice(0, 4)}...${publicKey.toBase58().slice(-4)}`
     : '';
 
   return (
-    <div ref={dropdownRef} style={{ position: 'relative', display: 'inline-block' }}>
+    <div ref={dropdownRef} className="relative inline-block">
       <button
         type="button"
         onClick={handleClick}
         disabled={connecting || disconnecting}
-        className="wallet-adapter-button sketch-btn"
-        style={{
-          fontFamily: 'var(--font-handwriting)',
-          fontSize: '17px',
-          fontWeight: '700',
-          color: '#1a1a1e',
-          background: connected ? '#bbf7d0' : 'var(--marker-cyan)',
-          border: '2.5px solid #1a1a1e',
-          borderRadius: '10px 12px 9px 13px',
-          boxShadow: '2px 2px 0px #1a1a1e',
-          height: '42px',
-          padding: '0 16px',
-          cursor: 'pointer',
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '8px',
-          outline: 'none',
-          transition: 'all 0.15s ease'
-        }}
+        className={`h-9 px-3.5 rounded-lg text-xs font-heading font-semibold transition-all duration-150 inline-flex items-center gap-2 outline-none ${
+          connected
+            ? 'bg-[#141720] border border-[#202430] hover:border-[#00d2ff] text-slate-200'
+            : 'bg-[#00d2ff] hover:bg-[#38bdf8] text-[#090a0d] border border-[#00d2ff] shadow-sm'
+        }`}
       >
-        <Wallet size={18} />
+        <Wallet className={`w-3.5 h-3.5 ${connected ? 'text-[#00d2ff]' : 'text-[#090a0d]'}`} />
         <span>
           {connecting
             ? 'Connecting...'
@@ -102,81 +88,33 @@ export const PhantomWalletButton = () => {
             ? 'Disconnecting...'
             : connected
             ? truncatedAddress
-            : 'Connect Phantom'}
+            : 'Connect Wallet'}
         </span>
+        {connected && (
+          <span className="w-1.5 h-1.5 rounded-full bg-[#00ffa3]"></span>
+        )}
       </button>
 
       {/* Connected Dropdown menu */}
       {connected && dropdownOpen && (
-        <div
-          style={{
-            position: 'absolute',
-            top: 'calc(100% + 8px)',
-            right: 0,
-            background: '#ffffff',
-            border: '2.5px solid #1a1a1e',
-            borderRadius: '10px',
-            boxShadow: '3px 3px 0px #1a1a1e',
-            padding: '6px',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '4px',
-            minWidth: '160px',
-            zIndex: 100,
-            animation: 'pulse-subtle 0.15s ease'
-          }}
-        >
+        <div className="absolute right-0 mt-2 min-w-[180px] bg-[#141720] border border-[#202430] rounded-lg shadow-2xl p-1.5 z-50 flex flex-col gap-1 font-mono text-xs">
           <button
             type="button"
             onClick={handleCopy}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              padding: '8px 12px',
-              background: 'none',
-              border: 'none',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              fontFamily: 'var(--font-handwriting)',
-              fontSize: '15px',
-              fontWeight: '700',
-              color: '#1a1a1e',
-              textAlign: 'left',
-              width: '100%',
-              transition: 'background 0.15s ease'
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.background = '#f1f5f9')}
-            onMouseLeave={(e) => (e.currentTarget.style.background = 'none')}
+            className="flex items-center gap-2 w-full px-3 py-2 rounded text-left text-slate-300 hover:text-white hover:bg-[#1a1e2b] transition-colors"
           >
-            {copied ? <Check size={16} color="#16a34a" /> : <Copy size={16} />}
+            {copied ? <Check className="w-3.5 h-3.5 text-[#00ffa3]" /> : <Copy className="w-3.5 h-3.5 text-slate-400" />}
             <span>{copied ? 'Copied!' : 'Copy Address'}</span>
           </button>
+
+          <div className="h-[1px] bg-[#202430] my-0.5"></div>
 
           <button
             type="button"
             onClick={handleDisconnect}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              padding: '8px 12px',
-              background: 'none',
-              border: 'none',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              fontFamily: 'var(--font-handwriting)',
-              fontSize: '15px',
-              fontWeight: '700',
-              color: '#ef4444',
-              textAlign: 'left',
-              width: '100%',
-              transition: 'background 0.15s ease'
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.background = '#fef2f2')}
-            onMouseLeave={(e) => (e.currentTarget.style.background = 'none')}
+            className="flex items-center gap-2 w-full px-3 py-2 rounded text-left text-rose-400 hover:text-rose-300 hover:bg-rose-950/30 transition-colors"
           >
-            <LogOut size={16} />
+            <LogOut className="w-3.5 h-3.5" />
             <span>Disconnect</span>
           </button>
         </div>

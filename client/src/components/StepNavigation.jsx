@@ -20,7 +20,7 @@ export function StepNavigation({ currentStep, onStepChange }) {
           value={currentStep}
           onChange={(val) => onStepChange(Number(val))}
           chipColor="#141720"
-          activeColor="#f1f5f9"
+          activeColor="#00d2ff"
           textColor="#94a3b8"
           activeTextColor="#090a0d"
           size="md"
