@@ -1,21 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Pen, Coins, Rocket, Check, ArrowDown, ArrowUp, ChevronDown, Sparkles } from '@sketchyicons/react';
+import { Sparkles, Waves, Brain, Droplets, Rocket, ArrowDown, ArrowUp, ChevronDown, CheckCircle2, Shield, Zap } from 'lucide-react';
 import RotatingText from './RotatingText';
 import BounceCards from './BounceCards';
 
-import logoImg from '../assets/logo.png';
-import dogeImg from '../../draw/doge.jpeg';
-import spodermanImg from '../../draw/spoderman.jpeg';
-import dogwiphapImg from '../../draw/dogwiphap.jpeg';
-import trompImg from '../../draw/tromp.jpeg';
+import pompfonImg from '../../draw/pompfon.png';
+import stoankImg from '../../draw/stoank.png';
+import dimondImg from '../../draw/dimond.png';
+import raketImg from '../../draw/raket.png';
 import solonoImg from '../../draw/solono.png';
 
 const BOUNCE_IMAGES = [
-  dogeImg,
-  spodermanImg,
-  dogwiphapImg,
-  trompImg,
+  pompfonImg,
+  stoankImg,
+  dimondImg,
+  raketImg,
   solonoImg
 ];
 
@@ -27,7 +26,7 @@ const BOUNCE_TRANSFORMS = [
   'rotate(2deg) translate(140px)'
 ];
 
-export const ScrollIntroView = ({ onLaunchNow }) => {
+export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
   const [activeSlide, setActiveSlide] = useState(0);
   const isTransitioningRef = useRef(false);
   const touchStartYRef = useRef(0);
@@ -52,12 +51,10 @@ export const ScrollIntroView = ({ onLaunchNow }) => {
     }
   };
 
-  // Wheel listener with debounce and preventDefault
+  // Wheel listener with debounce
   useEffect(() => {
     const handleWheel = (e) => {
-      // Prevent browser from dragging/scrolling the whole window
       e.preventDefault();
-
       if (isTransitioningRef.current) return;
 
       if (Math.abs(e.deltaY) > 15) {
@@ -118,654 +115,293 @@ export const ScrollIntroView = ({ onLaunchNow }) => {
     };
   }, [activeSlide]);
 
-  const slideVariants = {
-    enter: (direction) => ({
-      opacity: 0,
-      scale: 0.95,
-      rotateX: direction > 0 ? 8 : -8,
-      y: direction > 0 ? 20 : -20,
-    }),
-    center: {
-      opacity: 1,
-      scale: 1,
-      rotateX: 0,
-      y: 0,
-      transition: {
-        duration: 0.35,
-        ease: [0.16, 1, 0.3, 1],
-      },
-    },
-    exit: (direction) => ({
-      opacity: 0,
-      scale: 0.95,
-      rotateX: direction > 0 ? -8 : 8,
-      y: direction > 0 ? -20 : 20,
-      transition: {
-        duration: 0.25,
-        ease: [0.16, 1, 0.3, 1],
-      },
-    }),
-  };
-
-  const steps = [
-    {
-      num: '01',
-      title: 'Doodle your Masterpiece',
-      subtitle: 'Step 1 • Canvas Studio',
-      desc: 'Use the interactive sketchbook canvas to draw your coin logo. Choose pencil sizes, marker colors, erasers, and sketch stamps. No boring AI images—100% authentic community creativity.',
-      highlights: ['Custom stroke widths & colors', 'Undo & clear history stack', 'PNG export with decentralized IPFS metadata'],
-      color: 'var(--marker-yellow)',
-      tapeColor: '#fef08a',
-      icon: <Pen size={32} />
-    },
-    {
-      num: '02',
-      title: 'Configure Token Details',
-      subtitle: 'Step 2 • Launch Specs',
-      desc: 'Give your hand-drawn coin a memorable Name, Ticker ($SYMBOL), and funny meme lore. Add your social links (Twitter/X, Telegram, Website) to grow your community.',
-      highlights: ['Custom Coin Name & Ticker', 'Full meme description & lore', 'Social links (Twitter/X, Telegram, Website)'],
-      color: 'var(--marker-green)',
-      tapeColor: '#bbf7d0',
-      icon: <Coins size={32} />
-    },
-    {
-      num: '03',
-      title: 'Deploy to pump.fun & Fee Buybacks',
-      subtitle: 'Step 3 • Live Launch & Tokenomics',
-      desc: 'Connect your Phantom Solana wallet. Approve the non-custodial launch for only 0.02 SOL protocol fee (no mandatory dev buy required). 100% of platform launch fees fund the main $DRAWPAD buyback pool.',
-      highlights: ['0.02 SOL DrawPad protocol fee', '100% Non-custodial signing with Phantom', 'Launch fees fund the main $DRAWPAD buyback pool'],
-      color: 'var(--marker-cyan)',
-      tapeColor: '#bae6fd',
-      icon: <Rocket size={32} />
-    },
-  ];
-
-  const faqs = [
-    {
-      q: 'How does DrawPad launch my coin onto pump.fun?',
-      a: 'DrawPad communicates directly with the official PumpPortal Trade API. It uploads your hand-drawn artwork to IPFS, builds the versioned Solana transaction, and prompts your Phantom wallet for non-custodial signing.'
-    },
-    {
-      q: 'How does the Buyback & Fee system work?',
-      a: 'Every 0.02 SOL protocol fee paid upon launching a coin goes directly to the DrawPad ecosystem treasury (7jMX3...Pau4) to buy back $DRAWPAD and support continuous platform growth.'
-    },
-    {
-      q: 'How much SOL does it cost to launch a coin?',
-      a: 'Launching any hand-drawn token on DrawPad costs only 0.02 SOL protocol fee (+ standard Solana network execution fee). No mandatory dev buy is required.'
-    },
-    {
-      q: 'Is DrawPad non-custodial?',
-      a: 'Yes! DrawPad never holds your private keys or funds. Every launch transaction is signed directly and securely inside your Phantom wallet.'
-    }
-  ];
-
   return (
-    <div style={styles.deckWrapper}>
-      {/* Slide Navigation Pagination Dots */}
-      <div style={styles.paginationSidebar}>
-        {[0, 1, 2, 3, 4].map((idx) => (
-          <button
-            key={idx}
-            type="button"
-            onClick={() => goToSlide(idx)}
-            style={{
-              ...styles.dotBtn,
-              background: activeSlide === idx ? 'var(--ink-black)' : '#e2e8f0',
-              transform: activeSlide === idx ? 'scale(1.3)' : 'scale(1)',
-              borderColor: activeSlide === idx ? '#1a1a1e' : '#94a3b8',
-            }}
-            title={`Go to slide ${idx + 1}`}
-          />
-        ))}
-      </div>
+    <div className="relative w-full h-[calc(100vh-140px)] min-h-[580px] max-h-[820px] overflow-hidden rounded-3xl border border-cyan-500/20 bg-[#030917] shadow-2xl flex flex-col justify-between p-6 md:p-10 select-none">
+      
+      {/* Background Water Particles & Rays */}
+      <div className="absolute inset-0 pointer-events-none scanline-overlay opacity-20"></div>
 
-      {/* Main Single-Screen Slide Container */}
-      <div style={styles.slideDisplayBox}>
-        <AnimatePresence mode="wait" custom={1}>
+      {/* Main Slide Carousel Container */}
+      <div className="relative flex-1 w-full flex items-center justify-center">
+        <AnimatePresence mode="wait">
+          
           {/* SLIDE 0: HERO INTRO */}
           {activeSlide === 0 && (
             <motion.div
               key="slide-0"
-              custom={1}
-              variants={slideVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              style={styles.cardContainer}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -30 }}
+              transition={{ duration: 0.45, ease: 'easeOut' }}
+              className="w-full max-w-5xl flex flex-col md:flex-row items-center justify-between gap-8 z-10"
             >
-              <div style={styles.slideCard} className="sketch-card">
-                <div style={styles.tapeTop}>
-                  <span>DRAWPAD • HOW IT WORKS</span>
+              <div className="flex-1 text-center md:text-left space-y-4">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-950/80 border border-cyan-400/50 text-cyan-300 font-mono text-xs font-bold shadow-[0_0_15px_rgba(0,245,255,0.2)]">
+                  <Sparkles className="w-4 h-4 text-cyan-400" />
+                  <span>AUTONOMOUS MARINE LAUNCHPAD ON SOLANA</span>
                 </div>
 
-                <div style={styles.heroLogoWrap}>
-                  <img src={logoImg} alt="DrawPad Pencil Logo" style={styles.heroLogoImg} />
-                </div>
-
-                <h1 style={styles.mainTitle}>
-                  Draw it.{' '}
-                  <span className="highlighter-tape-cyan" style={{ display: 'inline-flex', verticalAlign: 'middle' }}>
+                <h2 className="text-4xl md:text-6xl font-black text-white tracking-tight font-heading leading-tight">
+                  Spawn Living <br />
+                  <span className="text-gradient-cyan">
                     <RotatingText
-                      texts={['Launch it.', 'Pump it.', 'Trade it.', 'Meme it.']}
-                      mainClassName="justify-center"
+                      texts={['AI Marine Agents', 'Predatory Sharks', 'Deep Alpha Snipers', 'Yield Floats', 'Autonomous Faucets']}
+                      mainClassName="inline-block"
                       staggerFrom="last"
-                      initial={{ y: '100%', opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      exit={{ y: '-120%', opacity: 0 }}
-                      staggerDuration={0.03}
-                      transition={{ type: 'spring', damping: 25, stiffness: 350 }}
-                      rotationInterval={2400}
+                      initial={{ y: "100%" }}
+                      animate={{ y: 0 }}
+                      exit={{ y: "-120%" }}
+                      staggerDuration={0.025}
+                      splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1 md:pb-1"
+                      transition={{ type: "spring", damping: 30, stiffness: 400 }}
+                      rotationInterval={2800}
                     />
                   </span>
-                </h1>
+                </h2>
 
-                <p style={styles.heroDesc}>
-                  Turn rough sketches into live Solana tokens on <strong>pump.fun</strong> for only <strong>0.02 SOL</strong> protocol fee (no mandatory dev buy required). All launch fees fund the main DrawPad ecosystem buyback pool.
+                <p className="text-slate-300 text-sm md:text-base max-w-lg leading-relaxed">
+                  Every coin launched on Pump.fun is an autonomous marine entity swimming in a living ocean, powered by real-time thought telemetry and community Faucet Vaults.
                 </p>
 
-                <div style={styles.slideActionsRow}>
+                {/* CTA Buttons */}
+                <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 pt-2">
                   <button
-                    type="button"
-                    onClick={nextSlide}
-                    className="sketch-btn sketch-btn-green"
-                    style={styles.actionBtn}
-                  >
-                    <span>Explore Steps (Scroll Down)</span>
-                    <ArrowDown size={18} />
-                  </button>
-                  <button
-                    type="button"
                     onClick={onLaunchNow}
-                    className="sketch-btn"
-                    style={{ ...styles.actionBtn, background: 'var(--marker-cyan)' }}
+                    className="ocean-btn-primary px-7 py-3.5 rounded-2xl text-sm font-extrabold flex items-center gap-2 shadow-2xl"
                   >
-                    <Rocket size={18} />
-                    <span>Skip to Studio</span>
+                    <Zap className="w-4 h-4" />
+                    <span>Spawn Creature Now</span>
+                  </button>
+
+                  <button
+                    onClick={onExploreOcean}
+                    className="px-6 py-3.5 rounded-2xl bg-slate-900/90 hover:bg-slate-800 border border-cyan-500/30 text-cyan-300 font-mono text-xs font-bold flex items-center gap-2 transition-all"
+                  >
+                    <Waves className="w-4 h-4 text-cyan-400" />
+                    <span>Enter The Aquarium</span>
                   </button>
                 </div>
+              </div>
+
+              {/* Right: Bounce Cards Visual */}
+              <div className="flex-1 flex items-center justify-center">
+                <BounceCards
+                  images={BOUNCE_IMAGES}
+                  containerWidth={340}
+                  containerHeight={340}
+                  animationDelay={0.1}
+                  animationStagger={0.07}
+                  transformStyles={BOUNCE_TRANSFORMS}
+                  enableHover={true}
+                />
               </div>
             </motion.div>
           )}
 
-          {/* SLIDE 1: STEP 1 */}
+          {/* SLIDE 1: FISH STUDIO */}
           {activeSlide === 1 && (
             <motion.div
               key="slide-1"
-              custom={1}
-              variants={slideVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              style={styles.cardContainer}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -30 }}
+              transition={{ duration: 0.45, ease: 'easeOut' }}
+              className="w-full max-w-4xl text-center space-y-6 z-10"
             >
-              <div style={styles.slideCard} className="sketch-card">
-                <div style={{ ...styles.tapeTop, background: steps[0].tapeColor }}>
-                  <span>{steps[0].subtitle}</span>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950 border border-cyan-400 text-cyan-400 font-mono text-xs font-bold">
+                <span>01 • CYBER-AQUATIC DNA FORGE</span>
+              </div>
+              <h3 className="text-3xl md:text-5xl font-extrabold text-white font-heading">
+                Design Your <span className="text-gradient-cyan">Autonomous Creature</span>
+              </h3>
+              <p className="text-slate-300 max-w-xl mx-auto text-sm md:text-base leading-relaxed">
+                Choose from 6 predatory and liquidity archetypes (Cyber Sharks, Neon Anglers, Bio Jellies). Tweak bioluminescence, equip laser augments, and paint custom neon decals on an interactive live swim simulator.
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-left max-w-3xl mx-auto font-mono text-xs">
+                <div className="glass-panel p-4 rounded-2xl border border-cyan-500/20">
+                  <span className="text-xl mb-1 block">🦈</span>
+                  <strong className="text-cyan-300 block mb-1">6 Species Archetypes</strong>
+                  <span className="text-slate-400 text-[11px]">From aggressive volume snipers to passive liquidity floaters.</span>
                 </div>
-
-                <div style={styles.cardHeader}>
-                  <div style={{ ...styles.stepIconBox, background: steps[0].color }}>
-                    {steps[0].icon}
-                  </div>
-                  <div>
-                    <h2 style={styles.cardTitle}>{steps[0].title}</h2>
-                    <span style={styles.cardStepNum}>Phase 01 of 03</span>
-                  </div>
+                <div className="glass-panel p-4 rounded-2xl border border-cyan-500/20">
+                  <span className="text-xl mb-1 block">🎨</span>
+                  <strong className="text-cyan-300 block mb-1">Live Paint & Decals</strong>
+                  <span className="text-slate-400 text-[11px]">Hand-paint glowing markings or stickers over your 2D model.</span>
                 </div>
-
-                <div style={styles.stepOneContentWrapper}>
-                  <div style={styles.stepOneLeft}>
-                    <p style={styles.cardDesc}>{steps[0].desc}</p>
-                    <div style={styles.highlightsBox}>
-                      {steps[0].highlights.map((h, i) => (
-                        <div key={i} style={styles.highlightRow}>
-                          <div style={styles.checkIconWrap}><Check size={14} /></div>
-                          <span style={styles.highlightText}>{h}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div style={styles.bounceCardsWrapper}>
-                    <BounceCards
-                      images={BOUNCE_IMAGES}
-                      containerWidth={340}
-                      containerHeight={170}
-                      animationDelay={0.15}
-                      animationStagger={0.06}
-                      easeType="elastic.out(1, 0.6)"
-                      transformStyles={BOUNCE_TRANSFORMS}
-                      enableHover={false}
-                    />
-                  </div>
-                </div>
-
-                <div style={styles.navigationControls}>
-                  <button type="button" onClick={prevSlide} className="sketch-btn" style={styles.miniBtn}>
-                    <ArrowUp size={16} /> Back
-                  </button>
-                  <button type="button" onClick={nextSlide} className="sketch-btn sketch-btn-green" style={styles.miniBtn}>
-                    Next: Token Setup <ArrowDown size={16} />
-                  </button>
+                <div className="glass-panel p-4 rounded-2xl border border-cyan-500/20">
+                  <span className="text-xl mb-1 block">🌊</span>
+                  <strong className="text-cyan-300 block mb-1">Live Swim Simulator</strong>
+                  <span className="text-slate-400 text-[11px]">Creature responds to physics and swims dynamically in real-time.</span>
                 </div>
               </div>
             </motion.div>
           )}
 
-          {/* SLIDE 2: STEP 2 */}
+          {/* SLIDE 2: AGENT BRAIN & PUMP.FUN */}
           {activeSlide === 2 && (
             <motion.div
               key="slide-2"
-              custom={1}
-              variants={slideVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              style={styles.cardContainer}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -30 }}
+              transition={{ duration: 0.45, ease: 'easeOut' }}
+              className="w-full max-w-4xl text-center space-y-6 z-10"
             >
-              <div style={styles.slideCard} className="sketch-card">
-                <div style={{ ...styles.tapeTop, background: steps[1].tapeColor }}>
-                  <span>{steps[1].subtitle}</span>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950 border border-emerald-400 text-emerald-400 font-mono text-xs font-bold">
+                <span>02 • BRAIN MATRIX & PUMP.FUN DEPLOYMENT</span>
+              </div>
+              <h3 className="text-3xl md:text-5xl font-extrabold text-white font-heading">
+                Bonding Curve <span className="text-gradient-cyan">Instant Mint</span>
+              </h3>
+              <p className="text-slate-300 max-w-xl mx-auto text-sm md:text-base leading-relaxed">
+                Connect your Phantom wallet, configure dev buy amount, risk parameters, and system prompts. Your token and IPFS metadata are signed and deployed directly to Pump.fun via PumpPortal.
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-left max-w-3xl mx-auto font-mono text-xs">
+                <div className="glass-panel p-4 rounded-2xl border border-emerald-500/20">
+                  <span className="text-xl mb-1 block">🧠</span>
+                  <strong className="text-emerald-300 block mb-1">Trading Personality</strong>
+                  <span className="text-slate-400 text-[11px]">Define strategy (Momentum, Dip Sniper, Fortress) & AI prompt.</span>
                 </div>
-
-                <div style={styles.cardHeader}>
-                  <div style={{ ...styles.stepIconBox, background: steps[1].color }}>
-                    {steps[1].icon}
-                  </div>
-                  <div>
-                    <h2 style={styles.cardTitle}>{steps[1].title}</h2>
-                    <span style={styles.cardStepNum}>Phase 02 of 03</span>
-                  </div>
+                <div className="glass-panel p-4 rounded-2xl border border-emerald-500/20">
+                  <span className="text-xl mb-1 block">⚡</span>
+                  <strong className="text-emerald-300 block mb-1">Instant Genesis Buy</strong>
+                  <span className="text-slate-400 text-[11px]">Optionally snipe your own bonding curve at block 0.</span>
                 </div>
-
-                <p style={styles.cardDesc}>{steps[1].desc}</p>
-
-                <div style={styles.highlightsBox}>
-                  {steps[1].highlights.map((h, i) => (
-                    <div key={i} style={styles.highlightRow}>
-                      <div style={styles.checkIconWrap}><Check size={14} /></div>
-                      <span style={styles.highlightText}>{h}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <div style={styles.navigationControls}>
-                  <button type="button" onClick={prevSlide} className="sketch-btn" style={styles.miniBtn}>
-                    <ArrowUp size={16} /> Back
-                  </button>
-                  <button type="button" onClick={nextSlide} className="sketch-btn sketch-btn-green" style={styles.miniBtn}>
-                    Next: Live Deploy <ArrowDown size={16} />
-                  </button>
+                <div className="glass-panel p-4 rounded-2xl border border-emerald-500/20">
+                  <span className="text-xl mb-1 block">🛡️</span>
+                  <strong className="text-emerald-300 block mb-1">0.02 SOL Protocol Fee</strong>
+                  <span className="text-slate-400 text-[11px]">Funds the buyback treasury & ocean liquidity reserves.</span>
                 </div>
               </div>
             </motion.div>
           )}
 
-          {/* SLIDE 3: STEP 3 */}
+          {/* SLIDE 3: FAUCET PROTOCOL */}
           {activeSlide === 3 && (
             <motion.div
               key="slide-3"
-              custom={1}
-              variants={slideVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              style={styles.cardContainer}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -30 }}
+              transition={{ duration: 0.45, ease: 'easeOut' }}
+              className="w-full max-w-4xl text-center space-y-6 z-10"
             >
-              <div style={styles.slideCard} className="sketch-card">
-                <div style={{ ...styles.tapeTop, background: steps[2].tapeColor }}>
-                  <span>{steps[2].subtitle}</span>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-950 border border-purple-400 text-purple-300 font-mono text-xs font-bold">
+                <span>03 • AUTONOMOUS FAUCET PROTOCOL (FAUPAD)</span>
+              </div>
+              <h3 className="text-3xl md:text-5xl font-extrabold text-white font-heading">
+                Community <span className="text-gradient-pink">Feeding Vaults</span>
+              </h3>
+              <p className="text-slate-300 max-w-xl mx-auto text-sm md:text-base leading-relaxed">
+                Deploy community faucets locked in custody. Holders solve deep-sea AI riddles or claim instant timed drips to distribute supply autonomously.
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-left max-w-3xl mx-auto font-mono text-xs">
+                <div className="glass-panel p-4 rounded-2xl border border-purple-500/20">
+                  <span className="text-xl mb-1 block">🧩</span>
+                  <strong className="text-purple-300 block mb-1">AI Riddle Gateway</strong>
+                  <span className="text-slate-400 text-[11px]">Chat with the creature in a cyber terminal to earn tokens.</span>
                 </div>
-
-                <div style={styles.cardHeader}>
-                  <div style={{ ...styles.stepIconBox, background: steps[2].color }}>
-                    {steps[2].icon}
-                  </div>
-                  <div>
-                    <h2 style={styles.cardTitle}>{steps[2].title}</h2>
-                    <span style={styles.cardStepNum}>Phase 03 of 03</span>
-                  </div>
+                <div className="glass-panel p-4 rounded-2xl border border-purple-500/20">
+                  <span className="text-xl mb-1 block">💧</span>
+                  <strong className="text-purple-300 block mb-1">Instant Drip Cooldown</strong>
+                  <span className="text-slate-400 text-[11px]">Fair timed drip claims with sybil protection.</span>
                 </div>
-
-                <p style={styles.cardDesc}>{steps[2].desc}</p>
-
-                <div style={styles.highlightsBox}>
-                  {steps[2].highlights.map((h, i) => (
-                    <div key={i} style={styles.highlightRow}>
-                      <div style={styles.checkIconWrap}><Check size={14} /></div>
-                      <span style={styles.highlightText}>{h}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <div style={styles.navigationControls}>
-                  <button type="button" onClick={prevSlide} className="sketch-btn" style={styles.miniBtn}>
-                    <ArrowUp size={16} /> Back
-                  </button>
-                  <button type="button" onClick={nextSlide} className="sketch-btn sketch-btn-green" style={styles.miniBtn}>
-                    Got Questions? <ArrowDown size={16} />
-                  </button>
+                <div className="glass-panel p-4 rounded-2xl border border-purple-500/20">
+                  <span className="text-xl mb-1 block">🐟</span>
+                  <strong className="text-purple-300 block mb-1">Feed the Pool</strong>
+                  <span className="text-slate-400 text-[11px]">Anyone can donate tokens to boost the fish's feeding pool.</span>
                 </div>
               </div>
             </motion.div>
           )}
 
-          {/* SLIDE 4: FAQS & READY TO LAUNCH */}
+          {/* SLIDE 4: LIVING AQUARIUM & FINAL CTA */}
           {activeSlide === 4 && (
             <motion.div
               key="slide-4"
-              custom={1}
-              variants={slideVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              style={styles.cardContainer}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -30 }}
+              transition={{ duration: 0.45, ease: 'easeOut' }}
+              className="w-full max-w-4xl text-center space-y-6 z-10"
             >
-              <div style={styles.slideCard} className="sketch-card">
-                <div style={{ ...styles.tapeTop, background: '#fed7aa' }}>
-                  <span>GOT QUESTIONS? • FAQ & LAUNCH</span>
-                </div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950 border border-cyan-400 text-cyan-300 font-mono text-xs font-bold">
+                <span>04 • THE LIVING AQUARIUM</span>
+              </div>
+              <h3 className="text-3xl md:text-5xl font-extrabold text-white font-heading">
+                Join the <span className="text-gradient-cyan">Deep-Sea Ocean</span>
+              </h3>
+              <p className="text-slate-300 max-w-xl mx-auto text-sm md:text-base leading-relaxed">
+                Watch your fish grow as its Pump.fun bonding curve climbs. Hover or tap to inspect live radar telemetry, trade, or claim tokens.
+              </p>
 
-                <h2 style={{ ...styles.cardTitle, textAlign: 'center', marginTop: '4px' }}>
-                  Ready to launch your hand-drawn coin?
-                </h2>
+              <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
+                <button
+                  onClick={onLaunchNow}
+                  className="ocean-btn-primary px-8 py-4 rounded-2xl text-base font-extrabold flex items-center gap-2 shadow-2xl"
+                >
+                  <Zap className="w-5 h-5" />
+                  <span>Spawn Your Creature Now</span>
+                </button>
 
-                <div style={styles.faqListCompact}>
-                  {faqs.map((faq, idx) => (
-                    <div key={idx} style={styles.faqItemCompact}>
-                      <div style={styles.faqQ}>
-                        <Sparkles size={16} style={{ color: '#ca8a04', flexShrink: 0 }} />
-                        <span>{faq.q}</span>
-                      </div>
-                      <div style={styles.faqA}>{faq.a}</div>
-                    </div>
-                  ))}
-                </div>
-
-                <div style={styles.ctaBottomRow}>
-                  <button type="button" onClick={prevSlide} className="sketch-btn" style={styles.miniBtn}>
-                    <ArrowUp size={16} /> Back
-                  </button>
-                  <motion.button
-                    whileHover={{ scale: 1.04 }}
-                    whileTap={{ scale: 0.96 }}
-                    type="button"
-                    onClick={onLaunchNow}
-                    className="sketch-btn sketch-btn-green"
-                    style={styles.bigLaunchBtn}
-                  >
-                    <Rocket size={22} />
-                    <span>Open Drawing Studio</span>
-                  </motion.button>
-                </div>
+                <button
+                  onClick={onExploreOcean}
+                  className="px-7 py-4 rounded-2xl bg-slate-900 hover:bg-slate-800 border border-cyan-500/40 text-cyan-300 font-mono text-xs font-bold flex items-center gap-2"
+                >
+                  <Waves className="w-4 h-4 text-cyan-400" />
+                  <span>Explore The Aquarium</span>
+                </button>
               </div>
             </motion.div>
           )}
+
         </AnimatePresence>
       </div>
 
-      {/* Slide Navigation Hint Footer */}
-      <div style={styles.bottomHint}>
-        <span>Slide {activeSlide + 1} of {totalSlides} • Scroll or use arrow keys / dots to navigate</span>
+      {/* Bottom Controls & Navigation Dots */}
+      <div className="w-full flex items-center justify-between z-20 pt-4 border-t border-cyan-500/10 text-xs font-mono">
+        <div className="flex items-center gap-2">
+          {Array.from({ length: totalSlides }).map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => goToSlide(idx)}
+              className={`h-2 rounded-full transition-all ${
+                activeSlide === idx ? 'w-8 bg-cyan-400 shadow-[0_0_10px_rgba(0,245,255,0.6)]' : 'w-2 bg-slate-700 hover:bg-slate-500'
+              }`}
+              title={`Go to slide ${idx + 1}`}
+            />
+          ))}
+        </div>
+
+        <div className="flex items-center gap-3">
+          <button
+            onClick={prevSlide}
+            disabled={activeSlide === 0}
+            className={`p-2 rounded-xl border transition-all ${
+              activeSlide === 0 ? 'opacity-30 cursor-not-allowed border-slate-800' : 'bg-slate-900 border-cyan-500/30 hover:border-cyan-400 text-cyan-300'
+            }`}
+            title="Previous slide"
+          >
+            <ArrowUp className="w-4 h-4" />
+          </button>
+          <button
+            onClick={nextSlide}
+            disabled={activeSlide === totalSlides - 1}
+            className={`p-2 rounded-xl border transition-all ${
+              activeSlide === totalSlides - 1 ? 'opacity-30 cursor-not-allowed border-slate-800' : 'bg-slate-900 border-cyan-500/30 hover:border-cyan-400 text-cyan-300'
+            }`}
+            title="Next slide"
+          >
+            <ArrowDown className="w-4 h-4" />
+          </button>
+        </div>
       </div>
+
     </div>
   );
 };
 
-const styles = {
-  deckWrapper: {
-    width: '100%',
-    maxWidth: '820px',
-    margin: '0 auto',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'relative',
-    flex: 1,
-    height: '100%',
-    minHeight: 0,
-  },
-  paginationSidebar: {
-    position: 'absolute',
-    right: '-36px',
-    top: '50%',
-    transform: 'translateY(-50%)',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '12px',
-    zIndex: 10,
-  },
-  dotBtn: {
-    width: '12px',
-    height: '12px',
-    borderRadius: '50%',
-    border: '2px solid',
-    cursor: 'pointer',
-    padding: 0,
-    transition: 'all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1)',
-    boxShadow: '1px 1px 0px rgba(0,0,0,0.2)',
-  },
-  slideDisplayBox: {
-    width: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    perspective: '1200px',
-    margin: 'auto 0',
-  },
-  cardContainer: {
-    width: '100%',
-    transformStyle: 'preserve-3d',
-  },
-  slideCard: {
-    padding: '36px 30px 28px 30px',
-    backgroundColor: '#ffffff',
-    position: 'relative',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '16px',
-  },
-  tapeTop: {
-    position: 'absolute',
-    top: '-14px',
-    left: '50%',
-    transform: 'translateX(-50%) rotate(-0.5deg)',
-    background: '#fef08a',
-    border: '2px dashed #1a1a1e',
-    padding: '3px 18px',
-    fontFamily: 'var(--font-mono)',
-    fontSize: '12px',
-    fontWeight: '700',
-    letterSpacing: '0.08em',
-    color: '#1a1a1e',
-  },
-  heroLogoWrap: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: '6px',
-    marginBottom: '2px',
-  },
-  heroLogoImg: {
-    width: '106px',
-    height: '106px',
-    objectFit: 'contain',
-    filter: 'drop-shadow(2.5px 3.5px 0px #1a1a1e)',
-  },
-  mainTitle: {
-    fontSize: '42px',
-    fontWeight: '800',
-    color: '#1a1a1e',
-    fontFamily: 'var(--font-heading)',
-    lineHeight: '1.2',
-    textAlign: 'center',
-  },
-  heroDesc: {
-    fontSize: '19px',
-    color: '#475569',
-    textAlign: 'center',
-    maxWidth: '620px',
-    margin: '0 auto',
-    lineHeight: '1.45',
-  },
-  slideActionsRow: {
-    display: 'flex',
-    justifyContent: 'center',
-    gap: '14px',
-    marginTop: '12px',
-    flexWrap: 'wrap',
-  },
-  actionBtn: {
-    padding: '12px 24px',
-    fontSize: '18px',
-  },
-  cardHeader: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '16px',
-    marginTop: '6px',
-  },
-  stepIconBox: {
-    width: '56px',
-    height: '56px',
-    borderRadius: '255px 15px 225px 15px/15px 225px 15px 255px',
-    border: '2px solid #1a1a1e',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    boxShadow: '2px 2px 0px #1a1a1e',
-    flexShrink: 0,
-  },
-  cardTitle: {
-    fontSize: '28px',
-    fontWeight: '800',
-    color: '#1a1a1e',
-    fontFamily: 'var(--font-heading)',
-    lineHeight: '1.2',
-  },
-  cardStepNum: {
-    fontSize: '14px',
-    fontWeight: '700',
-    color: '#64748b',
-    fontFamily: 'var(--font-mono)',
-  },
-  cardDesc: {
-    fontSize: '18px',
-    color: '#475569',
-    lineHeight: '1.5',
-  },
-  highlightsBox: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '8px',
-    background: '#f8fafc',
-    border: '2px solid #1a1a1e',
-    borderRadius: '18px 255px 16px 225px/225px 17px 255px 14px',
-    boxShadow: '2px 2px 0px #1a1a1e',
-    padding: '14px 18px',
-  },
-  highlightRow: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '10px',
-  },
-  checkIconWrap: {
-    background: '#bbf7d0',
-    border: '1.5px solid #1a1a1e',
-    borderRadius: '50%',
-    width: '22px',
-    height: '22px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    color: '#1a1a1e',
-    flexShrink: 0,
-  },
-  highlightText: {
-    fontSize: '16px',
-    fontWeight: '600',
-    color: '#1e293b',
-  },
-  stepOneContentWrapper: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: '24px',
-    flexWrap: 'wrap',
-  },
-  stepOneLeft: {
-    flex: '1 1 300px',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '12px',
-  },
-  bounceCardsWrapper: {
-    flex: '0 0 auto',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '10px 0',
-  },
-  navigationControls: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: '8px',
-  },
-  miniBtn: {
-    padding: '8px 18px',
-    fontSize: '16px',
-  },
-  faqListCompact: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '10px',
-  },
-  faqItemCompact: {
-    background: '#f8fafc',
-    border: '2px solid #1a1a1e',
-    borderRadius: '255px 15px 225px 15px/15px 225px 15px 255px',
-    padding: '12px 16px',
-    boxShadow: '2px 2px 0px #1a1a1e',
-  },
-  faqQ: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px',
-    fontWeight: '700',
-    fontSize: '17px',
-    fontFamily: 'var(--font-heading)',
-    color: '#1a1a1e',
-  },
-  faqA: {
-    fontSize: '15px',
-    color: '#475569',
-    marginTop: '4px',
-    paddingLeft: '24px',
-    lineHeight: '1.4',
-  },
-  ctaBottomRow: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: '10px',
-    flexWrap: 'wrap',
-    gap: '12px',
-  },
-  bigLaunchBtn: {
-    padding: '12px 28px',
-    fontSize: '19px',
-  },
-  bottomHint: {
-    marginTop: '16px',
-    fontSize: '15px',
-    color: '#ffffff',
-    fontWeight: '700',
-    fontFamily: 'var(--font-mono)',
-    textAlign: 'center',
-    textShadow: '2px 2px 0px #000000, -1px -1px 0px #000000, 1px -1px 0px #000000, -1px 1px 0px #000000, 0px 2px 0px #000000, 2px 0px 0px #000000',
-    letterSpacing: '0.5px',
-  },
-};
-
+export default ScrollIntroView;

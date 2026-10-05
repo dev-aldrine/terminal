@@ -5,9 +5,10 @@ import { VersionedTransaction, Transaction, SystemProgram, PublicKey, LAMPORTS_P
 import confetti from 'canvas-confetti';
 import { ContractBar } from './components/ContractBar';
 import { StepNavigation } from './components/StepNavigation';
-import { OceanAquarium } from './components/OceanAquarium';
+import { ScrollIntroView } from './components/ScrollIntroView';
 import { FishStudio } from './components/FishStudio';
 import { TokenForm } from './components/TokenForm';
+import { OceanAquarium } from './components/OceanAquarium';
 import { FaucetView } from './components/FaucetView';
 import { AgentTerminalView } from './components/AgentTerminalView';
 import { SuccessModal } from './components/SuccessModal';
@@ -20,7 +21,7 @@ export function App() {
   const { publicKey, signTransaction, sendTransaction, connected } = useWallet();
   const { connection } = useConnection();
 
-  // Navigation steps: 1 = Aquarium, 2 = Fish Studio, 3 = Agent/Faucet Form, 4 = Faucets, 5 = Telemetry
+  // Navigation steps: 1 = Intro/How it works, 2 = Fish Studio, 3 = Agent/Faucet Form, 4 = Aquarium, 5 = Faucets, 6 = Telemetry
   const [currentStep, setCurrentStep] = useState(1);
   const [siteConfig, setSiteConfig] = useState({ ca: '', twitter: '' });
   const [tokens, setTokens] = useState([]);
@@ -290,7 +291,7 @@ export function App() {
       />
 
       {/* Main Navbar */}
-      <header className="w-full border-b border-cyan-500/20 bg-[#061226]/80 backdrop-blur-xl py-4 px-6 sticky top-[41px] z-40">
+      <header className="w-full border-b border-cyan-500/20 bg-[#061226]/80 backdrop-blur-xl py-3 px-6 sticky top-[41px] z-40">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           
           {/* Brand Logo */}
@@ -328,18 +329,13 @@ export function App() {
       />
 
       {/* Main Content Area */}
-      <main className="flex-1 max-w-7xl w-full mx-auto pb-16">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 pb-16">
         
-        {/* Step 1: The Ocean Aquarium */}
+        {/* Step 1: Scrollable Interactive Intro */}
         {currentStep === 1 && (
-          <OceanAquarium
-            tokens={tokens}
-            onSelectTokenForFaucet={(token) => {
-              setPreselectedFaucetToken(token);
-              setCurrentStep(4);
-            }}
-            onOpenTerminal={() => setCurrentStep(5)}
-            onSpawnNew={() => setCurrentStep(2)}
+          <ScrollIntroView
+            onLaunchNow={() => setCurrentStep(2)}
+            onExploreOcean={() => setCurrentStep(4)}
           />
         )}
 
@@ -366,13 +362,26 @@ export function App() {
           />
         )}
 
-        {/* Step 4: Autonomous Faucet Protocol (Faucet Pad) */}
+        {/* Step 4: The Ocean Aquarium */}
         {currentStep === 4 && (
+          <OceanAquarium
+            tokens={tokens}
+            onSelectTokenForFaucet={(token) => {
+              setPreselectedFaucetToken(token);
+              setCurrentStep(5);
+            }}
+            onOpenTerminal={() => setCurrentStep(6)}
+            onSpawnNew={() => setCurrentStep(2)}
+          />
+        )}
+
+        {/* Step 5: Autonomous Faucet Protocol (Faucet Pad) */}
+        {currentStep === 5 && (
           <FaucetView preselectedToken={preselectedFaucetToken} />
         )}
 
-        {/* Step 5: Live Telemetry & Thought Stream */}
-        {currentStep === 5 && (
+        {/* Step 6: Live Telemetry & Thought Stream */}
+        {currentStep === 6 && (
           <AgentTerminalView />
         )}
 
@@ -384,7 +393,7 @@ export function App() {
           data={successData}
           onClose={() => {
             setSuccessData(null);
-            setCurrentStep(1);
+            setCurrentStep(4);
           }}
         />
       )}
@@ -394,9 +403,10 @@ export function App() {
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <p>© 2026 AgenSea Protocol. Autonomous Marine Entities on Solana Pump.fun.</p>
           <div className="flex items-center gap-4 text-slate-400">
-            <span className="hover:text-cyan-400 cursor-pointer" onClick={() => setCurrentStep(1)}>The Ocean</span>
-            <span className="hover:text-cyan-400 cursor-pointer" onClick={() => setCurrentStep(4)}>Faucet Vaults</span>
-            <span className="hover:text-cyan-400 cursor-pointer" onClick={() => setCurrentStep(5)}>Telemetry Radar</span>
+            <span className="hover:text-cyan-400 cursor-pointer" onClick={() => setCurrentStep(1)}>How It Works</span>
+            <span className="hover:text-cyan-400 cursor-pointer" onClick={() => setCurrentStep(4)}>The Ocean</span>
+            <span className="hover:text-cyan-400 cursor-pointer" onClick={() => setCurrentStep(5)}>Faucet Vaults</span>
+            <span className="hover:text-cyan-400 cursor-pointer" onClick={() => setCurrentStep(6)}>Telemetry Radar</span>
           </div>
         </div>
       </footer>
@@ -406,4 +416,3 @@ export function App() {
 }
 
 export default App;
-
