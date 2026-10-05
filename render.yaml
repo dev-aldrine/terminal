@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: drawpad
+    name: agensea
     runtime: node
     plan: free
     buildCommand: npm run build
@@ -11,6 +11,7 @@ services:
       - key: PORT
         value: 10000
       - key: RPC_ENDPOINT
-        value: https://solana-rpc.publicnode.com
+        value: https://api.mainnet-beta.solana.com
       - key: PINATA_JWT
         sync: false
+

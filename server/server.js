@@ -832,15 +832,22 @@ app.get('/api/telemetry', (req, res) => {
 const DIST_DIR = path.join(__dirname, '../client/dist');
 if (fs.existsSync(DIST_DIR)) {
   app.use(express.static(DIST_DIR));
-  app.get('*', (req, res) => {
-    if (!req.path.startsWith('/api') && !req.path.startsWith('/uploads')) {
-      res.sendFile(path.join(DIST_DIR, 'index.html'));
-    }
-  });
 }
+
+// Fallback SPA routing compatible with Express 4 and Express 5
+app.use((req, res, next) => {
+  if (req.method === 'GET' && !req.path.startsWith('/api') && !req.path.startsWith('/uploads')) {
+    const indexPath = path.join(DIST_DIR, 'index.html');
+    if (fs.existsSync(indexPath)) {
+      return res.sendFile(indexPath);
+    }
+  }
+  next();
+});
 
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`🌊 AgenSea Autonomous Marine Engine listening on port ${PORT}`);
   console.log(`🚀 IPFS + PumpPortal Trade API + Autonomous Faucet Protocol ready.`);
 });
+
 
