@@ -170,7 +170,7 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
               <div className="flex flex-wrap items-center justify-center gap-4 pt-3">
                 <button
                   onClick={onLaunchNow}
-                  className="px-8 sm:px-10 py-4 sm:py-4.5 rounded-2xl bg-gradient-to-r from-[#00d2ff] via-[#00ffa3] to-[#38bdf8] text-[#020712] font-heading font-black text-sm sm:text-base tracking-wide flex items-center gap-2.5 shadow-[0_0_35px_rgba(0,210,255,0.5)] hover:shadow-[0_0_50px_rgba(0,255,163,0.7)] hover:scale-105 transition-all transform active:scale-95"
+                  className="px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl bg-gradient-to-r from-[#00d2ff] via-[#00ffa3] to-[#38bdf8] text-[#020712] font-heading font-black text-sm sm:text-base tracking-wide flex items-center justify-center gap-2.5 shadow-[0_0_30px_rgba(0,210,255,0.4)] hover:shadow-[0_0_45px_rgba(0,255,163,0.6)] hover:scale-[1.03] transition-all transform active:scale-95 leading-none"
                 >
                   <FishIcon className="w-5 h-5 fill-current" />
                   <span>Spawn Agent Now</span>
@@ -178,7 +178,7 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
 
                 <button
                   onClick={onExploreOcean}
-                  className="px-8 sm:px-10 py-4 sm:py-4.5 rounded-2xl bg-[#04162e]/60 hover:bg-[#07244e]/80 border border-cyan-400/40 text-cyan-200 font-heading font-bold text-sm sm:text-base tracking-wide flex items-center gap-2.5 backdrop-blur-xl shadow-[0_0_20px_rgba(0,210,255,0.15)] hover:border-cyan-300 hover:scale-105 transition-all transform active:scale-95"
+                  className="px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl bg-[#04162e]/70 hover:bg-[#07244e]/90 border border-cyan-400/40 text-cyan-200 font-heading font-bold text-sm sm:text-base tracking-wide flex items-center justify-center gap-2.5 backdrop-blur-xl shadow-[0_0_20px_rgba(0,210,255,0.15)] hover:border-cyan-300 hover:scale-[1.03] transition-all transform active:scale-95 leading-none"
                 >
                   <Layers className="w-5 h-5 text-[#00d2ff]" />
                   <span>Enter Living Ocean</span>
@@ -350,7 +350,7 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
               <div className="flex flex-wrap items-center justify-center gap-4 pt-3">
                 <button
                   onClick={onLaunchNow}
-                  className="px-8 sm:px-10 py-4 sm:py-4.5 rounded-2xl bg-gradient-to-r from-[#00d2ff] via-[#00ffa3] to-[#38bdf8] text-[#020712] font-heading font-black text-sm sm:text-base tracking-wide flex items-center gap-2.5 shadow-[0_0_35px_rgba(0,210,255,0.5)] hover:shadow-[0_0_50px_rgba(0,255,163,0.7)] hover:scale-105 transition-all transform active:scale-95"
+                  className="px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl bg-gradient-to-r from-[#00d2ff] via-[#00ffa3] to-[#38bdf8] text-[#020712] font-heading font-black text-sm sm:text-base tracking-wide flex items-center justify-center gap-2.5 shadow-[0_0_30px_rgba(0,210,255,0.4)] hover:shadow-[0_0_45px_rgba(0,255,163,0.6)] hover:scale-[1.03] transition-all transform active:scale-95 leading-none"
                 >
                   <FishIcon className="w-5 h-5 fill-current" />
                   <span>Spawn Your Marine Fish Now</span>
@@ -358,7 +358,7 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
 
                 <button
                   onClick={onExploreOcean}
-                  className="px-8 sm:px-10 py-4 sm:py-4.5 rounded-2xl bg-[#04162e]/60 hover:bg-[#07244e]/80 border border-cyan-400/40 text-cyan-200 font-heading font-bold text-sm sm:text-base tracking-wide flex items-center gap-2.5 backdrop-blur-xl shadow-[0_0_20px_rgba(0,210,255,0.15)] hover:border-cyan-300 hover:scale-105 transition-all transform active:scale-95"
+                  className="px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl bg-[#04162e]/70 hover:bg-[#07244e]/90 border border-cyan-400/40 text-cyan-200 font-heading font-bold text-sm sm:text-base tracking-wide flex items-center justify-center gap-2.5 backdrop-blur-xl shadow-[0_0_20px_rgba(0,210,255,0.15)] hover:border-cyan-300 hover:scale-[1.03] transition-all transform active:scale-95 leading-none"
                 >
                   <Layers className="w-5 h-5 text-[#00d2ff]" />
                   <span>Explore The Ocean Aquarium</span>
