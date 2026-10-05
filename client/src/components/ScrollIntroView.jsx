@@ -132,11 +132,11 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
                   transition={{ duration: 0.28, ease: 'easeOut' }}
                   className="w-full text-center space-y-4 z-10 py-1 flex flex-col items-center justify-center"
                 >
-                  {/* Card Top Center Branding */}
+                  {/* Card Top Center Branding (150% larger) */}
                   <img
                     src="/logo.png"
                     alt="AgenSea"
-                    className="h-8 sm:h-10 w-auto object-contain mx-auto drop-shadow-[0_0_15px_rgba(0,210,255,0.45)]"
+                    className="h-14 sm:h-16 w-auto object-contain mx-auto drop-shadow-[0_0_20px_rgba(0,210,255,0.5)]"
                   />
 
                   <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white font-heading tracking-tight leading-[1.12] text-center flex flex-col items-center justify-center w-full">

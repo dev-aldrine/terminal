@@ -26,7 +26,7 @@ export function Navbar({ siteConfig, onLogoClick }) {
     <header className="w-full bg-transparent py-3 px-4 sm:px-6 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto relative flex items-center justify-between min-h-[40px]">
         
-        {/* Left: Logo Image */}
+        {/* Left: Logo Image (150% larger) */}
         <div
           onClick={onLogoClick}
           className="flex items-center cursor-pointer hover:opacity-90 transition-opacity z-10"
@@ -34,7 +34,7 @@ export function Navbar({ siteConfig, onLogoClick }) {
           <img
             src="/logo.png"
             alt="AgenSea"
-            className="h-7 sm:h-8 w-auto object-contain drop-shadow-[0_0_10px_rgba(0,210,255,0.4)]"
+            className="h-12 sm:h-14 w-auto object-contain drop-shadow-[0_0_16px_rgba(0,210,255,0.5)]"
           />
         </div>
 
