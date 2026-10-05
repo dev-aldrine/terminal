@@ -1,17 +1,19 @@
 @import '@solana/wallet-adapter-react-ui/styles.css';
 
 :root {
-  --bg-primary: #05080f;
-  --bg-secondary: #080d17;
-  --bg-card: #0c1322;
-  --bg-card-hover: #111b2e;
+  --bg-primary: #090a0d;
+  --bg-secondary: #0f1117;
+  --bg-card: #141720;
+  --bg-card-hover: #1a1e2b;
   
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-hover: rgba(0, 229, 255, 0.35);
+  --border-subtle: #202430;
+  --border-focus: #3b4255;
+  --border-accent: #00d2ff;
   
-  --accent-cyan: #00e5ff;
-  --accent-lime: #00ffa3;
-  --text-main: #f8fafc;
+  --accent: #00d2ff;
+  --accent-muted: rgba(0, 210, 255, 0.08);
+  
+  --text-primary: #f1f5f9;
   --text-secondary: #94a3b8;
   --text-muted: #64748b;
 
@@ -28,18 +30,13 @@
 
 body {
   background-color: var(--bg-primary);
-  color: var(--text-main);
+  color: var(--text-primary);
   font-family: var(--font-main);
-  font-size: 15px;
-  line-height: 1.6;
+  font-size: 14px;
+  line-height: 1.5;
   min-height: 100vh;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
-  background-image: 
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 40px 40px;
-  background-attachment: fixed;
 }
 
 /* Hide Scrollbars */
@@ -55,62 +52,78 @@ body {
   background: transparent;
 }
 
-/* Editorial Glass & Surface Panels */
+/* Editorial Panels (No Neon Glows) */
 .editorial-card {
-  background: #080d17;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 14px;
-  transition: border-color 0.2s ease, transform 0.2s ease;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  transition: border-color 0.15s ease;
 }
 
 .editorial-card:hover {
-  border-color: rgba(0, 229, 255, 0.3);
+  border-color: var(--border-focus);
 }
 
-.editorial-card-highlight {
-  background: #0c1322;
-  border: 1px solid rgba(0, 229, 255, 0.35);
-  border-radius: 14px;
-  box-shadow: 0 0 25px rgba(0, 229, 255, 0.06);
+.editorial-card-active {
+  background: var(--bg-card);
+  border: 1px solid var(--accent);
 }
 
 .text-accent {
-  color: #00e5ff;
-}
-
-.text-gradient-cyan {
-  color: #00e5ff;
+  color: var(--accent);
 }
 
 .btn-primary {
-  background: #00e5ff;
-  color: #05080f;
+  background: #f1f5f9;
+  color: #090a0d;
   font-family: var(--font-heading);
-  font-weight: 700;
-  border-radius: 10px;
-  padding: 10px 22px;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  font-weight: 600;
+  font-size: 13px;
+  border-radius: 6px;
+  padding: 8px 18px;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid transparent;
+}
+
+.btn-primary:hover {
+  background: #ffffff;
+  color: #000000;
+  transform: translateY(-1px);
+}
+
+.btn-accent {
+  background: #00d2ff;
+  color: #090a0d;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 13px;
+  border-radius: 6px;
+  padding: 8px 18px;
+  transition: all 0.15s ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
 }
 
-.btn-primary:hover {
-  background: #33ebff;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 20px rgba(0, 229, 255, 0.3);
+.btn-accent:hover {
+  background: #38bdf8;
 }
 
 .btn-secondary {
-  background: #0c1322;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #f8fafc;
+  background: #141720;
+  border: 1px solid var(--border-subtle);
+  color: #e2e8f0;
   font-family: var(--font-heading);
-  font-weight: 600;
-  border-radius: 10px;
-  padding: 10px 20px;
-  transition: all 0.2s ease;
+  font-weight: 500;
+  font-size: 13px;
+  border-radius: 6px;
+  padding: 8px 16px;
+  transition: all 0.15s ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -118,39 +131,39 @@ body {
 }
 
 .btn-secondary:hover {
-  background: #111b2e;
-  border-color: rgba(0, 229, 255, 0.4);
-  color: #00e5ff;
+  background: #1a1e2b;
+  border-color: var(--border-focus);
+  color: #ffffff;
 }
 
 /* Wallet Adapter Custom Overrides */
 .wallet-adapter-button {
   font-family: var(--font-heading) !important;
-  background: #0c1322 !important;
-  border: 1px solid rgba(0, 229, 255, 0.3) !important;
-  color: #00e5ff !important;
-  border-radius: 8px !important;
-  font-weight: 700 !important;
-  font-size: 13px !important;
-  padding: 8px 18px !important;
-  height: 38px !important;
-  transition: all 0.2s ease !important;
+  background: #141720 !important;
+  border: 1px solid #202430 !important;
+  color: #f1f5f9 !important;
+  border-radius: 6px !important;
+  font-weight: 600 !important;
+  font-size: 12px !important;
+  padding: 6px 14px !important;
+  height: 34px !important;
+  transition: all 0.15s ease !important;
 }
 
 .wallet-adapter-button:hover {
-  background: #00e5ff !important;
-  color: #05080f !important;
-  box-shadow: 0 0 20px rgba(0, 229, 255, 0.35) !important;
+  background: #1a1e2b !important;
+  border-color: #3b4255 !important;
+  color: #00d2ff !important;
 }
 
 .wallet-adapter-button-trigger {
-  background: #0c1322 !important;
+  background: #141720 !important;
 }
 
 /* Data Terminal Window */
 .terminal-window {
-  background: #05080f;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
+  background: #090a0d;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
   font-family: var(--font-mono);
 }

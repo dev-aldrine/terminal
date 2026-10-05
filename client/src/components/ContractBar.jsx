@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Copy, Check, Waves, Send, Globe } from 'lucide-react';
+import { Copy, Check, Activity, Send } from 'lucide-react';
 
 const TwitterIcon = ({ className = 'w-3.5 h-3.5' }) => (
   <svg className={className} viewBox="0 0 24 24" fill="currentColor">
@@ -7,9 +7,10 @@ const TwitterIcon = ({ className = 'w-3.5 h-3.5' }) => (
   </svg>
 );
 
-export function ContractBar({ siteConfig, totalSpawned = 3, activePools = 3 }) {
+export function ContractBar({ siteConfig, totalSpawned = 3 }) {
   const [copied, setCopied] = useState(false);
 
+  // Full contract address (Never truncated)
   const contractAddress = siteConfig?.ca || 'AgenSea7xJkM9QvW2p8L4s5T3u1Y6z8N0m2B4v6C8d0Ef';
   const twitterUrl = siteConfig?.twitter || 'https://x.com/agensea';
 
@@ -21,35 +22,40 @@ export function ContractBar({ siteConfig, totalSpawned = 3, activePools = 3 }) {
   };
 
   return (
-    <div className="w-full bg-[#05080f] border-b border-white/[0.08] py-2 px-4 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto flex items-center justify-between gap-3 text-xs">
+    <div className="w-full bg-[#090a0d] border-b border-[#202430] py-2 px-4 sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-xs">
         
-        {/* Left: Metrics & Status */}
-        <div className="flex items-center gap-4 text-slate-400 font-mono">
-          <div className="flex items-center gap-1.5 text-[#00e5ff]">
-            <Waves className="w-3.5 h-3.5" />
-            <span>{totalSpawned} Active Marine Agents</span>
+        {/* Left: Metrics & Cost */}
+        <div className="flex items-center gap-4 text-slate-400 font-mono text-[11px]">
+          <div className="flex items-center gap-1.5 text-[#00d2ff]">
+            <Activity className="w-3.5 h-3.5" />
+            <span>{totalSpawned} Active Agents</span>
           </div>
           <span className="text-slate-700 hidden sm:inline">•</span>
-          <div className="hidden sm:flex items-center gap-1 text-slate-400">
-            <span>Launch Fee:</span>
+          <div className="hidden sm:flex items-center gap-1.5 text-slate-400">
+            <span>Launch Cost:</span>
             <strong className="text-white">~0.0001 SOL (Almost Free)</strong>
           </div>
         </div>
 
-        {/* Right: Contract Address & Socials */}
-        <div className="flex items-center gap-2">
+        {/* Right: Full Untruncated CA & Social Links */}
+        <div className="flex items-center gap-2 flex-wrap">
           {contractAddress && (
             <button
               onClick={handleCopy}
-              className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#0c1322] hover:bg-[#111b2e] border border-white/[0.08] hover:border-[#00e5ff]/40 text-slate-300 transition-all font-mono text-xs"
-              title="Click to copy official CA"
+              className="flex items-center gap-2 px-2.5 py-1 rounded bg-[#141720] hover:bg-[#1a1e2b] border border-[#202430] hover:border-[#3b4255] text-slate-300 transition-colors font-mono text-xs"
+              title="Click to copy full CA"
             >
-              <span className="text-slate-500">CA:</span>
-              <span className="text-[#00e5ff] font-medium">
-                {contractAddress.slice(0, 4)}...{contractAddress.slice(-4)}
+              <span className="text-slate-500 font-medium">CA:</span>
+              {/* FULL UNTRUNCATED ADDRESS */}
+              <span className="text-white font-medium select-all">
+                {contractAddress}
               </span>
-              {copied ? <Check className="w-3 h-3 text-[#00ffa3]" /> : <Copy className="w-3 h-3 text-slate-400" />}
+              {copied ? (
+                <Check className="w-3.5 h-3.5 text-[#00ffa3] shrink-0" />
+              ) : (
+                <Copy className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+              )}
             </button>
           )}
 
@@ -57,8 +63,8 @@ export function ContractBar({ siteConfig, totalSpawned = 3, activePools = 3 }) {
             href={twitterUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="p-1.5 rounded bg-[#0c1322] hover:bg-[#111b2e] border border-white/[0.08] text-slate-400 hover:text-[#00e5ff] transition-all"
-            title="AgenSea on X"
+            className="p-1.5 rounded bg-[#141720] hover:bg-[#1a1e2b] border border-[#202430] text-slate-400 hover:text-white transition-colors"
+            title="X / Twitter"
           >
             <TwitterIcon />
           </a>
@@ -67,8 +73,8 @@ export function ContractBar({ siteConfig, totalSpawned = 3, activePools = 3 }) {
             href="https://t.me/agensea"
             target="_blank"
             rel="noopener noreferrer"
-            className="p-1.5 rounded bg-[#0c1322] hover:bg-[#111b2e] border border-white/[0.08] text-slate-400 hover:text-[#00e5ff] transition-all"
-            title="AgenSea Telegram"
+            className="p-1.5 rounded bg-[#141720] hover:bg-[#1a1e2b] border border-[#202430] text-slate-400 hover:text-white transition-colors"
+            title="Telegram"
           >
             <Send className="w-3.5 h-3.5" />
           </a>

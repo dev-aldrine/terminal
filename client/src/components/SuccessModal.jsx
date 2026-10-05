@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ExternalLink, Check, Copy, Rocket, Waves, Droplets, Sparkles, RefreshCw } from 'lucide-react';
+import { ExternalLink, Check, Copy, Rocket, Layers, CheckCircle2 } from 'lucide-react';
 
 export const SuccessModal = ({ data, onClose }) => {
   const [copied, setCopied] = useState(false);
@@ -15,81 +15,79 @@ export const SuccessModal = ({ data, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md">
-      <div className="glass-panel-glow w-full max-w-lg rounded-3xl p-6 md:p-8 border-2 border-cyan-400 shadow-[0_0_60px_rgba(0,245,255,0.4)] text-center relative space-y-5 animate-in fade-in zoom-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+      <div className="editorial-card-active w-full max-w-lg p-6 bg-[#0f1117] text-center relative space-y-4">
         
-        {/* Glow Header Badge */}
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950 border border-cyan-400 text-cyan-300 font-mono text-xs font-bold">
-          <Sparkles className="w-3.5 h-3.5 text-cyan-400 animate-spin" />
-          <span>MARINE AI ENTITY SPAWNED</span>
+        <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#141720] border border-[#202430] text-xs font-mono text-[#00ffa3]">
+          <CheckCircle2 className="w-3.5 h-3.5" />
+          <span>TOKEN DEPLOYED TO SOLANA</span>
         </div>
 
-        <h2 className="text-2xl md:text-3xl font-extrabold text-white">
-          {data.name} <span className="text-gradient-cyan font-mono">(${data.symbol})</span> Live!
+        <h2 className="text-xl md:text-2xl font-bold text-white font-heading">
+          {data.name} <span className="text-[#00d2ff] font-mono">(${data.symbol})</span> Live
         </h2>
-        <p className="text-slate-400 text-xs md:text-sm">
-          Your autonomous creature has hatched into the AgenSea ocean and its bonding curve is active on Pump.fun.
+        <p className="text-slate-400 text-xs leading-relaxed">
+          Your marine entity has hatched into the AgenSea ecosystem and its bonding curve is live on Pump.fun.
         </p>
 
-        {/* Creature Avatar Preview */}
         {data.imageUrl && (
-          <div className="w-32 h-32 mx-auto rounded-2xl bg-slate-950 border-2 border-cyan-400/60 p-1.5 shadow-[0_0_30px_rgba(0,245,255,0.3)] overflow-hidden">
-            <img src={data.imageUrl} alt={data.name} className="w-full h-full object-cover rounded-xl" />
+          <div className="w-28 h-28 mx-auto rounded bg-[#090a0d] border border-[#202430] p-1 overflow-hidden">
+            <img src={data.imageUrl} alt={data.name} className="w-full h-full object-cover rounded" />
           </div>
         )}
 
-        {/* Details Card */}
-        <div className="bg-slate-950/80 p-4 rounded-2xl border border-cyan-500/20 text-left font-mono text-xs space-y-2.5">
-          <div className="flex items-center justify-between">
-            <span className="text-slate-400">Mint Address:</span>
-            <div className="flex items-center gap-2">
-              <span className="text-cyan-300 font-bold">
-                {data.mintPublicKey ? `${data.mintPublicKey.slice(0, 6)}...${data.mintPublicKey.slice(-6)}` : 'Generating...'}
+        {/* Details Card with FULL UNTRUNCATED MINT ADDRESS */}
+        <div className="bg-[#090a0d] p-3.5 rounded border border-[#202430] text-left font-mono text-xs space-y-2.5">
+          <div>
+            <span className="text-slate-500 text-[11px] block mb-1">Full Mint Address:</span>
+            <div className="flex items-center justify-between gap-2 p-2 rounded bg-[#141720] border border-[#202430]">
+              <span className="text-white text-[11px] break-all select-all font-semibold">
+                {data.mintPublicKey}
               </span>
               <button
                 onClick={copyAddress}
-                className="p-1 rounded bg-slate-900 border border-slate-700 hover:border-cyan-400 text-slate-300 hover:text-white transition-all"
-                title="Copy Address"
+                className="p-1 rounded bg-[#1a1e2b] hover:bg-[#202430] border border-[#3b4255] text-slate-300 hover:text-white transition-colors shrink-0"
+                title="Copy Full Mint Address"
               >
-                {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                {copied ? <Check className="w-3.5 h-3.5 text-[#00ffa3]" /> : <Copy className="w-3.5 h-3.5" />}
               </button>
             </div>
           </div>
 
           {data.signature && (
-            <div className="flex items-center justify-between pt-1 border-t border-slate-900">
-              <span className="text-slate-400">Solana Transaction:</span>
+            <div className="flex items-center justify-between pt-1 border-t border-[#202430]">
+              <span className="text-slate-500">Transaction:</span>
               <a
                 href={`https://solscan.io/tx/${data.signature}`}
                 target="_blank"
                 rel="noreferrer"
-                className="text-emerald-400 hover:underline flex items-center gap-1 font-bold"
+                className="text-[#00d2ff] hover:underline flex items-center gap-1 font-semibold"
               >
-                <span>View Solscan</span>
+                <span>Solscan</span>
                 <ExternalLink className="w-3 h-3" />
               </a>
             </div>
           )}
         </div>
 
-        {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
+        {/* Actions */}
+        <div className="flex flex-col sm:flex-row items-center gap-2.5 pt-1">
           <a
             href={data.mintPublicKey ? `https://pump.fun/coin/${data.mintPublicKey}` : 'https://pump.fun'}
             target="_blank"
             rel="noreferrer"
-            className="ocean-btn-primary w-full py-3.5 rounded-xl font-extrabold text-sm flex items-center justify-center gap-2"
+            className="btn-accent w-full text-xs font-semibold py-2.5"
           >
-            <Rocket className="w-4 h-4" />
+            <Rocket className="w-3.5 h-3.5" />
             <span>Trade on Pump.fun</span>
           </a>
 
           <button
             onClick={onClose}
-            className="w-full py-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-cyan-500/30 text-white font-mono text-xs font-bold flex items-center justify-center gap-2 transition-all"
+            className="btn-secondary w-full text-xs font-medium py-2.5"
           >
-            <Waves className="w-4 h-4 text-cyan-400" />
-            <span>Enter The Aquarium</span>
+            <Layers className="w-3.5 h-3.5 text-slate-400" />
+            <span>Enter Ecosystem</span>
           </button>
         </div>
 
