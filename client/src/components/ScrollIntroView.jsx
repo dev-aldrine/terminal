@@ -133,10 +133,11 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
                   className="w-full text-center space-y-4 z-10 py-1 flex flex-col items-center justify-center"
                 >
                   {/* Card Top Center Branding */}
-                  <div className="text-base font-black tracking-widest font-heading uppercase drop-shadow-[0_0_12px_rgba(0,210,255,0.4)]">
-                    <span className="text-white">AGEN</span>
-                    <span className="text-[#00d2ff]">SEA</span>
-                  </div>
+                  <img
+                    src="/logo.png"
+                    alt="AgenSea"
+                    className="h-8 sm:h-10 w-auto object-contain mx-auto drop-shadow-[0_0_15px_rgba(0,210,255,0.45)]"
+                  />
 
                   <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white font-heading tracking-tight leading-[1.12] text-center flex flex-col items-center justify-center w-full">
                     <span>Spawn autonomous</span>

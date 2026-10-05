@@ -13,6 +13,7 @@ import { FaucetView } from './components/FaucetView';
 import { AgentTerminalView } from './components/AgentTerminalView';
 import { SuccessModal } from './components/SuccessModal';
 import LightPillar from './components/LightPillar';
+import { OceanFishes3D } from './components/OceanFishes3D';
 
 import { Waves } from 'lucide-react';
 
@@ -278,7 +279,7 @@ export function App() {
   return (
     <div className="relative h-screen w-screen overflow-hidden flex flex-col justify-center items-center bg-[#05080f] text-[#e2e8f0]">
       
-      {/* Background Light Pillar */}
+      {/* Background 3D Low-Poly Roaming Fishes & Light Pillar */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
         <LightPillar
           topColor="#64b5ff"
@@ -293,6 +294,7 @@ export function App() {
           interactive={false}
           mixBlendMode="normal"
         />
+        <OceanFishes3D />
       </div>
 
       {/* Top Header & Navigation Bar (Floating) */}

@@ -26,13 +26,16 @@ export function Navbar({ siteConfig, onLogoClick }) {
     <header className="w-full bg-transparent py-3 px-4 sm:px-6 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto relative flex items-center justify-between min-h-[40px]">
         
-        {/* Left: Logo Text */}
+        {/* Left: Logo Image */}
         <div
           onClick={onLogoClick}
           className="flex items-center cursor-pointer hover:opacity-90 transition-opacity z-10"
         >
-          <span className="text-xl font-black tracking-tight font-heading text-white">AGEN</span>
-          <span className="text-xl font-black tracking-tight font-heading text-[#00d2ff]">SEA</span>
+          <img
+            src="/logo.png"
+            alt="AgenSea"
+            className="h-7 sm:h-8 w-auto object-contain drop-shadow-[0_0_10px_rgba(0,210,255,0.4)]"
+          />
         </div>
 
         {/* Center: Mathematically Centered Full CA Button */}
