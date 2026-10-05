@@ -122,8 +122,14 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -12 }}
                   transition={{ duration: 0.28, ease: 'easeOut' }}
-                  className="w-full text-center space-y-4 z-10 py-2 flex flex-col items-center justify-center"
+                  className="w-full text-center space-y-4 z-10 py-1 flex flex-col items-center justify-center"
                 >
+                  {/* Card Top Center Branding */}
+                  <div className="inline-flex items-center justify-center gap-1.5 px-4 py-1 rounded-full bg-[#04162e]/70 border border-cyan-400/40 backdrop-blur-md shadow-sm">
+                    <span className="text-sm font-black tracking-wider font-heading text-white">AGEN</span>
+                    <span className="text-sm font-black tracking-wider font-heading text-[#00d2ff]">SEA</span>
+                  </div>
+
                   <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white font-heading tracking-tight leading-[1.12] text-center flex flex-col items-center justify-center w-full">
                     <span>Spawn autonomous</span>
                     <span className="text-[#00d2ff] flex items-center justify-center w-full mt-1">
