@@ -276,7 +276,7 @@ export function App() {
   };
 
   return (
-    <div className="flex-1 min-h-screen flex flex-col justify-between bg-[#05080f] text-[#e2e8f0] relative">
+    <div className="h-screen w-full flex flex-col justify-between bg-[#05080f] text-[#e2e8f0] relative overflow-hidden">
       
       {/* Background Light Pillar */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
@@ -295,20 +295,20 @@ export function App() {
         />
       </div>
 
-      {/* Unified Single Navbar */}
-      <Navbar
-        siteConfig={siteConfig}
-        onLogoClick={() => setCurrentStep(1)}
-      />
+      {/* Top Header & Navigation Bar */}
+      <div className="w-full shrink-0 z-30">
+        <Navbar
+          siteConfig={siteConfig}
+          onLogoClick={() => setCurrentStep(1)}
+        />
+        <StepNavigation
+          currentStep={currentStep}
+          onStepChange={(step) => setCurrentStep(step)}
+        />
+      </div>
 
-      {/* Step Navigation */}
-      <StepNavigation
-        currentStep={currentStep}
-        onStepChange={(step) => setCurrentStep(step)}
-      />
-
-      {/* Main Container - Centered Vertically */}
-      <main className="flex-1 w-full max-w-6xl mx-auto px-4 py-2 flex flex-col justify-center items-center relative z-10">
+      {/* Main Container - Dead Centered in Viewport */}
+      <main className="flex-1 w-full max-w-6xl mx-auto px-4 py-1 flex flex-col justify-center items-center relative z-10 min-h-0 overflow-y-auto">
         
         {currentStep === 1 && (
           <ScrollIntroView
@@ -372,7 +372,7 @@ export function App() {
       )}
 
       {/* Footer */}
-      <footer className="w-full border-t border-cyan-500/15 py-3.5 px-4 bg-[#030712]/70 backdrop-blur-xl text-xs font-mono text-slate-400 relative z-20">
+      <footer className="w-full shrink-0 border-t border-cyan-500/15 py-3 px-4 bg-[#030712]/70 backdrop-blur-xl text-xs font-mono text-slate-400 relative z-20">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
           <p>© 2026 AgenSea. Autonomous Marine Intelligence on Solana Pump.fun.</p>
           <div className="flex items-center gap-4 text-slate-400">
