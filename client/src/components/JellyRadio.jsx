@@ -1,12 +1,12 @@
 'use client';
 
 import React, { forwardRef, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { animate, motion, motionValue, useReducedMotion } from 'framer-motion';
+import { animate, motion, motionValue, useReducedMotion, useTransform } from 'framer-motion';
 
 import './JellyRadio.css';
 
 const DEFAULT_ITEMS = ['Off', 'Low', 'Medium', 'High', 'Max'];
-const SIZES = { sm: [28, 12, 12], md: [36, 12, 14], lg: [44, 14, 18] };
+const SIZES = { sm: [28, 12, 12], md: [36, 13, 16], lg: [44, 14, 20] };
 
 const spring = (k, m, bounce) => ({
   type: 'spring',
@@ -15,18 +15,13 @@ const spring = (k, m, bounce) => ({
   mass: m
 });
 
-const Chip = forwardRef(function Chip({ mv, children, style = {}, ...rest }, ref) {
+const Chip = forwardRef(function Chip({ mv, children, ...rest }, ref) {
+  const transform = useTransform(
+    [mv.x, mv.sx, mv.sy],
+    ([x, sx, sy]) => `translateX(${x}px) scale(${sx}, ${sy})`
+  );
   return (
-    <motion.button
-      ref={ref}
-      style={{
-        x: mv.x,
-        scaleX: mv.sx,
-        scaleY: mv.sy,
-        ...style
-      }}
-      {...rest}
-    >
+    <motion.button ref={ref} style={{ transform }} {...rest}>
       {children}
     </motion.button>
   );
@@ -37,27 +32,27 @@ export default function JellyRadio({
   value,
   defaultValue,
   onChange,
-  chipColor = '#141720',
-  activeColor = '#f1f5f9',
-  textColor = '#94a3b8',
-  activeTextColor = '#090a0d',
+  chipColor = '#27272a',
+  activeColor = '#f5f5f5',
+  textColor = '#f5f5f5',
+  activeTextColor = '#18181b',
   size = 'md',
   gap = 8,
-  radius = 8,
+  radius = 18,
   swell = 0.2,
   barge = 6,
   shrink = 0.05,
   jelly = 1,
-  bounce = 0.28,
+  bounce = 0.25,
   stagger = 22,
   stiffness = 580,
   disabled = false,
-  ariaLabel = 'Navigation Steps',
+  ariaLabel = 'Options',
   className = ''
 }) {
   const list = items.map(it => (typeof it === 'string' ? { value: it, label: it } : it));
   const [inner, setInner] = useState(() => defaultValue ?? list[0]?.value);
-  const current = value !== undefined ? value : inner;
+  const current = value ?? inner;
   const at = Math.max(
     0,
     list.findIndex(it => String(it.value) === String(current))
@@ -122,7 +117,6 @@ export default function JellyRadio({
     group.style.setProperty('--jr-pad-x', `${Math.ceil((maxW * swell * 1.3) / 2 + barge) + 2}px`);
     group.style.setProperty('--jr-pad-y', `${Math.ceil((chipH * swell) / 2) + 2}px`);
   };
-
   useLayoutEffect(() => {
     const settle = () => {
       measure();
@@ -133,14 +127,14 @@ export default function JellyRadio({
     if (groupRef.current) observer.observe(groupRef.current);
     document.fonts?.ready.then(settle);
     return () => observer.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [itemsKey, size, gap, swell, barge, shrink]);
-
   useEffect(() => {
     if (applied.current === at) return;
     applied.current = at;
-    apply(at, false); // Animate smoothly when active step changes
+    apply(at, false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [at]);
-
   useEffect(
     () => () =>
       mvs.current.forEach(mv => {
@@ -158,7 +152,6 @@ export default function JellyRadio({
     if (value === undefined) setInner(list[i].value);
     onChange?.(list[i].value, i);
   };
-
   const stepFrom = (i, dir) => {
     const n = list.length;
     let j = i;
@@ -168,7 +161,6 @@ export default function JellyRadio({
     }
     return i;
   };
-
   const onKeyDown = (e, i) => {
     let next = null;
     if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next = stepFrom(i, 1);
@@ -215,7 +207,7 @@ export default function JellyRadio({
           disabled={disabled || !!it.disabled}
           className="jelly-radio__chip"
           data-on={i === at ? 'true' : 'false'}
-          onClick={e => commit(i, false)}
+          onClick={e => commit(i, e.detail === 0)}
           onKeyDown={e => onKeyDown(e, i)}
         >
           <span className="jelly-radio__skin">
