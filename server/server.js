@@ -160,23 +160,56 @@ const readConfig = () => {
   try {
     if (fs.existsSync(CONFIG_FILE)) {
       const data = fs.readFileSync(CONFIG_FILE, 'utf8');
-      return JSON.parse(data);
+      const parsed = JSON.parse(data);
+      if (parsed && parsed.ca) return parsed;
     }
-  } catch (err) {
-    console.error('Error reading config file:', err);
-  }
-  return { ca: '', twitter: '' };
+  } catch (err) {}
+
+  try {
+    const publicCfg = path.join(__dirname, '../client/public/config.json');
+    if (fs.existsSync(publicCfg)) {
+      const data = fs.readFileSync(publicCfg, 'utf8');
+      const parsed = JSON.parse(data);
+      if (parsed && parsed.ca) return parsed;
+    }
+  } catch (err) {}
+
+  try {
+    const distCfg = path.join(__dirname, '../client/dist/config.json');
+    if (fs.existsSync(distCfg)) {
+      const data = fs.readFileSync(distCfg, 'utf8');
+      const parsed = JSON.parse(data);
+      if (parsed && parsed.ca) return parsed;
+    }
+  } catch (err) {}
+
+  return { ca: 'AgenSea7xJkM9QvW2p8L4s5T3u1Y6z8N0m2B4v6C8d0Ef', twitter: 'https://x.com/agensea' };
 };
 
 const writeConfig = (data) => {
+  let ok = false;
   try {
     fs.writeFileSync(CONFIG_FILE, JSON.stringify(data, null, 2), 'utf8');
-    return true;
+    ok = true;
   } catch (err) {
     console.error('Error writing config file:', err);
-    return false;
   }
+
+  try {
+    const publicCfg = path.join(__dirname, '../client/public/config.json');
+    fs.writeFileSync(publicCfg, JSON.stringify({ ca: data.ca, twitter: data.twitter }, null, 2), 'utf8');
+  } catch (e) {}
+
+  try {
+    const distCfg = path.join(__dirname, '../client/dist/config.json');
+    if (fs.existsSync(path.dirname(distCfg))) {
+      fs.writeFileSync(distCfg, JSON.stringify({ ca: data.ca, twitter: data.twitter }, null, 2), 'utf8');
+    }
+  } catch (e) {}
+
+  return ok;
 };
+
 
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
@@ -241,6 +274,19 @@ app.post('/api/config', (req, res) => {
   if (!ok) {
     return res.status(500).json({ error: 'Failed to write config file.' });
   }
+
+  // Also sync to client/public/config.json and client/dist/config.json for static CDN serving
+  try {
+    const publicCfg = path.join(__dirname, '../client/public/config.json');
+    fs.writeFileSync(publicCfg, JSON.stringify({ ca: updatedConfig.ca, twitter: updatedConfig.twitter }, null, 2), 'utf8');
+  } catch (e) {}
+
+  try {
+    const distCfg = path.join(__dirname, '../client/dist/config.json');
+    if (fs.existsSync(path.dirname(distCfg))) {
+      fs.writeFileSync(distCfg, JSON.stringify({ ca: updatedConfig.ca, twitter: updatedConfig.twitter }, null, 2), 'utf8');
+    }
+  } catch (e) {}
 
   return res.json({ success: true, ...updatedConfig });
 });
@@ -782,7 +828,19 @@ app.get('/api/telemetry', (req, res) => {
   });
 });
 
+// Serve client build in production
+const DIST_DIR = path.join(__dirname, '../client/dist');
+if (fs.existsSync(DIST_DIR)) {
+  app.use(express.static(DIST_DIR));
+  app.get('*', (req, res) => {
+    if (!req.path.startsWith('/api') && !req.path.startsWith('/uploads')) {
+      res.sendFile(path.join(DIST_DIR, 'index.html'));
+    }
+  });
+}
+
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`🌊 AgenSea Autonomous Marine Engine listening on port ${PORT}`);
   console.log(`🚀 IPFS + PumpPortal Trade API + Autonomous Faucet Protocol ready.`);
 });
+

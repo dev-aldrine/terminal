@@ -58,7 +58,12 @@ function configApiPlugin() {
                 ...(typeof parsed.pinataJwt === 'string' ? { pinataJwt: parsed.pinataJwt.trim() } : {}),
                 updatedAt: new Date().toISOString()
               };
+              const clientPublicConfigFile = path.resolve(baseDir, 'public/config.json');
               fs.writeFileSync(configFile, JSON.stringify(updated, null, 2), 'utf8');
+              try {
+                fs.writeFileSync(clientPublicConfigFile, JSON.stringify({ ca: updated.ca, twitter: updated.twitter }, null, 2), 'utf8');
+              } catch (e) {}
+
               res.setHeader('Content-Type', 'application/json');
               res.end(JSON.stringify({ success: true, ...updated }));
               return;

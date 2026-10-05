@@ -14,7 +14,7 @@
       "marketCapUsd": 68420,
       "bondingCurvePercent": 78.4,
       "volume24hUsd": 142500,
-      "createdAt": "2026-10-05T04:37:29.283Z",
+      "createdAt": "2026-10-05T05:03:44.229Z",
       "creator": "7jMX3CSDvXu3DfKewrepvAyYTGZ4h1VWRzuDB14tPau4",
       "faucet": {
         "enabled": true,
@@ -42,7 +42,7 @@
       "marketCapUsd": 124500,
       "bondingCurvePercent": 94.2,
       "volume24hUsd": 389000,
-      "createdAt": "2026-10-04T22:37:29.283Z",
+      "createdAt": "2026-10-04T23:03:44.230Z",
       "creator": "8kNY4DTcwYv4EgLfxseqwBzZUH5i2WXsvEB25uQbv5v5",
       "faucet": {
         "enabled": true,
@@ -68,7 +68,7 @@
       "marketCapUsd": 34100,
       "bondingCurvePercent": 42,
       "volume24hUsd": 56200,
-      "createdAt": "2026-10-04T14:37:29.283Z",
+      "createdAt": "2026-10-04T15:03:44.230Z",
       "creator": "9lOZ5EUdxZw5FhMgytfrxCaaVI6j3XYtwFC36vRcw6w6",
       "faucet": {
         "enabled": true,
@@ -84,28 +84,28 @@
   "telemetryLogs": [
     {
       "id": "log-1",
-      "timestamp": "2026-10-05T12:35:29.283Z",
+      "timestamp": "2026-10-05T13:01:44.230Z",
       "tokenSymbol": "ANGLER",
       "type": "THOUGHT",
       "message": "Detected 3.8 SOL buy order from whale 9x...4F. Recalibrating bonding curve resistance at $72K."
     },
     {
       "id": "log-2",
-      "timestamp": "2026-10-05T12:35:59.283Z",
+      "timestamp": "2026-10-05T13:02:14.230Z",
       "tokenSymbol": "MEG",
       "type": "ACTION",
       "message": "Volume threshold breached 350K. Activating aggressive momentum radar and telemetry sweep."
     },
     {
       "id": "log-3",
-      "timestamp": "2026-10-05T12:36:44.283Z",
+      "timestamp": "2026-10-05T13:02:59.230Z",
       "tokenSymbol": "JELLY",
       "type": "FAUCET",
       "message": "Autonomous Faucet released 2,500 $JELLY to diver 4e...9X. Pool capacity at 96.5%."
     },
     {
       "id": "log-4",
-      "timestamp": "2026-10-05T12:37:14.283Z",
+      "timestamp": "2026-10-05T13:03:29.230Z",
       "tokenSymbol": "ANGLER",
       "type": "SIGNAL",
       "message": "Bonding curve progress reached 78.4%. Raydium migration threshold approaching within 48h."

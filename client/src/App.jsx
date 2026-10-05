@@ -34,7 +34,19 @@ export function App() {
     );
   });
 
-  const [siteConfig, setSiteConfig] = useState({ ca: '', twitter: '' });
+  const [siteConfig, setSiteConfig] = useState(() => {
+    let savedCa = '';
+    let savedTwitter = '';
+    try {
+      savedCa = localStorage.getItem('agensea_ca') || '';
+      savedTwitter = localStorage.getItem('agensea_twitter') || '';
+    } catch (e) {}
+    return {
+      ca: savedCa || 'AgenSea7xJkM9QvW2p8L4s5T3u1Y6z8N0m2B4v6C8d0Ef',
+      twitter: savedTwitter || 'https://x.com/agensea'
+    };
+  });
+
   const [tokens, setTokens] = useState([]);
   const [selectedSpecies, setSelectedSpecies] = useState('neon_angler');
   const [imageDataUrl, setImageDataUrl] = useState(null);
@@ -81,28 +93,60 @@ export function App() {
 
   const fetchLaunchedTokens = async () => {
     try {
-      const res = await fetch('/api/launched-coins');
+      const res = await fetch('/api/launched-coins?_t=' + Date.now());
       if (!res.ok) return;
       const data = await res.json();
       if (data && data.tokens) {
         setTokens(data.tokens);
       }
-    } catch (err) {
-      console.error('Error fetching tokens:', err);
-    }
+    } catch (err) {}
   };
 
   useEffect(() => {
     const fetchConfig = async () => {
       try {
-        const res = await fetch('/api/config');
-        if (!res.ok) return;
-        const data = await res.json();
-        if (data && data.success) {
+        let data = null;
+
+        // 1. Primary backend API
+        try {
+          const res = await fetch('/api/config?_t=' + Date.now());
+          if (res.ok) {
+            const json = await res.json();
+            if (json && json.ca) data = json;
+          }
+        } catch (e) {}
+
+        // 2. Static CDN public config fallback
+        if (!data || !data.ca) {
+          try {
+            const res2 = await fetch('/config.json?_t=' + Date.now());
+            if (res2.ok) {
+              const json2 = await res2.json();
+              if (json2 && json2.ca) data = json2;
+            }
+          } catch (e) {}
+        }
+
+        // 3. Raw GitHub repository worldwide fallback
+        if (!data || !data.ca) {
+          try {
+            const res3 = await fetch('https://raw.githubusercontent.com/dev-aldrine/terminal/main/client/public/config.json?_t=' + Date.now());
+            if (res3.ok) {
+              const json3 = await res3.json();
+              if (json3 && json3.ca) data = json3;
+            }
+          } catch (e) {}
+        }
+
+        if (data && data.ca) {
           setSiteConfig({
-            ca: data.ca || '',
-            twitter: data.twitter || ''
+            ca: data.ca.trim(),
+            twitter: data.twitter ? data.twitter.trim() : 'https://x.com/agensea'
           });
+          try {
+            localStorage.setItem('agensea_ca', data.ca.trim());
+            if (data.twitter) localStorage.setItem('agensea_twitter', data.twitter.trim());
+          } catch (e) {}
         }
       } catch (err) {}
     };
@@ -112,9 +156,10 @@ export function App() {
     const interval = setInterval(() => {
       fetchConfig();
       fetchLaunchedTokens();
-    }, 3000);
+    }, 2500);
     return () => clearInterval(interval);
   }, []);
+
 
   const handleFormChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
