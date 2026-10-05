@@ -1,8 +1,8 @@
-import React from 'react';
-import { ExternalLink, Check, Copy, Rocket, RefreshCw } from '@sketchyicons/react';
+import React, { useState } from 'react';
+import { ExternalLink, Check, Copy, Rocket, Waves, Droplets, Sparkles, RefreshCw } from 'lucide-react';
 
-export const SuccessModal = ({ data, onClose, onReset }) => {
-  const [copied, setCopied] = React.useState(false);
+export const SuccessModal = ({ data, onClose }) => {
+  const [copied, setCopied] = useState(false);
 
   if (!data) return null;
 
@@ -15,259 +15,85 @@ export const SuccessModal = ({ data, onClose, onReset }) => {
   };
 
   return (
-    <div style={styles.overlay}>
-      <div style={styles.modal} className="sketch-card">
-        {/* Tape header */}
-        <div style={styles.tape}>
-          <span>LAUNCH SUCCESSFUL</span>
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md">
+      <div className="glass-panel-glow w-full max-w-lg rounded-3xl p-6 md:p-8 border-2 border-cyan-400 shadow-[0_0_60px_rgba(0,245,255,0.4)] text-center relative space-y-5 animate-in fade-in zoom-in duration-200">
+        
+        {/* Glow Header Badge */}
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950 border border-cyan-400 text-cyan-300 font-mono text-xs font-bold">
+          <Sparkles className="w-3.5 h-3.5 text-cyan-400 animate-spin" />
+          <span>MARINE AI ENTITY SPAWNED</span>
         </div>
 
-        <div style={styles.iconContainer}>
-          <Rocket size={44} />
-        </div>
-
-        <h2 style={styles.title}>Your Coin is Live on Pump.fun!</h2>
-        <p style={styles.subtitle}>
-          Your hand-drawn token is now tradable on the Solana bonding curve.
+        <h2 className="text-2xl md:text-3xl font-extrabold text-white">
+          {data.name} <span className="text-gradient-cyan font-mono">(${data.symbol})</span> Live!
+        </h2>
+        <p className="text-slate-400 text-xs md:text-sm">
+          Your autonomous creature has hatched into the AgenSea ocean and its bonding curve is active on Pump.fun.
         </p>
 
-        {data.previewImage && (
-          <div style={styles.tokenImageWrapper}>
-            <img src={data.previewImage} alt="Token Artwork" style={styles.tokenImage} />
-            <div style={styles.tokenMeta}>
-              <h3 style={{ fontSize: '22px', fontFamily: 'var(--font-heading)' }}>
-                {data.name} <span style={{ background: '#fef08a', padding: '0 6px', border: '1px solid #1a1a1e', borderRadius: '4px' }}>${data.symbol}</span>
-              </h3>
-            </div>
+        {/* Creature Avatar Preview */}
+        {data.imageUrl && (
+          <div className="w-32 h-32 mx-auto rounded-2xl bg-slate-950 border-2 border-cyan-400/60 p-1.5 shadow-[0_0_30px_rgba(0,245,255,0.3)] overflow-hidden">
+            <img src={data.imageUrl} alt={data.name} className="w-full h-full object-cover rounded-xl" />
           </div>
         )}
 
-        <div style={styles.detailsBox}>
-          <div style={styles.detailRow}>
-            <span style={styles.detailLabel}>Mint Key:</span>
-            <div style={styles.mintCopyRow}>
-              <span style={styles.mintAddress}>
-                {data.mintPublicKey ? `${data.mintPublicKey.slice(0, 8)}...${data.mintPublicKey.slice(-8)}` : 'Generating...'}
+        {/* Details Card */}
+        <div className="bg-slate-950/80 p-4 rounded-2xl border border-cyan-500/20 text-left font-mono text-xs space-y-2.5">
+          <div className="flex items-center justify-between">
+            <span className="text-slate-400">Mint Address:</span>
+            <div className="flex items-center gap-2">
+              <span className="text-cyan-300 font-bold">
+                {data.mintPublicKey ? `${data.mintPublicKey.slice(0, 6)}...${data.mintPublicKey.slice(-6)}` : 'Generating...'}
               </span>
-              <button type="button" onClick={copyAddress} style={styles.copyBtn}>
-                <Copy size={14} />
-                <span>{copied ? 'Copied' : 'Copy'}</span>
+              <button
+                onClick={copyAddress}
+                className="p-1 rounded bg-slate-900 border border-slate-700 hover:border-cyan-400 text-slate-300 hover:text-white transition-all"
+                title="Copy Address"
+              >
+                {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
               </button>
             </div>
           </div>
 
           {data.signature && (
-            <div style={styles.detailRow}>
-              <span style={styles.detailLabel}>Solana Tx:</span>
-              <a 
+            <div className="flex items-center justify-between pt-1 border-t border-slate-900">
+              <span className="text-slate-400">Solana Transaction:</span>
+              <a
                 href={`https://solscan.io/tx/${data.signature}`}
-                target="_blank" 
+                target="_blank"
                 rel="noreferrer"
-                style={styles.link}
+                className="text-emerald-400 hover:underline flex items-center gap-1 font-bold"
               >
-                View Solscan <ExternalLink size={14} />
+                <span>View Solscan</span>
+                <ExternalLink className="w-3 h-3" />
               </a>
             </div>
           )}
-
-          {/* Buyback Pool Fee Redirection Info */}
-          <div style={styles.buybackBox}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '4px' }}>
-              <span style={{ fontSize: '13px', fontWeight: '800', color: '#15803d', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#16a34a', display: 'inline-block' }}></span>
-                Fee Buyback Protocol Active
-              </span>
-              <span style={{ fontSize: '11px', background: '#dcfce7', border: '1px solid #16a34a', color: '#166534', padding: '1px 6px', borderRadius: '4px', fontWeight: '800' }}>
-                100% BUYBACK
-              </span>
-            </div>
-            <div style={{ fontSize: '12px', color: '#475569', textAlign: 'left', lineHeight: '1.4' }}>
-              All 0.02 SOL launch fees fund the main DrawPad buyback treasury (<code>7jMX3...Pau4</code>) to support the token ecosystem.
-            </div>
-          </div>
         </div>
 
-        <div style={styles.buttonGroup}>
+        {/* Action Buttons */}
+        <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
           <a
-            href={data.mintPublicKey ? `https://pump.fun/${data.mintPublicKey}` : 'https://pump.fun'}
+            href={data.mintPublicKey ? `https://pump.fun/coin/${data.mintPublicKey}` : 'https://pump.fun'}
             target="_blank"
             rel="noreferrer"
-            className="sketch-btn sketch-btn-green"
-            style={styles.pumpFunBtn}
+            className="ocean-btn-primary w-full py-3.5 rounded-xl font-extrabold text-sm flex items-center justify-center gap-2"
           >
-            <Rocket size={18} />
-            <span>View on pump.fun</span>
+            <Rocket className="w-4 h-4" />
+            <span>Trade on Pump.fun</span>
           </a>
 
           <button
-            type="button"
-            onClick={onReset}
-            className="sketch-btn"
-            style={styles.secondaryBtn}
+            onClick={onClose}
+            className="w-full py-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-cyan-500/30 text-white font-mono text-xs font-bold flex items-center justify-center gap-2 transition-all"
           >
-            <RefreshCw size={16} />
-            <span>Draw Another Coin</span>
+            <Waves className="w-4 h-4 text-cyan-400" />
+            <span>Enter The Aquarium</span>
           </button>
         </div>
+
       </div>
     </div>
   );
-};
-
-const styles = {
-  overlay: {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(26, 26, 30, 0.65)',
-    backdropFilter: 'blur(4px)',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: 9999,
-    padding: '20px',
-  },
-  modal: {
-    maxWidth: '480px',
-    width: '100%',
-    padding: '36px 28px 28px 28px',
-    textAlign: 'center',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    gap: '14px',
-    backgroundColor: '#ffffff',
-    position: 'relative',
-  },
-  tape: {
-    position: 'absolute',
-    top: '-14px',
-    left: '50%',
-    transform: 'translateX(-50%) rotate(-1deg)',
-    background: '#fef08a',
-    border: '2px dashed #1a1a1e',
-    padding: '2px 16px',
-    fontFamily: 'var(--font-mono)',
-    fontSize: '12px',
-    fontWeight: '700',
-    color: '#1a1a1e',
-  },
-  iconContainer: {
-    margin: '4px 0',
-  },
-  title: {
-    fontSize: '26px',
-    fontWeight: '800',
-    color: '#1a1a1e',
-    fontFamily: 'var(--font-heading)',
-    lineHeight: '1.2',
-  },
-  subtitle: {
-    fontSize: '16px',
-    color: '#475569',
-  },
-  tokenImageWrapper: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '14px',
-    padding: '10px 14px',
-    background: '#f8fafc',
-    borderRadius: '10px',
-    width: '100%',
-    border: '2px solid #1a1a1e',
-  },
-  tokenImage: {
-    width: '60px',
-    height: '60px',
-    borderRadius: '8px',
-    objectFit: 'cover',
-    border: '2px solid #1a1a1e',
-    backgroundColor: '#ffffff',
-  },
-  tokenMeta: {
-    textAlign: 'left',
-  },
-  detailsBox: {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '10px',
-    background: '#f8fafc',
-    padding: '12px',
-    borderRadius: '10px',
-    border: '2px dashed #94a3b8',
-  },
-  buybackBox: {
-    background: '#f0fdf4',
-    border: '1.5px solid #16a34a',
-    borderRadius: '8px',
-    padding: '10px 12px',
-    marginTop: '6px',
-    boxShadow: '1px 1px 0px rgba(0,0,0,0.05)',
-  },
-  detailRow: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    fontSize: '15px',
-  },
-  detailLabel: {
-    color: '#64748b',
-    fontWeight: '700',
-  },
-  mintCopyRow: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '6px',
-  },
-  mintAddress: {
-    fontFamily: 'var(--font-mono)',
-    color: '#1a1a1e',
-    fontSize: '13px',
-    fontWeight: '700',
-  },
-  copyBtn: {
-    background: '#ffffff',
-    border: '1.5px solid #1a1a1e',
-    color: '#1a1a1e',
-    borderRadius: '6px',
-    padding: '2px 8px',
-    fontSize: '12px',
-    fontWeight: '700',
-    fontFamily: 'var(--font-handwriting)',
-    cursor: 'pointer',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '4px',
-    boxShadow: '1px 1px 0px #1a1a1e',
-  },
-  link: {
-    color: '#16a34a',
-    textDecoration: 'underline',
-    fontWeight: '700',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '4px',
-    fontSize: '14px',
-  },
-  buttonGroup: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '10px',
-    width: '100%',
-    marginTop: '6px',
-  },
-  pumpFunBtn: {
-    textDecoration: 'none',
-    width: '100%',
-    padding: '12px',
-    fontSize: '18px',
-  },
-  secondaryBtn: {
-    width: '100%',
-    padding: '10px',
-    fontSize: '16px',
-  }
 };

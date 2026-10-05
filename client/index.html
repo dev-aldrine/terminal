@@ -2,38 +2,21 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="apple-touch-icon" href="/logo.png" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="DrawPad - Hand-drawn sketch launchpad on pump.fun via PumpPortal" />
-    <title>DrawPad</title>
-    <!-- Hand-drawn & Sketch Google Fonts -->
+    <meta name="description" content="AgenSea - The Autonomous Marine AI Launchpad & Faucet Protocol on Solana pump.fun" />
+    <title>AgenSea 🌊 | Autonomous Marine AI Launchpad & Faucet Protocol</title>
+    <!-- Modern Cyber & Oceanic Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Gaegu:wght@400;700&family=Patrick+Hand&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Outfit:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
     <script>
       // Suppress Lit dev mode warning globally
       window.litDisableDevMode = true;
       globalThis.litDisableDevMode = true;
     </script>
   </head>
-  <body>
-    <!-- Embedded SVG Hand-Drawn / Sketch Vector Filters -->
-    <svg style="position: absolute; width: 0; height: 0; pointer-events: none;" aria-hidden="true">
-      <defs>
-        <!-- Organic Hand-Drawn Wobbly Ink Filter -->
-        <filter id="hand-drawn-sketch" x="-2%" y="-2%" width="104%" height="104%">
-          <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" result="noise" />
-          <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.2" xChannelSelector="R" yChannelSelector="G" />
-        </filter>
-        <!-- Subtle Pencil Texture Stroke Filter -->
-        <filter id="pencil-stroke" x="-2%" y="-2%" width="104%" height="104%">
-          <feTurbulence type="fractalNoise" baseFrequency="0.07" numOctaves="2" result="noise" />
-          <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.4" xChannelSelector="R" yChannelSelector="G" />
-        </filter>
-      </defs>
-    </svg>
-
+  <body class="bg-[#030712] text-slate-100 antialiased overflow-x-hidden">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

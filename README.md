@@ -1,55 +1,52 @@
-# DrawPad 🎨🚀
+# AgenSea 🌊🤖🐟
 
-**DrawPad** is a decentralized Solana launchpad that lets users draw their memecoin artwork on an interactive canvas, fill in coin details, and launch directly to **pump.fun** via the **PumpPortal Trade API**.
+**AgenSea** is an autonomous marine AI launchpad and community faucet protocol on **Solana** and **Pump.fun**. Every token launched is a living, autonomous AI marine creature with its own visual DNA, on-chain telemetry, thought reflections, and a community-governed faucet pool (powered by Faucet Pad architecture).
 
 ---
 
-## 🌟 Features
+## 🌟 Core Features
 
-- 🖌️ **Interactive Studio Canvas**: Hand-draw your memecoin logo directly in the browser with brush tools, stickers/emojis, custom color pickers, and undo actions.
-- 🔗 **Non-Custodial Phantom Wallet Connection**: Connect with Phantom / Solflare using standard Solana Wallet Adapter.
-- ⚡ **PumpPortal & Pump.fun Integration**: 
-  - Direct metadata & artwork upload to IPFS.
-  - Bonding curve creation on pump.fun.
-  - Optional initial developer buy with customized slippage and priority fees.
-- 🚀 **Live Solscan & Pump.fun Links**: View the live transaction on Solscan and bonding curve page on pump.fun right after minting.
+- 🧬 **Cyber-Aquatic DNA Forge & Fish Studio**:
+  - 6 Species Archetypes (Cyber Shark, Neon Angler, Bioluminescent Jelly, Volt Ray, Mecha Puffer, Abyss Whale).
+  - Custom bioluminescent aura controls, cybernetic implants (laser eye, alpha radar, plasma core).
+  - Interactive hand-drawing brush/eraser for custom neon decals and stickers.
+  - Real-time physics-based swimming preview simulator.
+
+- 🌊 **The Living Aquarium (Interactive Ecosystem)**:
+  - Physics-based interactive multi-fish ecosystem canvas.
+  - Scale & luminescence dynamically tied to **Pump.fun Bonding Curve %** and Market Cap.
+  - Sonar radar inspection mode for fast token analytics.
+
+- 🚰 **Autonomous Faucet Protocol (Faucet Pad Architecture)**:
+  - Devs/creators allocate initial supply into the **AgenSea Custody Vault**.
+  - **AI Riddle & Cognitive Challenge**: Users interact with the AI creature's brain in a cyber terminal to solve deep-sea riddles and unlock token claims.
+  - **Instant Deep-Sea Drip**: Timed wallet cooldown claims with anti-sybil protection.
+  - **Feed the School**: Community members can deposit tokens directly to top up any faucet vault.
+
+- 📡 **Cyber Radar & Live Telemetry**:
+  - Live stream of autonomous thoughts, whale alerts, liquidity monitoring, and bonding curve migrations.
+
+- ⚡ **Seamless Pump.fun & PumpPortal Integration**:
+  - Direct IPFS metadata pinning.
+  - Bonding curve creation on Pump.fun via PumpPortal Trade-Local API.
+  - Non-custodial Phantom & Solana wallet adapter connection.
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: React 18, Vite, `@solana/wallet-adapter-react`, `@solana/web3.js`, Lucide Icons, Canvas Confetti.
+- **Frontend**: React 19, Vite, Lucide Icons, `@solana/wallet-adapter-react`, `@solana/web3.js`, Canvas Confetti, HTML5 Canvas 2D Physics.
 - **Backend**: Node.js, Express, Multer, FormData, Axios, `@solana/web3.js`, bs58.
-- **Blockchain**: Solana Mainnet-Beta, PumpPortal Trade-Local API, Pump.fun IPFS.
+- **Blockchain**: Solana Mainnet-Beta, PumpPortal API, IPFS.
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Running Locally
 
-### 1. Prerequisites
-- Node.js (v18+)
-- Phantom Wallet browser extension installed and set to Solana Mainnet with some SOL balance (for launch transaction fees & initial buy).
-
-### 2. Run the Entire Project (Server + Client)
-From the root directory:
 ```bash
+# Start both client and server
 npm run dev
 ```
-- **React Frontend**: `http://localhost:5173`
-- **Express Backend**: `http://localhost:5001`
 
----
-
-## ⚙️ Architecture & Flow
-
-```
-1. User connects Phantom Wallet
-2. User draws token logo on the interactive canvas
-3. User enters coin Name, Symbol ($TICKER), Description & optional dev buy amount
-4. Frontend sends Drawing Blob + Details to Backend (/api/upload-metadata) -> IPFS
-5. Backend calls PumpPortal API (https://pumpportal.fun/api/trade-local) to build the Create Coin Transaction
-6. Backend signs transaction with newly generated Mint Keypair
-7. Frontend prompts Phantom Wallet for the creator signature
-8. Backend broadcasts the signed transaction to Solana Mainnet
-9. Success! Token is live on pump.fun
-```
+- **Frontend**: `http://localhost:5173`
+- **Backend API**: `http://localhost:5001`

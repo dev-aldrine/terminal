@@ -1,34 +1,37 @@
 @import '@solana/wallet-adapter-react-ui/styles.css';
 
 :root {
-  /* Hand-drawn Sketch / Notebook Palette */
-  --bg-paper: #fbf6ea;
-  --card-bg: #ffffff;
-  --ink-black: #1a1a1e;
-  --ink-pencil: #2d3142;
-  --pencil-gray: #4f5d75;
-  --sketch-border: #1a1a1e;
+  /* AgenSea Deep Oceanic Palette */
+  --ocean-abyss: #030712;
+  --ocean-deep: #071326;
+  --ocean-card: #0b1f3b;
+  --ocean-card-hover: #102d54;
+  --ocean-border: rgba(0, 245, 255, 0.18);
+  --ocean-border-glow: rgba(0, 245, 255, 0.45);
   
-  /* Highlighter & Crayon Accents */
-  --marker-yellow: #fef08a;
-  --marker-green: #bbf7d0;
-  --marker-cyan: #bae6fd;
-  --marker-pink: #fbcfe8;
-  --marker-orange: #fed7aa;
+  /* Bioluminescent Accents */
+  --bio-cyan: #00f5ff;
+  --bio-emerald: #05ffa1;
+  --bio-purple: #a855f7;
+  --bio-pink: #ff2a85;
+  --bio-amber: #ffb703;
   
-  --solana-green: #10b981;
+  --solana-green: #14f195;
   --pump-orange: #f97316;
-  --pump-purple: #7c3aed;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
 
-  /* Sketchy Shadows */
-  --sketch-shadow: 4px 4px 0px #1a1a1e;
-  --sketch-shadow-sm: 2px 2px 0px #1a1a1e;
-  --sketch-shadow-lg: 6px 6px 0px #1a1a1e;
+  /* Glow Shadows */
+  --glow-cyan: 0 0 25px rgba(0, 245, 255, 0.35);
+  --glow-emerald: 0 0 25px rgba(5, 255, 161, 0.35);
+  --glow-pink: 0 0 25px rgba(255, 42, 133, 0.35);
+  --glow-card: 0 8px 32px 0 rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(0, 245, 255, 0.15);
 
   /* Typography */
-  --font-handwriting: 'Patrick Hand', 'Kalam', cursive, sans-serif;
-  --font-heading: 'Architects Daughter', 'Gaegu', cursive, sans-serif;
-  --font-mono: 'Space Mono', monospace;
+  --font-main: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 }
 
 * {
@@ -38,28 +41,28 @@
 }
 
 body {
-  background-color: var(--bg-paper);
-  /* Very subtle, faint notebook pattern so 3D Cubes background pops */
+  background-color: var(--ocean-abyss);
   background-image: 
-    linear-gradient(rgba(26, 26, 30, 0.018) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(26, 26, 30, 0.018) 1px, transparent 1px),
-    linear-gradient(90deg, transparent 60px, rgba(239, 68, 68, 0.08) 60px, rgba(239, 68, 68, 0.08) 61px, transparent 61px);
-  background-size: 24px 24px, 24px 24px, 100% 100%;
+    radial-gradient(ellipse at 50% 0%, rgba(0, 245, 255, 0.08) 0%, transparent 60%),
+    radial-gradient(circle at 10% 40%, rgba(168, 85, 247, 0.06) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(5, 255, 161, 0.05) 0%, transparent 50%),
+    linear-gradient(rgba(0, 245, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 245, 255, 0.02) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 32px 32px, 32px 32px;
   background-attachment: fixed;
-  color: var(--ink-pencil);
-  font-family: var(--font-handwriting);
-  font-size: 18px;
+  color: var(--text-main);
+  font-family: var(--font-main);
+  font-size: 16px;
   min-height: 100vh;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Hide Scrollbars globally so page layout/width remains 100% fixed */
+/* Hide Scrollbars */
 * {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
-
 *::-webkit-scrollbar,
 ::-webkit-scrollbar {
   display: none;
@@ -68,241 +71,143 @@ body {
   background: transparent;
 }
 
-/* 🎨 Fluid Doodle Keyframe Animations */
-@keyframes doodle-float-1 {
-  0%, 100% { transform: translateY(0px) rotate(-12deg); }
-  50% { transform: translateY(-10px) rotate(-8deg); }
+/* 🌊 Animated Ocean Waves & Floating Bubbles */
+@keyframes bubble-rise {
+  0% { transform: translateY(100vh) scale(0.6); opacity: 0; }
+  20% { opacity: 0.6; }
+  80% { opacity: 0.8; }
+  100% { transform: translateY(-20vh) scale(1.2); opacity: 0; }
 }
 
-@keyframes doodle-float-2 {
-  0%, 100% { transform: translateY(0px) rotate(18deg); }
-  50% { transform: translateY(-12px) rotate(22deg); }
+@keyframes fish-swim {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  25% { transform: translateY(-6px) rotate(1.5deg); }
+  50% { transform: translateY(0px) rotate(0deg); }
+  75% { transform: translateY(6px) rotate(-1.5deg); }
 }
 
-@keyframes doodle-float-3 {
-  0%, 100% { transform: translateY(0px) rotate(35deg); }
-  50% { transform: translateY(-8px) rotate(30deg); }
+@keyframes fin-flutter {
+  0%, 100% { transform: rotate(0deg) skewY(0deg); }
+  50% { transform: rotate(-8deg) skewY(-4deg); }
 }
 
-@keyframes doodle-float-4 {
-  0%, 100% { transform: translateY(0px) rotate(-20deg); }
-  50% { transform: translateY(-14px) rotate(-16deg); }
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(0, 245, 255, 0.3); }
+  50% { box-shadow: 0 0 35px rgba(0, 245, 255, 0.6), 0 0 10px rgba(5, 255, 161, 0.4); }
 }
 
-@keyframes doodle-wiggle {
-  0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(-1.5deg); }
-  75% { transform: rotate(1.5deg); }
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(1000%); }
 }
 
-@keyframes pulse-subtle {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.03); }
+/* Glassmorphism Class Utilities */
+.glass-panel {
+  background: rgba(11, 31, 59, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 245, 255, 0.18);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
 
-@keyframes tape-glow {
-  0%, 100% { filter: brightness(1); }
-  50% { filter: brightness(1.08); }
+.glass-panel-glow {
+  background: rgba(11, 31, 59, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 245, 255, 0.35);
+  box-shadow: 0 0 30px rgba(0, 245, 255, 0.15), inset 0 0 15px rgba(0, 245, 255, 0.05);
 }
 
-/* Animation Classes */
-.animate-float-1 {
-  animation: doodle-float-1 4.5s ease-in-out infinite;
+.text-gradient-cyan {
+  background: linear-gradient(135deg, #ffffff 0%, #00f5ff 50%, #05ffa1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.animate-float-2 {
-  animation: doodle-float-2 5.5s ease-in-out infinite;
+.text-gradient-pink {
+  background: linear-gradient(135deg, #ffffff 0%, #ff2a85 60%, #a855f7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.animate-float-3 {
-  animation: doodle-float-3 5s ease-in-out infinite;
+.text-gradient-gold {
+  background: linear-gradient(135deg, #ffffff 0%, #ffb703 60%, #f97316 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.animate-float-4 {
-  animation: doodle-float-4 6s ease-in-out infinite;
-}
-
-.animate-wiggle-hover:hover {
-  animation: doodle-wiggle 0.3s ease-in-out infinite;
-}
-
-/* ✏️ Hand-Drawn Sketch Box Utility (Applied to All Containers & Slides) */
-.sketch-card,
-.sketch-box {
-  background: var(--card-bg);
-  border: 2.5px solid var(--sketch-border) !important;
-  /* Iconic Rough / Asymmetrical hand-drawn organic border radius */
-  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px !important;
-  box-shadow: 4px 4px 0px #1a1a1e, -0.5px -0.5px 0px #1a1a1e !important;
-  filter: url(#pencil-stroke);
-  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.sketch-card:hover {
-  box-shadow: 5px 6px 0px #1a1a1e, -0.5px -0.5px 0px #1a1a1e !important;
-}
-
-/* Alternate organic curvature for inner sub-containers */
-.sketch-card-alt {
-  background: #f8fafc;
-  border: 2px solid var(--sketch-border) !important;
-  border-radius: 18px 255px 16px 225px/225px 17px 255px 14px !important;
-  box-shadow: 2.5px 2.5px 0px #1a1a1e !important;
-  filter: url(#pencil-stroke);
-}
-
-/* 🎨 Hand-Drawn Buttons with Natural Ink Contour */
-.sketch-btn {
-  font-family: var(--font-handwriting);
-  font-size: 19px;
+.ocean-btn-primary {
+  background: linear-gradient(135deg, #00f5ff 0%, #0284c7 100%);
+  color: #030712;
+  font-family: var(--font-heading);
   font-weight: 700;
-  background: var(--marker-yellow);
-  color: var(--ink-black);
-  border: 2.5px solid var(--sketch-border) !important;
-  border-radius: 255px 25px 225px 25px/25px 225px 25px 255px !important;
-  padding: 10px 20px;
-  box-shadow: 2.5px 3px 0px #1a1a1e, -0.5px -0.5px 0px #1a1a1e !important;
-  filter: url(#pencil-stroke);
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  transition: all 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 20px rgba(0, 245, 255, 0.4);
 }
 
-.sketch-btn:hover:not(:disabled) {
-  transform: translate(-3px, -3px) rotate(-0.5deg);
-  box-shadow: 4.5px 5px 0px #1a1a1e !important;
-  background: #fde047;
+.ocean-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 35px rgba(0, 245, 255, 0.7);
+  background: linear-gradient(135deg, #38bdf8 0%, #00f5ff 100%);
 }
 
-.sketch-btn:active:not(:disabled) {
-  transform: translate(2px, 2px) rotate(0deg);
-  box-shadow: 0px 0px 0px #1a1a1e !important;
-}
-
-.sketch-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  background: #e2e8f0;
-}
-
-.sketch-btn-green {
-  background: var(--marker-green);
-}
-.sketch-btn-green:hover:not(:disabled) {
-  background: #86efac;
-}
-
-/* 🖋️ Hand-Drawn Inputs & Textareas */
-input[type="text"],
-input[type="url"],
-input[type="password"],
-input[type="number"],
-textarea {
-  border: 2px solid var(--sketch-border) !important;
-  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px !important;
-  filter: url(#pencil-stroke);
-}
-
-/* 〰️ SVG Hand-Drawn Wavy & Zig-Zag Border Utilities */
-.sketch-border-wavy {
-  border-bottom: 3px solid transparent;
-  border-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='6' viewBox='0 0 20 6'%3E%3Cpath d='M 0 3 Q 5 0, 10 3 T 20 3' fill='none' stroke='%231a1a1e' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") 0 0 100% 0 repeat;
-}
-
-.sketch-border-zigzag {
-  border-bottom: 4px solid transparent;
-  border-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='6' viewBox='0 0 16 6'%3E%3Cpath d='M 0 5 L 4 1 L 8 5 L 12 1 L 16 5' fill='none' stroke='%231a1a1e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") 0 0 100% 0 repeat;
-}
-
-/* 🏷️ Hand-Drawn Masking Tape */
-.sketch-tape {
-  border-radius: 4px;
-  filter: url(#hand-drawn-sketch);
-  box-shadow: 1px 1px 0px rgba(0,0,0,0.15);
-}
-
-/* Highlighter tape effect with hover tilt */
-.highlighter-tape,
-.highlighter-tape-cyan,
-.highlighter-tape-pink {
-  display: inline-block;
-  padding: 2px 8px;
-  border-radius: 4px;
-  box-decoration-break: clone;
-  -webkit-box-decoration-break: clone;
+.ocean-btn-emerald {
+  background: linear-gradient(135deg, #05ffa1 0%, #059669 100%);
+  color: #030712;
+  font-family: var(--font-heading);
   font-weight: 700;
-  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: all 0.25s ease;
+  box-shadow: 0 0 20px rgba(5, 255, 161, 0.4);
 }
 
-.highlighter-tape {
-  background: var(--marker-yellow);
-}
-.highlighter-tape:hover {
-  transform: rotate(-1.5deg) scale(1.05);
+.ocean-btn-emerald:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 35px rgba(5, 255, 161, 0.7);
 }
 
-.highlighter-tape-cyan {
-  background: var(--marker-cyan);
-}
-.highlighter-tape-cyan:hover {
-  transform: rotate(1.5deg) scale(1.05);
-}
-
-.highlighter-tape-pink {
-  background: var(--marker-pink);
-}
-.highlighter-tape-pink:hover {
-  transform: rotate(-1.5deg) scale(1.05);
-}
-
-/* Solana Wallet Adapter Overrides */
+/* Wallet Adapter Custom Overrides */
 .wallet-adapter-button {
-  font-family: var(--font-handwriting) !important;
-  font-size: 18px !important;
+  font-family: var(--font-heading) !important;
+  background: rgba(11, 31, 59, 0.8) !important;
+  border: 1px solid rgba(0, 245, 255, 0.4) !important;
+  color: #00f5ff !important;
+  border-radius: 9999px !important;
   font-weight: 700 !important;
-  color: var(--ink-black) !important;
-  background: var(--marker-cyan) !important;
-  border: 2.5px solid var(--sketch-border) !important;
-  border-radius: 10px 12px 9px 13px !important;
-  box-shadow: var(--sketch-shadow-sm) !important;
-  transition: all 0.18s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+  font-size: 14px !important;
+  padding: 8px 20px !important;
   height: 42px !important;
-  padding: 0 16px !important;
+  transition: all 0.25s ease !important;
+  box-shadow: 0 0 15px rgba(0, 245, 255, 0.2) !important;
 }
 
 .wallet-adapter-button:hover {
-  background: #7dd3fc !important;
-  transform: translate(-3px, -3px) rotate(-1deg) !important;
-  box-shadow: var(--sketch-shadow) !important;
+  background: #00f5ff !important;
+  color: #030712 !important;
+  box-shadow: 0 0 25px rgba(0, 245, 255, 0.6) !important;
 }
 
-.wallet-adapter-button:active {
-  transform: translate(2px, 2px) !important;
-  box-shadow: 0 0 0 #1a1a1e !important;
+.wallet-adapter-button-trigger {
+  background: linear-gradient(135deg, rgba(0, 245, 255, 0.15) 0%, rgba(5, 255, 161, 0.15) 100%) !important;
 }
 
-.wallet-adapter-modal-wrapper {
-  background: var(--bg-paper) !important;
-  border: 3px solid var(--sketch-border) !important;
-  border-radius: 16px !important;
-  box-shadow: var(--sketch-shadow-lg) !important;
-  color: var(--ink-black) !important;
-  font-family: var(--font-handwriting) !important;
-  animation: pulse-subtle 0.25s ease;
+/* Cyber Terminal Styling */
+.terminal-window {
+  background: #030a16;
+  border: 1px solid rgba(0, 245, 255, 0.25);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(0, 245, 255, 0.05);
+  font-family: var(--font-mono);
 }
 
-.wallet-adapter-modal-title {
-  color: var(--ink-black) !important;
-  font-family: var(--font-heading) !important;
-  font-size: 24px !important;
-}
-
-.wallet-adapter-modal-list .wallet-adapter-button {
-  background: #ffffff !important;
-  border: 2px solid var(--sketch-border) !important;
-  box-shadow: var(--sketch-shadow-sm) !important;
-  margin-bottom: 8px !important;
+.scanline-overlay {
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.25) 50%
+  ), linear-gradient(
+    90deg,
+    rgba(255, 0, 0, 0.03),
+    rgba(0, 255, 0, 0.01),
+    rgba(0, 0, 255, 0.03)
+  );
+  background-size: 100% 3px, 6px 100%;
+  pointer-events: none;
 }

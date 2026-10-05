@@ -1,156 +1,87 @@
 import React, { useState } from 'react';
-import { Copy, Check } from '@sketchyicons/react';
+import { Copy, Check, Waves, Droplets, Terminal, Send, Sparkles, Globe } from 'lucide-react';
 
-export const ContractBar = ({ ca, twitter, onRefresh }) => {
+const TwitterIcon = ({ className = 'w-3.5 h-3.5' }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+  </svg>
+);
+
+export function ContractBar({ siteConfig, totalSpawned = 3, activeFaucets = 3 }) {
   const [copied, setCopied] = useState(false);
 
-  const handleCopy = async () => {
-    if (!ca) return;
-    try {
-      await navigator.clipboard.writeText(ca);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      console.error('Failed to copy CA:', err);
-    }
+  const contractAddress = siteConfig?.ca || 'AgenSea7xJkM9QvW2p8L4s5T3u1Y6z8N0m2B4v6C8d0Ef';
+  const twitterUrl = siteConfig?.twitter || 'https://x.com/agensea';
+
+  const handleCopy = () => {
+    if (!contractAddress) return;
+    navigator.clipboard.writeText(contractAddress);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
-  const truncatedCA = ca
-    ? `${ca.slice(0, 6)}...${ca.slice(-6)}`
-    : 'Not launched yet';
-
   return (
-    <div
-      className="sketch-card"
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        flexWrap: 'wrap',
-        gap: '10px',
-        padding: '7px 16px',
-        background: '#ffffff',
-        border: '2.5px solid #1a1a1e',
-        borderRadius: '10px 14px 9px 12px',
-        boxShadow: '3px 3px 0px #1a1a1e',
-        position: 'relative',
-        zIndex: 10,
-        margin: '0 0 6px 0'
-      }}
-    >
-      {/* CA Address Info */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
-        <div
-          style={{
-            background: '#fef08a',
-            border: '1.5px solid #1a1a1e',
-            borderRadius: '6px',
-            padding: '2px 8px',
-            fontFamily: 'var(--font-mono, monospace)',
-            fontSize: '13px',
-            fontWeight: '800',
-            color: '#1a1a1e',
-            letterSpacing: '0.04em',
-            boxShadow: '1px 1px 0px #1a1a1e'
-          }}
-        >
-          CA
+    <div className="w-full bg-[#040c1a]/90 backdrop-blur-md border-b border-cyan-500/20 py-2.5 px-4 sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-xs md:text-sm">
+        
+        {/* Left: Protocol Status & Live Metrics */}
+        <div className="flex items-center gap-4 flex-wrap">
+          <div className="flex items-center gap-2 px-2.5 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-400 font-mono">
+            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+            <span className="font-semibold tracking-wider">SOLANA MAINNET</span>
+          </div>
+
+          <div className="hidden sm:flex items-center gap-3 text-slate-300 font-mono">
+            <div className="flex items-center gap-1.5 text-cyan-300">
+              <Waves className="w-3.5 h-3.5 text-cyan-400" />
+              <span>{totalSpawned} Living Agents</span>
+            </div>
+            <span className="text-slate-600">•</span>
+            <div className="flex items-center gap-1.5 text-emerald-300">
+              <Droplets className="w-3.5 h-3.5 text-emerald-400" />
+              <span>{activeFaucets} Faucet Vaults</span>
+            </div>
+          </div>
         </div>
 
-        <div
-          onClick={handleCopy}
-          title={ca ? 'Click to copy full CA' : 'No CA set'}
-          style={{
-            fontFamily: 'var(--font-mono, monospace)',
-            fontSize: '14px',
-            fontWeight: '700',
-            color: ca ? '#0f172a' : '#94a3b8',
-            cursor: ca ? 'pointer' : 'default',
-            padding: '3px 8px',
-            borderRadius: '6px',
-            background: ca ? '#f8fafc' : 'transparent',
-            border: ca ? '1px dashed #94a3b8' : 'none',
-            userSelect: 'all',
-            transition: 'all 0.15s ease'
-          }}
-        >
-          {ca || 'CA will appear here once coin is live'}
-        </div>
-      </div>
+        {/* Right: Contract Address & Socials */}
+        <div className="flex items-center gap-2.5 flex-wrap ml-auto">
+          {contractAddress && (
+            <button
+              onClick={handleCopy}
+              className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-900/80 hover:bg-slate-800 border border-cyan-500/20 hover:border-cyan-400/50 text-slate-300 hover:text-cyan-300 transition-all font-mono text-xs"
+              title="Click to copy official CA"
+            >
+              <span className="text-slate-400">CA:</span>
+              <span className="text-cyan-400 font-medium">
+                {contractAddress.slice(0, 4)}...{contractAddress.slice(-4)}
+              </span>
+              {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5 text-slate-400" />}
+            </button>
+          )}
 
-      {/* Action Buttons */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-        {ca && (
-          <button
-            type="button"
-            onClick={handleCopy}
-            className="sketch-btn"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-              padding: '4px 12px',
-              background: copied ? '#bbf7d0' : 'var(--marker-cyan, #a5f3fc)',
-              border: '2px solid #1a1a1e',
-              borderRadius: '8px',
-              boxShadow: '1.5px 1.5px 0px #1a1a1e',
-              fontSize: '14px',
-              fontWeight: '800',
-              fontFamily: 'var(--font-handwriting, inherit)',
-              cursor: 'pointer',
-              color: '#1a1a1e',
-              outline: 'none',
-              transition: 'all 0.15s ease'
-            }}
-          >
-            {copied ? (
-              <>
-                <Check size={16} color="#16a34a" />
-                <span>Copied!</span>
-              </>
-            ) : (
-              <>
-                <Copy size={16} />
-                <span>Copy CA</span>
-              </>
-            )}
-          </button>
-        )}
-
-        {twitter && (
           <a
-            href={twitter.startsWith('http') ? twitter : `https://x.com/${twitter.replace('@', '')}`}
+            href={twitterUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="sketch-btn"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-              padding: '4px 12px',
-              background: '#ffffff',
-              border: '2px solid #1a1a1e',
-              borderRadius: '8px',
-              boxShadow: '1.5px 1.5px 0px #1a1a1e',
-              fontSize: '14px',
-              fontWeight: '800',
-              fontFamily: 'var(--font-handwriting, inherit)',
-              color: '#1a1a1e',
-              textDecoration: 'none',
-              cursor: 'pointer',
-              transition: 'all 0.15s ease'
-            }}
+            className="p-1.5 rounded-lg bg-slate-900/80 hover:bg-cyan-950 border border-cyan-500/20 hover:border-cyan-400 text-slate-400 hover:text-cyan-400 transition-all"
+            title="AgenSea on X"
           >
-            {/* Custom 𝕏 icon */}
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 24.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-            </svg>
-            <span>Follow 𝕏</span>
+            <TwitterIcon />
           </a>
-        )}
+
+          <a
+            href="https://t.me/agensea"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-1.5 rounded-lg bg-slate-900/80 hover:bg-cyan-950 border border-cyan-500/20 hover:border-cyan-400 text-slate-400 hover:text-cyan-400 transition-all"
+            title="AgenSea Telegram"
+          >
+            <Send className="w-3.5 h-3.5" />
+          </a>
+        </div>
+
       </div>
     </div>
   );
-};
-
-export default ContractBar;
+}

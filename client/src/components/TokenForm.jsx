@@ -1,428 +1,376 @@
-import React from 'react';
-import { Coins, Sparkles, Globe, MessageCircle, Rocket, ArrowLeft, Pen } from '@sketchyicons/react';
+import React, { useState } from 'react';
+import { Rocket, Sparkles, Brain, Droplets, Shield, Zap, Info, Send, Globe, ChevronDown } from 'lucide-react';
+import { SPECIES_LIST } from './FishStudio';
 
-export const TokenForm = ({
+const TwitterIcon = ({ className = 'w-3.5 h-3.5' }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+  </svg>
+);
+
+export function TokenForm({
   formData,
-  onChange,
+  onFormChange,
   onLaunch,
-  onBack,
-  onEditArtwork,
-  previewImage,
   loading,
   statusMessage,
-  isWalletConnected
-}) => {
+  imageDataUrl,
+  selectedSpecies,
+  onBackToStudio
+}) {
+  const [activeTab, setActiveTab] = useState('agent');
+  const activeSpeciesData = SPECIES_LIST.find((s) => s.id === selectedSpecies) || SPECIES_LIST[0];
+
+  const handleToggleFaucet = (e) => {
+    const isChecked = e.target.checked;
+    onFormChange('faucetEnabled', isChecked);
+  };
+
   return (
-    <div style={styles.container} className="sketch-card">
-      <div style={styles.tape}>
-        <span>STEP 2 OF 2 • TOKEN LAUNCHPAD</span>
-      </div>
-
-      <div style={styles.header}>
-        <div>
-          <h2 style={styles.title}>Token Details & Launch</h2>
-          <p style={styles.subtitle}>Set your coin's name and ticker to deploy to pump.fun for <strong>0.02 SOL</strong> protocol fee.</p>
+    <div className="w-full max-w-4xl mx-auto py-6 px-4">
+      {/* Header */}
+      <div className="text-center mb-8">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/80 border border-cyan-500/40 text-cyan-400 font-mono text-xs mb-3">
+          <Brain className="w-3.5 h-3.5" />
+          <span>AUTONOMOUS AGENT & FAUCET ARCHITECT</span>
         </div>
-        <span style={styles.pumpfunTag}>
-          pump.fun • 0.02 SOL Launch Fee
-        </span>
+        <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-2">
+          Configure Your <span className="text-gradient-cyan">AI Marine Agent</span>
+        </h2>
+        <p className="text-slate-400 max-w-xl mx-auto text-sm md:text-base">
+          Define your creature's trading strategy, personality core, and configure its community Faucet Pool before launching on Pump.fun.
+        </p>
       </div>
 
-      <div style={styles.mainLayout}>
-        {/* Left column: Artwork Preview Card */}
-        <div style={styles.previewCol}>
-          <div style={styles.previewCard}>
-            <span style={styles.previewLabel}>Coin Logo Preview</span>
-            <div style={styles.imageBox}>
-              {previewImage ? (
-                <img src={previewImage} alt="Coin Artwork" style={styles.tokenImage} />
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+        
+        {/* Left Column: Fish Avatar & Spec Summary */}
+        <div className="md:col-span-4 space-y-4">
+          <div className="glass-panel rounded-3xl p-5 border border-cyan-500/20 text-center space-y-3">
+            <div className="relative w-40 h-40 mx-auto rounded-2xl bg-slate-950 border-2 border-cyan-400/50 overflow-hidden shadow-[0_0_30px_rgba(0,245,255,0.25)] flex items-center justify-center">
+              {imageDataUrl ? (
+                <img src={imageDataUrl} alt="Marine Fish" className="w-full h-full object-cover" />
               ) : (
-                <div style={styles.placeholderImg}>No drawing created</div>
+                <span className="text-4xl">🐟</span>
               )}
             </div>
+
+            <div>
+              <h3 className="font-extrabold text-white text-lg">{formData.name || 'Unnamed Creature'}</h3>
+              <p className="text-cyan-400 font-mono text-sm font-bold">${formData.symbol || 'TICKER'}</p>
+            </div>
+
+            <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-800 text-left font-mono text-xs space-y-1.5">
+              <div className="flex justify-between text-slate-400">
+                <span>Species:</span>
+                <span className="text-cyan-300 font-bold">{activeSpeciesData.name}</span>
+              </div>
+              <div className="flex justify-between text-slate-400">
+                <span>Role:</span>
+                <span className="text-emerald-300 font-bold">{activeSpeciesData.role}</span>
+              </div>
+            </div>
+
             <button
-              type="button"
-              onClick={onEditArtwork}
-              className="sketch-btn"
-              style={styles.editArtBtn}
+              onClick={onBackToStudio}
+              className="text-xs text-slate-400 hover:text-cyan-300 font-mono underline transition-colors"
             >
-              <Pen size={16} />
-              <span>Edit Drawing</span>
+              ← Edit Fish Design
             </button>
           </div>
         </div>
 
-        {/* Right column: Form fields */}
-        <div style={styles.formCol}>
-          <div style={styles.formGrid}>
-            {/* Token Name */}
-            <div style={styles.inputGroup}>
-              <label style={styles.label}>
-                Coin Name <span style={styles.required}>*</span>
-              </label>
-              <input
-                type="text"
-                placeholder="e.g. Doodle Dog"
-                value={formData.name}
-                onChange={(e) => onChange('name', e.target.value)}
-                style={styles.input}
-                maxLength={32}
-                required
-              />
-            </div>
-
-            {/* Token Ticker */}
-            <div style={styles.inputGroup}>
-              <label style={styles.label}>
-                Ticker / Symbol <span style={styles.required}>*</span>
-              </label>
-              <input
-                type="text"
-                placeholder="e.g. DOODLE"
-                value={formData.symbol}
-                onChange={(e) => onChange('symbol', e.target.value.toUpperCase())}
-                style={{ ...styles.input, textTransform: 'uppercase', fontFamily: 'var(--font-mono)' }}
-                maxLength={10}
-                required
-              />
-            </div>
-
-            {/* Socials Divider */}
-            <div style={styles.divider}>
-              <span>Social Links (Optional)</span>
-            </div>
-
-            {/* Twitter / X */}
-            <div style={styles.inputGroupFull}>
-              <div style={styles.socialInputWrapper}>
-                <span style={{ fontSize: '15px', fontWeight: 'bold', color: '#1a1a1e', width: '20px', textAlign: 'center' }}>X</span>
-                <input
-                  type="url"
-                  placeholder="Twitter / X (https://x.com/...)"
-                  value={formData.twitter}
-                  onChange={(e) => onChange('twitter', e.target.value)}
-                  style={styles.socialInput}
-                />
-              </div>
-            </div>
-
-            {/* Telegram */}
-            <div style={styles.inputGroupFull}>
-              <div style={styles.socialInputWrapper}>
-                <MessageCircle size={18} />
-                <input
-                  type="url"
-                  placeholder="Telegram Link (https://t.me/...)"
-                  value={formData.telegram}
-                  onChange={(e) => onChange('telegram', e.target.value)}
-                  style={styles.socialInput}
-                />
-              </div>
-            </div>
-
-            {/* Website */}
-            <div style={styles.inputGroupFull}>
-              <div style={styles.socialInputWrapper}>
-                <Globe size={18} />
-                <input
-                  type="url"
-                  placeholder="Website Link (https://...)"
-                  value={formData.website}
-                  onChange={(e) => onChange('website', e.target.value)}
-                  style={styles.socialInput}
-                />
-              </div>
-            </div>
+        {/* Right Column: Form Tabs & Fields */}
+        <div className="md:col-span-8 space-y-5">
+          
+          {/* Sub Tabs */}
+          <div className="flex items-center gap-2 p-1.5 rounded-2xl bg-slate-900/90 border border-cyan-500/20 font-mono text-xs">
+            <button
+              onClick={() => setActiveTab('agent')}
+              className={`flex-1 py-2 rounded-xl transition-all font-bold flex items-center justify-center gap-1.5 ${
+                activeTab === 'agent' ? 'bg-cyan-500 text-slate-950 shadow-[0_0_15px_rgba(0,245,255,0.3)]' : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              <Brain className="w-3.5 h-3.5" />
+              <span>1. Identity & Brain</span>
+            </button>
+            <button
+              onClick={() => setActiveTab('faucet')}
+              className={`flex-1 py-2 rounded-xl transition-all font-bold flex items-center justify-center gap-1.5 ${
+                activeTab === 'faucet' ? 'bg-cyan-500 text-slate-950 shadow-[0_0_15px_rgba(0,245,255,0.3)]' : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              <Droplets className="w-3.5 h-3.5" />
+              <span>2. Faucet Protocol</span>
+            </button>
+            <button
+              onClick={() => setActiveTab('trading')}
+              className={`flex-1 py-2 rounded-xl transition-all font-bold flex items-center justify-center gap-1.5 ${
+                activeTab === 'trading' ? 'bg-cyan-500 text-slate-950 shadow-[0_0_15px_rgba(0,245,255,0.3)]' : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              <Rocket className="w-3.5 h-3.5" />
+              <span>3. Launch & Dev Buy</span>
+            </button>
           </div>
 
-          {/* Status Message */}
-          {statusMessage && (
-            <div style={styles.statusBox}>
-              <Sparkles size={18} />
-              <span>{statusMessage}</span>
+          {/* TAB 1: IDENTITY & BRAIN */}
+          {activeTab === 'agent' && (
+            <div className="glass-panel rounded-3xl p-6 border border-cyan-500/20 space-y-4">
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="text-xs font-mono text-slate-300 mb-1.5 block font-bold">
+                    Agent Name <span className="text-rose-400">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Neon Angler AI"
+                    value={formData.name || ''}
+                    onChange={(e) => onFormChange('name', e.target.value)}
+                    className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-cyan-500/30 text-white font-mono text-sm focus:outline-none focus:border-cyan-400"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-xs font-mono text-slate-300 mb-1.5 block font-bold">
+                    Ticker Symbol <span className="text-rose-400">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="e.g. ANGLER"
+                    value={formData.symbol || ''}
+                    onChange={(e) => onFormChange('symbol', e.target.value.toUpperCase())}
+                    className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-cyan-500/30 text-white font-mono text-sm focus:outline-none focus:border-cyan-400 uppercase"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="text-xs font-mono text-slate-300 mb-1.5 block font-bold">Agent Lore & Description</label>
+                <textarea
+                  rows={2}
+                  placeholder="Describe your creature's autonomous mission in the Solana deep sea..."
+                  value={formData.description || ''}
+                  onChange={(e) => onFormChange('description', e.target.value)}
+                  className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-cyan-500/30 text-white text-xs leading-relaxed focus:outline-none focus:border-cyan-400"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="text-xs font-mono text-slate-300 mb-1.5 block font-bold">Strategy Archetype</label>
+                  <select
+                    value={formData.strategy || 'Dip Sniper & Deep Alpha'}
+                    onChange={(e) => onFormChange('strategy', e.target.value)}
+                    className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-cyan-500/30 text-white font-mono text-xs focus:outline-none focus:border-cyan-400"
+                  >
+                    <option value="Dip Sniper & Deep Alpha">🏮 Dip Sniper & Deep Alpha</option>
+                    <option value="Momentum Hunter">🦈 Aggressive Momentum Hunter</option>
+                    <option value="Liquidity Float & Yield">🪼 Liquidity Float & Yield</option>
+                    <option value="High-Frequency Arbitrage">⚡ High-Frequency Arbitrage</option>
+                    <option value="Anti-Dump Fortress">🐡 Anti-Dump Fortress</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="text-xs font-mono text-slate-300 mb-1.5 block font-bold">Risk Appetite</label>
+                  <select
+                    value={formData.riskProfile || 'Aggressive'}
+                    onChange={(e) => onFormChange('riskProfile', e.target.value)}
+                    className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-cyan-500/30 text-white font-mono text-xs focus:outline-none focus:border-cyan-400"
+                  >
+                    <option value="Degenerate">💥 Degenerate (Max Volume)</option>
+                    <option value="Aggressive">⚡ Aggressive (Dip Alpha)</option>
+                    <option value="Balanced">⚖️ Balanced (Frictionless Float)</option>
+                    <option value="Fortress">🛡️ Fortress (Diamond Hands)</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Social Links */}
+              <div className="grid grid-cols-3 gap-3 pt-2">
+                <div className="relative">
+                  <div className="text-slate-500 absolute left-3 top-1/2 -translate-y-1/2">
+                    <TwitterIcon />
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="X / Twitter"
+                    value={formData.twitter || ''}
+                    onChange={(e) => onFormChange('twitter', e.target.value)}
+                    className="w-full pl-8 pr-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs font-mono focus:outline-none focus:border-cyan-400"
+                  />
+                </div>
+                <div className="relative">
+                  <Send className="w-3.5 h-3.5 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="text"
+                    placeholder="Telegram"
+                    value={formData.telegram || ''}
+                    onChange={(e) => onFormChange('telegram', e.target.value)}
+                    className="w-full pl-8 pr-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs font-mono focus:outline-none focus:border-cyan-400"
+                  />
+                </div>
+                <div className="relative">
+                  <Globe className="w-3.5 h-3.5 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="text"
+                    placeholder="Website"
+                    value={formData.website || ''}
+                    onChange={(e) => onFormChange('website', e.target.value)}
+                    className="w-full pl-8 pr-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs font-mono focus:outline-none focus:border-cyan-400"
+                  />
+                </div>
+              </div>
+
             </div>
           )}
 
-          {/* Launch Action Button */}
+          {/* TAB 2: AUTONOMOUS FAUCET PROTOCOL (FAUPAD) */}
+          {activeTab === 'faucet' && (
+            <div className="glass-panel rounded-3xl p-6 border border-cyan-500/20 space-y-4">
+              
+              <div className="flex items-center justify-between p-4 rounded-2xl bg-slate-950/80 border border-cyan-500/30">
+                <div className="flex items-center gap-3">
+                  <Droplets className="w-6 h-6 text-emerald-400" />
+                  <div>
+                    <h4 className="font-bold text-white text-sm">Deploy Autonomous Faucet Vault</h4>
+                    <p className="text-xs text-slate-400">Lock initial tokens in custody for community challenges and drips.</p>
+                  </div>
+                </div>
+                <input
+                  type="checkbox"
+                  checked={formData.faucetEnabled !== false}
+                  onChange={handleToggleFaucet}
+                  className="w-5 h-5 accent-cyan-400 cursor-pointer"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="text-xs font-mono text-slate-300 mb-1.5 block font-bold">Claim Mechanism</label>
+                  <select
+                    value={formData.faucetClaimMode || 'ai_challenge'}
+                    onChange={(e) => onFormChange('faucetClaimMode', e.target.value)}
+                    className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-cyan-500/30 text-white font-mono text-xs focus:outline-none focus:border-cyan-400"
+                  >
+                    <option value="ai_challenge">🧠 AI Brain Challenge / Riddle Solver</option>
+                    <option value="instant_drip">⚡ Instant Deep-Sea Drip</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="text-xs font-mono text-slate-300 mb-1.5 block font-bold">Drop Amount Per Claim</label>
+                  <input
+                    type="number"
+                    placeholder="e.g. 5000"
+                    value={formData.faucetClaimAmount || '5000'}
+                    onChange={(e) => onFormChange('faucetClaimAmount', e.target.value)}
+                    className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-cyan-500/30 text-white font-mono text-xs focus:outline-none focus:border-cyan-400"
+                  />
+                </div>
+              </div>
+
+              {formData.faucetClaimMode === 'ai_challenge' && (
+                <div className="space-y-3 p-4 rounded-2xl bg-cyan-950/40 border border-cyan-500/30">
+                  <div>
+                    <label className="text-xs font-mono text-cyan-300 mb-1 block">Aquatic Riddle / Challenge Question</label>
+                    <input
+                      type="text"
+                      placeholder="e.g. What lurks in the deepest trench that never sleeps?"
+                      value={formData.faucetChallengePrompt || ''}
+                      onChange={(e) => onFormChange('faucetChallengePrompt', e.target.value)}
+                      className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs font-mono focus:outline-none focus:border-cyan-400"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-xs font-mono text-cyan-300 mb-1 block">Secret Keyword / Answer</label>
+                    <input
+                      type="text"
+                      placeholder="e.g. liquidity"
+                      value={formData.faucetChallengeAnswer || ''}
+                      onChange={(e) => onFormChange('faucetChallengeAnswer', e.target.value)}
+                      className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs font-mono focus:outline-none focus:border-cyan-400"
+                    />
+                  </div>
+                </div>
+              )}
+
+            </div>
+          )}
+
+          {/* TAB 3: LAUNCH & DEV BUY */}
+          {activeTab === 'trading' && (
+            <div className="glass-panel rounded-3xl p-6 border border-cyan-500/20 space-y-4">
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="text-xs font-mono text-slate-300 mb-1.5 block font-bold">
+                    Initial Dev Buy (SOL)
+                  </label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    placeholder="0.0 (optional)"
+                    value={formData.initialBuySol || '0'}
+                    onChange={(e) => onFormChange('initialBuySol', e.target.value)}
+                    className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-cyan-500/30 text-white font-mono text-sm focus:outline-none focus:border-cyan-400"
+                  />
+                  <span className="text-[11px] text-slate-400 mt-1 block">
+                    Snipe your own coin bonding curve at genesis block.
+                  </span>
+                </div>
+
+                <div>
+                  <label className="text-xs font-mono text-slate-300 mb-1.5 block font-bold">Slippage (%)</label>
+                  <input
+                    type="number"
+                    min="1"
+                    max="50"
+                    value={formData.slippage || '10'}
+                    onChange={(e) => onFormChange('slippage', e.target.value)}
+                    className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-cyan-500/30 text-white font-mono text-sm focus:outline-none focus:border-cyan-400"
+                  />
+                </div>
+              </div>
+
+              {/* Protocol Fee Notice */}
+              <div className="p-4 rounded-2xl bg-cyan-950/60 border border-cyan-500/30 text-xs font-mono space-y-1 text-slate-300">
+                <div className="flex justify-between">
+                  <span>PumpPortal + Solana Fee:</span>
+                  <span className="text-cyan-400 font-bold">~0.005 SOL</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>AgenSea Protocol Fee:</span>
+                  <span className="text-cyan-400 font-bold">0.02 SOL</span>
+                </div>
+              </div>
+
+            </div>
+          )}
+
+          {/* Status Message */}
+          {statusMessage && (
+            <div className="p-4 rounded-2xl bg-cyan-950/80 border border-cyan-400 text-cyan-300 font-mono text-xs animate-pulse">
+              🌊 {statusMessage}
+            </div>
+          )}
+
+          {/* Master Launch Button */}
           <button
-            type="button"
             onClick={onLaunch}
-            disabled={loading || !formData.name || !formData.symbol}
-            className="sketch-btn sketch-btn-green"
-            style={styles.launchButton}
+            disabled={loading}
+            className="ocean-btn-primary w-full py-4 rounded-2xl font-extrabold text-base flex items-center justify-center gap-2 shadow-2xl transition-all"
           >
-            {loading ? (
-              <>
-                <span>Launching on Solana...</span>
-              </>
-            ) : (
-              <>
-                <Rocket size={20} />
-                <span>{!isWalletConnected ? 'Connect Phantom to Launch' : 'Launch to Pump.fun (0.02 SOL)'}</span>
-              </>
-            )}
+            <Rocket className="w-5 h-5" />
+            <span>{loading ? 'Executing Marine Deployment...' : 'Spawn & Launch Coin to Pump.fun'}</span>
           </button>
+
         </div>
-      </div>
 
-      {/* Navigation Footer */}
-      <div style={styles.navFooter}>
-        <button
-          type="button"
-          onClick={onBack}
-          className="sketch-btn"
-          style={styles.backBtn}
-        >
-          <ArrowLeft size={18} />
-          <span>Back to Drawing</span>
-        </button>
-
-        <span style={styles.footerNote}>
-          100% Non-custodial on Phantom • 0.02 SOL fee funds $DRAWPAD buyback pool
-        </span>
       </div>
     </div>
   );
-};
-
-const styles = {
-  container: {
-    padding: '32px 28px 24px 28px',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '20px',
-    width: '100%',
-    position: 'relative',
-    backgroundColor: '#ffffff',
-    marginTop: '12px',
-  },
-  tape: {
-    position: 'absolute',
-    top: '-14px',
-    left: '50%',
-    transform: 'translateX(-50%) rotate(0.5deg)',
-    background: '#bbf7d0',
-    border: '2px dashed #1a1a1e',
-    padding: '2px 16px',
-    fontFamily: 'var(--font-mono)',
-    fontSize: '11px',
-    fontWeight: '700',
-    letterSpacing: '0.08em',
-    color: '#1a1a1e',
-  },
-  header: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-    gap: '12px',
-  },
-  title: {
-    fontSize: '28px',
-    fontWeight: '800',
-    color: '#1a1a1e',
-    fontFamily: 'var(--font-heading)',
-  },
-  subtitle: {
-    fontSize: '16px',
-    color: '#64748b',
-  },
-  pumpfunTag: {
-    fontSize: '14px',
-    fontWeight: '700',
-    color: '#1a1a1e',
-    background: '#fed7aa',
-    border: '2px solid #1a1a1e',
-    borderRadius: '8px',
-    padding: '4px 12px',
-    boxShadow: '1.5px 1.5px 0px #1a1a1e',
-    fontFamily: 'var(--font-mono)',
-  },
-  mainLayout: {
-    display: 'grid',
-    gridTemplateColumns: '260px 1fr',
-    gap: '24px',
-    alignItems: 'start',
-  },
-  previewCol: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  previewCard: {
-    background: '#f8fafc',
-    border: '2px solid #1a1a1e',
-    borderRadius: '12px',
-    padding: '16px',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    gap: '12px',
-    boxShadow: '2px 2px 0px #1a1a1e',
-  },
-  previewLabel: {
-    fontSize: '15px',
-    fontWeight: '700',
-    color: '#1a1a1e',
-    fontFamily: 'var(--font-heading)',
-  },
-  imageBox: {
-    width: '180px',
-    height: '180px',
-    borderRadius: '10px',
-    border: '2px solid #1a1a1e',
-    overflow: 'hidden',
-    backgroundColor: '#ffffff',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  tokenImage: {
-    width: '100%',
-    height: '100%',
-    objectFit: 'cover',
-  },
-  placeholderImg: {
-    fontSize: '13px',
-    color: '#94a3b8',
-    textAlign: 'center',
-    padding: '10px',
-  },
-  editArtBtn: {
-    width: '100%',
-    padding: '8px',
-    fontSize: '15px',
-  },
-  formCol: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '16px',
-  },
-  formGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(2, 1fr)',
-    gap: '12px',
-  },
-  inputGroup: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '4px',
-  },
-  inputGroupFull: {
-    gridColumn: '1 / -1',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '4px',
-  },
-  label: {
-    fontSize: '16px',
-    fontWeight: '700',
-    color: '#1a1a1e',
-  },
-  required: {
-    color: '#dc2626',
-  },
-  input: {
-    background: '#f8fafc',
-    border: '2px solid #1a1a1e',
-    borderRadius: '8px',
-    padding: '8px 12px',
-    color: '#1a1a1e',
-    fontSize: '16px',
-    fontFamily: 'var(--font-handwriting)',
-    outline: 'none',
-    boxShadow: 'inset 1.5px 1.5px 0px rgba(0,0,0,0.05)',
-  },
-  textarea: {
-    background: '#f8fafc',
-    border: '2px solid #1a1a1e',
-    borderRadius: '8px',
-    padding: '8px 12px',
-    color: '#1a1a1e',
-    fontSize: '16px',
-    fontFamily: 'var(--font-handwriting)',
-    outline: 'none',
-    resize: 'vertical',
-    boxShadow: 'inset 1.5px 1.5px 0px rgba(0,0,0,0.05)',
-  },
-  inputWithIcon: {
-    position: 'relative',
-    display: 'flex',
-    alignItems: 'center',
-  },
-  currencyTag: {
-    position: 'absolute',
-    right: '10px',
-    fontSize: '12px',
-    fontWeight: '700',
-    color: '#475569',
-    fontFamily: 'var(--font-mono)',
-  },
-  helperText: {
-    fontSize: '13px',
-    color: '#64748b',
-  },
-  divider: {
-    gridColumn: '1 / -1',
-    borderTop: '2px dashed #cbd5e1',
-    paddingTop: '8px',
-    marginTop: '4px',
-    fontSize: '15px',
-    fontWeight: '700',
-    color: '#334155',
-  },
-  socialInputWrapper: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '10px',
-    background: '#f8fafc',
-    border: '2px solid #1a1a1e',
-    borderRadius: '8px',
-    padding: '0 10px',
-  },
-  socialInput: {
-    flex: 1,
-    background: 'transparent',
-    border: 'none',
-    padding: '8px 0',
-    color: '#1a1a1e',
-    fontSize: '15px',
-    fontFamily: 'var(--font-handwriting)',
-    outline: 'none',
-  },
-  statusBox: {
-    padding: '10px 14px',
-    background: '#fef08a',
-    border: '2px solid #1a1a1e',
-    borderRadius: '8px',
-    fontSize: '16px',
-    fontWeight: '700',
-    color: '#1a1a1e',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px',
-    boxShadow: '2px 2px 0px #1a1a1e',
-  },
-  launchButton: {
-    padding: '14px',
-    fontSize: '20px',
-    width: '100%',
-  },
-  navFooter: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    borderTop: '2px dashed #cbd5e1',
-    paddingTop: '16px',
-    marginTop: '8px',
-    flexWrap: 'wrap',
-    gap: '12px',
-  },
-  backBtn: {
-    padding: '10px 20px',
-    fontSize: '17px',
-  },
-  footerNote: {
-    fontSize: '14px',
-    color: '#64748b',
-  }
-};
+}
