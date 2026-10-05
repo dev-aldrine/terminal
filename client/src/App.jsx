@@ -276,7 +276,7 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#05080f] text-[#e2e8f0] relative">
+    <div className="flex-1 min-h-screen flex flex-col justify-between bg-[#05080f] text-[#e2e8f0] relative">
       
       {/* Background Light Pillar */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
@@ -308,7 +308,7 @@ export function App() {
       />
 
       {/* Main Container - Centered Vertically */}
-      <main className="flex-1 max-w-6xl w-full mx-auto px-4 py-4 flex flex-col justify-center items-center relative z-10 my-auto">
+      <main className="flex-1 w-full max-w-6xl mx-auto px-4 py-2 flex flex-col justify-center items-center relative z-10">
         
         {currentStep === 1 && (
           <ScrollIntroView

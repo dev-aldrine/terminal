@@ -132,9 +132,10 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
                   transition={{ duration: 0.28, ease: 'easeOut' }}
                   className="w-full text-center space-y-4 z-10 py-1 flex flex-col items-center justify-center"
                 >
-                  {/* Card Top Center Branding (Single Word, No Background) */}
-                  <div className="text-base font-black tracking-widest font-heading text-[#00d2ff] uppercase drop-shadow-[0_0_12px_rgba(0,210,255,0.4)]">
-                    AGENSEA
+                  {/* Card Top Center Branding */}
+                  <div className="text-base font-black tracking-widest font-heading uppercase drop-shadow-[0_0_12px_rgba(0,210,255,0.4)]">
+                    <span className="text-white">AGEN</span>
+                    <span className="text-[#00d2ff]">SEA</span>
                   </div>
 
                   <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white font-heading tracking-tight leading-[1.12] text-center flex flex-col items-center justify-center w-full">
