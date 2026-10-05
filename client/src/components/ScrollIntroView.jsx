@@ -167,21 +167,23 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
               </p>
 
               {/* Floating Action Buttons */}
-              <div className="flex flex-wrap items-center justify-center gap-4 pt-3">
+              <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
                 <button
                   onClick={onLaunchNow}
-                  className="px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl bg-gradient-to-r from-[#00d2ff] via-[#00ffa3] to-[#38bdf8] text-[#020712] font-heading font-black text-sm sm:text-base tracking-wide flex items-center justify-center gap-2.5 shadow-[0_0_30px_rgba(0,210,255,0.4)] hover:shadow-[0_0_45px_rgba(0,255,163,0.6)] hover:scale-[1.03] transition-all transform active:scale-95 leading-none"
+                  style={{ padding: '16px 36px' }}
+                  className="rounded-2xl bg-gradient-to-r from-[#00d2ff] via-[#00ffa3] to-[#38bdf8] text-[#020712] font-heading font-black text-sm sm:text-base tracking-wide inline-flex items-center justify-center gap-3 shadow-[0_0_35px_rgba(0,210,255,0.45)] hover:shadow-[0_0_50px_rgba(0,255,163,0.7)] hover:scale-[1.03] transition-all transform active:scale-95 cursor-pointer leading-none min-h-[54px]"
                 >
-                  <FishIcon className="w-5 h-5 fill-current" />
-                  <span>Spawn Agent Now</span>
+                  <FishIcon className="w-5 h-5 fill-current shrink-0" />
+                  <span className="font-extrabold">Spawn Agent Now</span>
                 </button>
 
                 <button
                   onClick={onExploreOcean}
-                  className="px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl bg-[#04162e]/70 hover:bg-[#07244e]/90 border border-cyan-400/40 text-cyan-200 font-heading font-bold text-sm sm:text-base tracking-wide flex items-center justify-center gap-2.5 backdrop-blur-xl shadow-[0_0_20px_rgba(0,210,255,0.15)] hover:border-cyan-300 hover:scale-[1.03] transition-all transform active:scale-95 leading-none"
+                  style={{ padding: '16px 36px' }}
+                  className="rounded-2xl bg-[#04162e]/80 hover:bg-[#07244e]/95 border border-cyan-400/40 text-cyan-200 font-heading font-bold text-sm sm:text-base tracking-wide inline-flex items-center justify-center gap-3 backdrop-blur-xl shadow-[0_0_20px_rgba(0,210,255,0.15)] hover:border-cyan-300 hover:scale-[1.03] transition-all transform active:scale-95 cursor-pointer leading-none min-h-[54px]"
                 >
-                  <Layers className="w-5 h-5 text-[#00d2ff]" />
-                  <span>Enter Living Ocean</span>
+                  <Layers className="w-5 h-5 text-[#00d2ff] shrink-0" />
+                  <span className="font-extrabold">Enter Living Ocean</span>
                 </button>
               </div>
             </motion.div>
@@ -347,21 +349,23 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
                 Connect your Phantom wallet, configure your creature visual DNA, and broadcast directly to Pump.fun in seconds.
               </p>
 
-              <div className="flex flex-wrap items-center justify-center gap-4 pt-3">
+              <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
                 <button
                   onClick={onLaunchNow}
-                  className="px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl bg-gradient-to-r from-[#00d2ff] via-[#00ffa3] to-[#38bdf8] text-[#020712] font-heading font-black text-sm sm:text-base tracking-wide flex items-center justify-center gap-2.5 shadow-[0_0_30px_rgba(0,210,255,0.4)] hover:shadow-[0_0_45px_rgba(0,255,163,0.6)] hover:scale-[1.03] transition-all transform active:scale-95 leading-none"
+                  style={{ padding: '16px 36px' }}
+                  className="rounded-2xl bg-gradient-to-r from-[#00d2ff] via-[#00ffa3] to-[#38bdf8] text-[#020712] font-heading font-black text-sm sm:text-base tracking-wide inline-flex items-center justify-center gap-3 shadow-[0_0_35px_rgba(0,210,255,0.45)] hover:shadow-[0_0_50px_rgba(0,255,163,0.7)] hover:scale-[1.03] transition-all transform active:scale-95 cursor-pointer leading-none min-h-[54px]"
                 >
-                  <FishIcon className="w-5 h-5 fill-current" />
-                  <span>Spawn Your Marine Fish Now</span>
+                  <FishIcon className="w-5 h-5 fill-current shrink-0" />
+                  <span className="font-extrabold">Spawn Your Marine Fish Now</span>
                 </button>
 
                 <button
                   onClick={onExploreOcean}
-                  className="px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl bg-[#04162e]/70 hover:bg-[#07244e]/90 border border-cyan-400/40 text-cyan-200 font-heading font-bold text-sm sm:text-base tracking-wide flex items-center justify-center gap-2.5 backdrop-blur-xl shadow-[0_0_20px_rgba(0,210,255,0.15)] hover:border-cyan-300 hover:scale-[1.03] transition-all transform active:scale-95 leading-none"
+                  style={{ padding: '16px 36px' }}
+                  className="rounded-2xl bg-[#04162e]/80 hover:bg-[#07244e]/95 border border-cyan-400/40 text-cyan-200 font-heading font-bold text-sm sm:text-base tracking-wide inline-flex items-center justify-center gap-3 backdrop-blur-xl shadow-[0_0_20px_rgba(0,210,255,0.15)] hover:border-cyan-300 hover:scale-[1.03] transition-all transform active:scale-95 cursor-pointer leading-none min-h-[54px]"
                 >
-                  <Layers className="w-5 h-5 text-[#00d2ff]" />
-                  <span>Explore The Ocean Aquarium</span>
+                  <Layers className="w-5 h-5 text-[#00d2ff] shrink-0" />
+                  <span className="font-extrabold">Explore The Ocean Aquarium</span>
                 </button>
               </div>
             </motion.div>
