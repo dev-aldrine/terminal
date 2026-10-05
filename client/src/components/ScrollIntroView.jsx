@@ -100,21 +100,21 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
         edgeSensitivity={32}
         glowColor="190 100 65"
         backgroundColor="#050e1f"
-        borderRadius={20}
-        glowRadius={36}
+        borderRadius={22}
+        glowRadius={38}
         glowIntensity={1.2}
         coneSpread={28}
         animated={false}
         colors={['#00d2ff', '#00ffa3', '#38bdf8']}
         className="w-full shadow-[0_20px_50px_rgba(0,0,0,0.6),0_0_30px_rgba(0,210,255,0.08)] border border-cyan-400/30"
       >
-        <div className="relative w-full min-h-[340px] flex flex-col justify-between p-5 sm:p-6">
+        <div className="relative w-full min-h-[350px] flex flex-col justify-between p-6 sm:p-7">
           
           {/* Main Slide Deck */}
-          <div className="relative flex-1 w-full flex items-center justify-center py-1">
+          <div className="relative flex-1 w-full flex items-center justify-center py-2">
             <AnimatePresence mode="wait">
               
-              {/* SLIDE 0: HERO INTRO (Centered & Fish-Degen Focus) */}
+              {/* SLIDE 0: HERO INTRO */}
               {activeSlide === 0 && (
                 <motion.div
                   key="slide-0"
@@ -122,18 +122,11 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -12 }}
                   transition={{ duration: 0.28, ease: 'easeOut' }}
-                  className="w-full text-center space-y-3 z-10 py-1 flex flex-col items-center justify-center"
+                  className="w-full text-center space-y-4 z-10 py-1 flex flex-col items-center justify-center"
                 >
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#020712] border border-cyan-400/50 text-[11px] font-mono text-cyan-300 shadow-sm">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#00d2ff] shadow-[0_0_8px_#00d2ff]"></span>
-                    <span className="font-semibold">Solana Marine AI Protocol</span>
-                    <span className="text-cyan-600">•</span>
-                    <span className="text-white font-bold">~0.0001 SOL Gas</span>
-                  </div>
-
-                  <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white font-heading tracking-tight leading-[1.15] text-center flex flex-col items-center justify-center w-full">
+                  <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white font-heading tracking-tight leading-[1.1] text-center flex flex-col items-center justify-center w-full">
                     <span>Spawn autonomous</span>
-                    <span className="text-[#00d2ff] flex items-center justify-center w-full">
+                    <span className="text-[#00d2ff] flex items-center justify-center w-full mt-0.5">
                       <RotatingText
                         texts={[
                           'predatory alpha sharks.',
@@ -149,32 +142,32 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
                         animate={{ y: 0 }}
                         exit={{ y: "-120%" }}
                         staggerDuration={0.02}
-                        splitLevelClassName="overflow-hidden pb-0.5 inline-flex justify-center"
+                        splitLevelClassName="overflow-hidden pb-1 inline-flex justify-center"
                         transition={{ type: "spring", damping: 30, stiffness: 400 }}
                         rotationInterval={2400}
                       />
                     </span>
                   </h1>
 
-                  <p className="text-slate-200 text-xs sm:text-sm max-w-lg mx-auto leading-relaxed font-sans font-medium text-center">
+                  <p className="text-slate-200 text-sm sm:text-base max-w-xl mx-auto leading-relaxed font-sans font-medium text-center">
                     Deploy autonomous fish trading agents on Pump.fun with custom visual DNA, live swimming physics, on-chain thought telemetry, and community treasury pools.
                   </p>
 
                   {/* Actions */}
-                  <div className="flex flex-wrap items-center justify-center gap-3 pt-1">
+                  <div className="flex flex-wrap items-center justify-center gap-3.5 pt-2">
                     <button
                       onClick={onLaunchNow}
-                      className="btn-primary text-xs font-bold px-5 py-2.5 shadow-[0_0_20px_rgba(0,210,255,0.35)] rounded-xl"
+                      className="btn-primary text-sm font-bold px-6 py-3 shadow-[0_0_25px_rgba(0,210,255,0.35)] rounded-xl"
                     >
-                      <Zap className="w-3.5 h-3.5" />
+                      <Zap className="w-4 h-4" />
                       <span>Spawn Agent Now</span>
                     </button>
 
                     <button
                       onClick={onExploreOcean}
-                      className="btn-secondary text-xs font-semibold px-5 py-2.5 bg-[#030d1d] border-cyan-500/40 hover:border-cyan-400 text-slate-100 rounded-xl"
+                      className="btn-secondary text-sm font-semibold px-6 py-3 bg-[#030d1d] border-cyan-500/40 hover:border-cyan-400 text-slate-100 rounded-xl"
                     >
-                      <Layers className="w-3.5 h-3.5 text-cyan-400" />
+                      <Layers className="w-4 h-4 text-cyan-400" />
                       <span>Enter Ocean Ecosystem</span>
                     </button>
                   </div>
@@ -189,33 +182,33 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -12 }}
                   transition={{ duration: 0.28, ease: 'easeOut' }}
-                  className="w-full text-left space-y-3 z-10"
+                  className="w-full text-left space-y-3.5 z-10"
                 >
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#020712] border border-cyan-400/50 text-xs font-mono text-[#00d2ff]">
                     <span>01 / PREDATORY FISH DNA FORGE</span>
                   </div>
-                  <h2 className="text-2xl sm:text-3xl font-bold text-white font-heading tracking-tight">
+                  <h2 className="text-3xl sm:text-4xl font-extrabold text-white font-heading tracking-tight leading-tight">
                     Forge Degen Marine Fish with <br /><span className="text-[#00d2ff]">Live Swimming Physics</span>
                   </h2>
-                  <p className="text-slate-200 text-xs leading-relaxed font-medium">
+                  <p className="text-slate-200 text-sm leading-relaxed font-medium">
                     Select from 6 ferocious marine fish archetypes (Cyber Megalodons, Neon Anglers, Degen Jellies, Trench Whales). Calibrate neon emission cores, equip cybernetic implants, and watch them hunt.
                   </p>
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 pt-1">
-                    <div className="p-3 rounded-xl bg-[#020815] border border-cyan-400/30">
-                      <Cpu className="w-4 h-4 text-[#00d2ff] mb-1" />
-                      <h4 className="text-white font-bold text-xs mb-0.5 font-heading">6 Fish Archetypes</h4>
-                      <p className="text-slate-300 text-[11px] leading-tight">Tailored mathematical profiles for volume snipers & alpha hunters.</p>
+                    <div className="p-3.5 rounded-xl bg-[#020815] border border-cyan-400/30">
+                      <Cpu className="w-4.5 h-4.5 text-[#00d2ff] mb-1.5" />
+                      <h4 className="text-white font-bold text-sm mb-0.5 font-heading">6 Fish Archetypes</h4>
+                      <p className="text-slate-300 text-xs leading-tight">Tailored mathematical profiles for volume snipers & alpha hunters.</p>
                     </div>
-                    <div className="p-3 rounded-xl bg-[#020815] border border-cyan-400/30">
-                      <Sparkles className="w-4 h-4 text-[#00ffa3] mb-1" />
-                      <h4 className="text-white font-bold text-xs mb-0.5 font-heading">Neon Emission Aura</h4>
-                      <p className="text-slate-300 text-[11px] leading-tight">Procedural spectral shaders with custom glowing dorsal fins.</p>
+                    <div className="p-3.5 rounded-xl bg-[#020815] border border-cyan-400/30">
+                      <Sparkles className="w-4.5 h-4.5 text-[#00ffa3] mb-1.5" />
+                      <h4 className="text-white font-bold text-sm mb-0.5 font-heading">Neon Emission Aura</h4>
+                      <p className="text-slate-300 text-xs leading-tight">Procedural spectral shaders with custom glowing dorsal fins.</p>
                     </div>
-                    <div className="p-3 rounded-xl bg-[#020815] border border-cyan-400/30">
-                      <Zap className="w-4 h-4 text-[#38bdf8] mb-1" />
-                      <h4 className="text-white font-bold text-xs mb-0.5 font-heading">Cybernetic Augments</h4>
-                      <p className="text-slate-300 text-[11px] leading-tight">Equip sonar radar, trench armor, and alpha dip snipers.</p>
+                    <div className="p-3.5 rounded-xl bg-[#020815] border border-cyan-400/30">
+                      <Zap className="w-4.5 h-4.5 text-[#38bdf8] mb-1.5" />
+                      <h4 className="text-white font-bold text-sm mb-0.5 font-heading">Cybernetic Augments</h4>
+                      <p className="text-slate-300 text-xs leading-tight">Equip sonar radar, trench armor, and alpha dip snipers.</p>
                     </div>
                   </div>
                 </motion.div>
@@ -229,33 +222,33 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -12 }}
                   transition={{ duration: 0.28, ease: 'easeOut' }}
-                  className="w-full text-left space-y-3 z-10"
+                  className="w-full text-left space-y-3.5 z-10"
                 >
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#020712] border border-cyan-400/50 text-xs font-mono text-[#00d2ff]">
                     <span>02 / FISH COMMUNITY TREASURY PROTOCOL</span>
                   </div>
-                  <h2 className="text-2xl sm:text-3xl font-bold text-white font-heading tracking-tight">
+                  <h2 className="text-3xl sm:text-4xl font-extrabold text-white font-heading tracking-tight leading-tight">
                     Autonomous Fish Pools with <br /><span className="text-[#00d2ff]">AI Cognitive Verification</span>
                   </h2>
-                  <p className="text-slate-200 text-xs leading-relaxed font-medium">
+                  <p className="text-slate-200 text-sm leading-relaxed font-medium">
                     Equip your fish token with a community treasury pool. Reward diamond hand holders with automated drip payouts, or protect liquidity with interactive AI riddles.
                   </p>
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 pt-1">
-                    <div className="p-3 rounded-xl bg-[#020815] border border-cyan-400/30">
-                      <Droplets className="w-4 h-4 text-[#00d2ff] mb-1" />
-                      <h4 className="text-white font-bold text-xs mb-0.5 font-heading">Instant Token Drip</h4>
-                      <p className="text-slate-300 text-[11px] leading-tight">Automated cooldown-governed payouts to connected fish holders.</p>
+                    <div className="p-3.5 rounded-xl bg-[#020815] border border-cyan-400/30">
+                      <Droplets className="w-4.5 h-4.5 text-[#00d2ff] mb-1.5" />
+                      <h4 className="text-white font-bold text-sm mb-0.5 font-heading">Instant Token Drip</h4>
+                      <p className="text-slate-300 text-xs leading-tight">Automated cooldown-governed payouts to connected fish holders.</p>
                     </div>
-                    <div className="p-3 rounded-xl bg-[#020815] border border-cyan-400/30">
-                      <Zap className="w-4 h-4 text-[#00ffa3] mb-1" />
-                      <h4 className="text-white font-bold text-xs mb-0.5 font-heading">AI Fish Riddle Gates</h4>
-                      <p className="text-slate-300 text-[11px] leading-tight">Marine agents verify natural language answers before release.</p>
+                    <div className="p-3.5 rounded-xl bg-[#020815] border border-cyan-400/30">
+                      <Zap className="w-4.5 h-4.5 text-[#00ffa3] mb-1.5" />
+                      <h4 className="text-white font-bold text-sm mb-0.5 font-heading">AI Fish Riddle Gates</h4>
+                      <p className="text-slate-300 text-xs leading-tight">Marine agents verify natural language answers before release.</p>
                     </div>
-                    <div className="p-3 rounded-xl bg-[#020815] border border-cyan-400/30">
-                      <Shield className="w-4 h-4 text-[#ffb703] mb-1" />
-                      <h4 className="text-white font-bold text-xs mb-0.5 font-heading">Anti-Bot Defenses</h4>
-                      <p className="text-slate-300 text-[11px] leading-tight">Cooldown thresholds to prevent sniper bot extraction.</p>
+                    <div className="p-3.5 rounded-xl bg-[#020815] border border-cyan-400/30">
+                      <Shield className="w-4.5 h-4.5 text-[#ffb703] mb-1.5" />
+                      <h4 className="text-white font-bold text-sm mb-0.5 font-heading">Anti-Bot Defenses</h4>
+                      <p className="text-slate-300 text-xs leading-tight">Cooldown thresholds to prevent sniper bot extraction.</p>
                     </div>
                   </div>
                 </motion.div>
@@ -269,33 +262,33 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -12 }}
                   transition={{ duration: 0.28, ease: 'easeOut' }}
-                  className="w-full text-left space-y-3 z-10"
+                  className="w-full text-left space-y-3.5 z-10"
                 >
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#020712] border border-cyan-400/50 text-xs font-mono text-[#00d2ff]">
                     <span>03 / THE LIVING DEGEN AQUARIUM</span>
                   </div>
-                  <h2 className="text-2xl sm:text-3xl font-bold text-white font-heading tracking-tight">
+                  <h2 className="text-3xl sm:text-4xl font-extrabold text-white font-heading tracking-tight leading-tight">
                     Watch Spawned Fish Co-Exist & <br /><span className="text-[#00d2ff]">Scale with Market Cap</span>
                   </h2>
-                  <p className="text-slate-200 text-xs leading-relaxed font-medium">
+                  <p className="text-slate-200 text-sm leading-relaxed font-medium">
                     Step into the shared ocean where every spawned token swims autonomously. Fish size scales dynamically with Pump.fun market cap, and live thought telemetry broadcasts on-chain alpha.
                   </p>
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 pt-1">
-                    <div className="p-3 rounded-xl bg-[#020815] border border-cyan-400/30">
-                      <Waves className="w-4 h-4 text-[#00d2ff] mb-1" />
-                      <h4 className="text-white font-bold text-xs mb-0.5 font-heading">Market Cap Scaling</h4>
-                      <p className="text-slate-300 text-[11px] leading-tight">Fish grow into gigantic leviathans as bonding curves fill up.</p>
+                    <div className="p-3.5 rounded-xl bg-[#020815] border border-cyan-400/30">
+                      <Waves className="w-4.5 h-4.5 text-[#00d2ff] mb-1.5" />
+                      <h4 className="text-white font-bold text-sm mb-0.5 font-heading">Market Cap Scaling</h4>
+                      <p className="text-slate-300 text-xs leading-tight">Fish grow into gigantic leviathans as bonding curves fill up.</p>
                     </div>
-                    <div className="p-3 rounded-xl bg-[#020815] border border-cyan-400/30">
-                      <Terminal className="w-4 h-4 text-[#00ffa3] mb-1" />
-                      <h4 className="text-white font-bold text-xs mb-0.5 font-heading">Alpha Thought Streams</h4>
-                      <p className="text-slate-300 text-[11px] leading-tight">Live telemetry feeds broadcast autonomous trading signals.</p>
+                    <div className="p-3.5 rounded-xl bg-[#020815] border border-cyan-400/30">
+                      <Terminal className="w-4.5 h-4.5 text-[#00ffa3] mb-1.5" />
+                      <h4 className="text-white font-bold text-sm mb-0.5 font-heading">Alpha Thought Streams</h4>
+                      <p className="text-slate-300 text-xs leading-tight">Live telemetry feeds broadcast autonomous trading signals.</p>
                     </div>
-                    <div className="p-3 rounded-xl bg-[#020815] border border-cyan-400/30">
-                      <Sparkles className="w-4 h-4 text-[#38bdf8] mb-1" />
-                      <h4 className="text-white font-bold text-xs mb-0.5 font-heading">Sonar Whale Radar</h4>
-                      <p className="text-slate-300 text-[11px] leading-tight">Real-time alerts for massive SOL buys in the deep trench.</p>
+                    <div className="p-3.5 rounded-xl bg-[#020815] border border-cyan-400/30">
+                      <Sparkles className="w-4.5 h-4.5 text-[#38bdf8] mb-1.5" />
+                      <h4 className="text-white font-bold text-sm mb-0.5 font-heading">Sonar Whale Radar</h4>
+                      <p className="text-slate-300 text-xs leading-tight">Real-time alerts for massive SOL buys in the deep trench.</p>
                     </div>
                   </div>
                 </motion.div>
@@ -309,35 +302,35 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -12 }}
                   transition={{ duration: 0.28, ease: 'easeOut' }}
-                  className="w-full text-center space-y-3 z-10 py-1 flex flex-col items-center justify-center"
+                  className="w-full text-center space-y-4 z-10 py-2 flex flex-col items-center justify-center"
                 >
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#020712] border border-cyan-400/50 text-xs font-mono text-[#00d2ff]">
                     <span>READY TO SPAWN</span>
                   </div>
 
-                  <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white font-heading tracking-tight leading-tight">
+                  <h2 className="text-4xl sm:text-5xl font-black text-white font-heading tracking-tight leading-tight">
                     Enter the Trench. <br />
                     <span className="text-[#00d2ff]">Spawn Your Fish Agent.</span>
                   </h2>
 
-                  <p className="text-slate-200 text-xs sm:text-sm leading-relaxed max-w-md mx-auto font-medium">
+                  <p className="text-slate-200 text-sm sm:text-base leading-relaxed max-w-lg mx-auto font-medium">
                     Connect your wallet, configure your creature visual DNA, and broadcast directly to Pump.fun in seconds.
                   </p>
 
-                  <div className="flex flex-wrap items-center justify-center gap-3 pt-1">
+                  <div className="flex flex-wrap items-center justify-center gap-3.5 pt-2">
                     <button
                       onClick={onLaunchNow}
-                      className="btn-primary text-xs font-bold px-6 py-2.5 shadow-[0_0_25px_rgba(0,210,255,0.35)] rounded-xl"
+                      className="btn-primary text-sm font-bold px-7 py-3.5 shadow-[0_0_25px_rgba(0,210,255,0.35)] rounded-xl"
                     >
-                      <Zap className="w-3.5 h-3.5" />
+                      <Zap className="w-4 h-4" />
                       <span>Spawn Your Marine Fish Now</span>
                     </button>
 
                     <button
                       onClick={onExploreOcean}
-                      className="btn-secondary text-xs font-semibold px-6 py-2.5 bg-[#030d1d] border-cyan-500/40 hover:border-cyan-400 text-slate-100 rounded-xl"
+                      className="btn-secondary text-sm font-semibold px-7 py-3.5 bg-[#030d1d] border-cyan-500/40 hover:border-cyan-400 text-slate-100 rounded-xl"
                     >
-                      <Layers className="w-3.5 h-3.5 text-cyan-400" />
+                      <Layers className="w-4 h-4 text-cyan-400" />
                       <span>Explore The Ocean Aquarium</span>
                     </button>
                   </div>
@@ -348,39 +341,39 @@ export const ScrollIntroView = ({ onLaunchNow, onExploreOcean }) => {
           </div>
 
           {/* Bottom Deck Navigation */}
-          <div className="w-full flex items-center justify-between z-20 pt-2.5 border-t border-cyan-500/25 text-xs font-mono">
-            <div className="flex items-center gap-2">
+          <div className="w-full flex items-center justify-between z-20 pt-3 border-t border-cyan-500/25 text-sm font-mono">
+            <div className="flex items-center gap-2.5">
               {Array.from({ length: totalSlides }).map((_, idx) => (
                 <button
                   key={idx}
                   onClick={() => goToSlide(idx)}
-                  className={`h-1.5 rounded-full transition-all ${
-                    activeSlide === idx ? 'w-6 bg-[#00d2ff] shadow-[0_0_8px_#00d2ff]' : 'w-2 bg-cyan-900/60 hover:bg-cyan-500/50'
+                  className={`h-2 rounded-full transition-all ${
+                    activeSlide === idx ? 'w-7 bg-[#00d2ff] shadow-[0_0_10px_#00d2ff]' : 'w-2.5 bg-cyan-900/70 hover:bg-cyan-500/50'
                   }`}
                   title={`Slide ${idx + 1}`}
                 />
               ))}
             </div>
 
-            <div className="flex items-center gap-2">
-              <span className="text-slate-300 font-mono text-xs hidden sm:inline mr-2 font-semibold">0{activeSlide + 1} / 0{totalSlides}</span>
+            <div className="flex items-center gap-2.5">
+              <span className="text-slate-200 font-mono text-xs sm:text-sm hidden sm:inline mr-2 font-bold">0{activeSlide + 1} / 0{totalSlides}</span>
               <button
                 onClick={prevSlide}
                 disabled={activeSlide === 0}
-                className={`p-1.5 rounded-lg border transition-all ${
+                className={`p-2 rounded-lg border transition-all ${
                   activeSlide === 0 ? 'opacity-30 cursor-not-allowed border-transparent text-slate-600' : 'bg-[#020712] border-cyan-500/40 hover:border-cyan-400 text-slate-200'
                 }`}
               >
-                <ArrowUp className="w-3.5 h-3.5" />
+                <ArrowUp className="w-4 h-4" />
               </button>
               <button
                 onClick={nextSlide}
                 disabled={activeSlide === totalSlides - 1}
-                className={`p-1.5 rounded-lg border transition-all ${
+                className={`p-2 rounded-lg border transition-all ${
                   activeSlide === totalSlides - 1 ? 'opacity-30 cursor-not-allowed border-transparent text-slate-600' : 'bg-[#020712] border-cyan-500/40 hover:border-cyan-400 text-slate-200'
                 }`}
               >
-                <ArrowDown className="w-3.5 h-3.5" />
+                <ArrowDown className="w-4 h-4" />
               </button>
             </div>
           </div>
