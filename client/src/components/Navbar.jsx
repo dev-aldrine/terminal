@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Waves, Copy, Check } from 'lucide-react';
+import { Copy, Check } from 'lucide-react';
 import { PhantomWalletButton } from './PhantomWalletButton';
 
 const TwitterIcon = ({ className = 'w-3.5 h-3.5' }) => (
@@ -30,19 +30,16 @@ export function Navbar({ siteConfig, onLogoClick }) {
   };
 
   return (
-    <header className="w-full border-b border-cyan-500/20 bg-[#030918]/80 backdrop-blur-2xl py-2.5 px-4 sm:px-6 sticky top-0 z-50">
+    <header className="w-full bg-transparent py-3 px-4 sm:px-6 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
         
-        {/* Logo and Text (No version) */}
+        {/* Logo Text */}
         <div
           onClick={onLogoClick}
-          className="flex items-center gap-2 cursor-pointer hover:opacity-90 transition-opacity"
+          className="flex items-center cursor-pointer hover:opacity-90 transition-opacity"
         >
-          <Waves className="w-5 h-5 text-[#00d2ff]" />
-          <div className="flex items-center">
-            <span className="text-lg font-black tracking-tight font-heading text-white">AGEN</span>
-            <span className="text-lg font-black tracking-tight font-heading text-[#00d2ff]">SEA</span>
-          </div>
+          <span className="text-xl font-black tracking-tight font-heading text-white">AGEN</span>
+          <span className="text-xl font-black tracking-tight font-heading text-[#00d2ff]">SEA</span>
         </div>
 
         {/* Center: Full Contract Address Button */}
