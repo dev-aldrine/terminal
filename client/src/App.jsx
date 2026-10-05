@@ -279,19 +279,19 @@ export function App() {
     <div className="min-h-screen flex flex-col bg-[#05080f] text-[#e2e8f0] relative">
       
       {/* Background Light Pillar */}
-      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-85">
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-60">
         <LightPillar
-          topColor="#64b5ff"
-          bottomColor="#000184"
-          intensity={0.7}
-          rotationSpeed={0.3}
-          glowAmount={0.006}
-          pillarWidth={10}
-          pillarHeight={0.1}
-          noiseIntensity={0}
-          pillarRotation={176}
+          topColor="#38bdf8"
+          bottomColor="#021329"
+          intensity={0.5}
+          rotationSpeed={0.2}
+          glowAmount={0.003}
+          pillarWidth={4.5}
+          pillarHeight={1.4}
+          noiseIntensity={0.2}
+          pillarRotation={0}
           interactive={false}
-          mixBlendMode="normal"
+          mixBlendMode="screen"
         />
       </div>
 

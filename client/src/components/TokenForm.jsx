@@ -28,21 +28,9 @@ export function TokenForm({
 
   return (
     <div className="w-full max-w-4xl mx-auto my-auto select-none">
-      <BorderGlow
-        edgeSensitivity={35}
-        glowColor="190 100 65"
-        backgroundColor="rgba(6, 16, 36, 0.45)"
-        borderRadius={24}
-        glowRadius={36}
-        glowIntensity={1.2}
-        coneSpread={28}
-        animated={false}
-        colors={['#00d2ff', '#00ffa3', '#38bdf8']}
-        className="w-full backdrop-blur-xl border border-cyan-400/30 shadow-[0_20px_50px_rgba(0,0,0,0.5),0_0_30px_rgba(0,210,255,0.08)]"
-      >
-        <div className="p-6 sm:p-7 space-y-4">
-          
-          {/* Header */}
+      <div className="w-full rounded-2xl bg-[#061224]/50 backdrop-blur-xl border border-cyan-400/25 shadow-[0_15px_35px_rgba(0,0,0,0.5),0_0_20px_rgba(0,210,255,0.06)] p-5 sm:p-6 space-y-3.5">
+        
+        {/* Header */}
           <div className="flex items-center justify-between border-b border-cyan-500/20 pb-3">
             <div>
               <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-[#040a16]/80 border border-cyan-400/40 text-[10px] font-mono text-cyan-300 mb-1">
@@ -383,10 +371,8 @@ export function TokenForm({
 
             </div>
 
-          </div>
-
         </div>
-      </BorderGlow>
+      </div>
     </div>
   );
 }
