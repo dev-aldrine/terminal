@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Sparkles, Dices, RefreshCw, Zap, Activity, Shield, Waves, Cpu, Eye, Radio } from 'lucide-react';
+import BorderGlow from './BorderGlow';
 
 export const SPECIES_LIST = [
   {
@@ -130,13 +131,11 @@ export function FishStudio({ onSaveFish, selectedSpecies = 'neon_angler', setSel
     const tailWiggle = Math.sin(time * 0.08 * swimSpeed) * 14;
 
     if (activeSpecies === 'neon_angler') {
-      // Main Body
       targetCtx.beginPath();
       targetCtx.ellipse(0, 0, 95, 70, 0, 0, Math.PI * 2);
       targetCtx.fill();
       targetCtx.stroke();
 
-      // Tail
       targetCtx.beginPath();
       targetCtx.moveTo(-80, 0);
       targetCtx.lineTo(-145, -50 + tailWiggle);
@@ -146,7 +145,6 @@ export function FishStudio({ onSaveFish, selectedSpecies = 'neon_angler', setSel
       targetCtx.fill();
       targetCtx.stroke();
 
-      // Angler Lure Stem
       targetCtx.beginPath();
       targetCtx.moveTo(40, -60);
       targetCtx.quadraticCurveTo(75, -110, 105, -90);
@@ -154,7 +152,6 @@ export function FishStudio({ onSaveFish, selectedSpecies = 'neon_angler', setSel
       targetCtx.lineWidth = 3;
       targetCtx.stroke();
 
-      // Glowing Lure Bulb
       targetCtx.beginPath();
       targetCtx.arc(105, -90, 12, 0, Math.PI * 2);
       targetCtx.fillStyle = '#ffffff';
@@ -163,7 +160,6 @@ export function FishStudio({ onSaveFish, selectedSpecies = 'neon_angler', setSel
       targetCtx.fill();
 
     } else if (activeSpecies === 'cyber_shark') {
-      // Hydrodynamic Torpedo Body
       targetCtx.beginPath();
       targetCtx.moveTo(120, 0);
       targetCtx.quadraticCurveTo(40, -60, -100, -25);
@@ -176,7 +172,6 @@ export function FishStudio({ onSaveFish, selectedSpecies = 'neon_angler', setSel
       targetCtx.fill();
       targetCtx.stroke();
 
-      // Dorsal Fin
       targetCtx.beginPath();
       targetCtx.moveTo(-10, -50);
       targetCtx.lineTo(-30, -95);
@@ -187,7 +182,6 @@ export function FishStudio({ onSaveFish, selectedSpecies = 'neon_angler', setSel
       targetCtx.stroke();
 
     } else if (activeSpecies === 'bio_jelly') {
-      // Jelly Bell
       targetCtx.beginPath();
       targetCtx.arc(0, -30, 85, Math.PI, 0, false);
       targetCtx.quadraticCurveTo(40, 0, 0, 5);
@@ -196,7 +190,6 @@ export function FishStudio({ onSaveFish, selectedSpecies = 'neon_angler', setSel
       targetCtx.fill();
       targetCtx.stroke();
 
-      // Flowing Bioluminescent Tentacles
       for (let t = -60; t <= 60; t += 20) {
         targetCtx.beginPath();
         targetCtx.moveTo(t, 0);
@@ -211,7 +204,6 @@ export function FishStudio({ onSaveFish, selectedSpecies = 'neon_angler', setSel
       }
 
     } else if (activeSpecies === 'volt_ray') {
-      // Diamond Wing Ray
       targetCtx.beginPath();
       targetCtx.moveTo(110, 0);
       targetCtx.lineTo(0, -95);
@@ -221,7 +213,6 @@ export function FishStudio({ onSaveFish, selectedSpecies = 'neon_angler', setSel
       targetCtx.fill();
       targetCtx.stroke();
 
-      // Electric Stinger
       targetCtx.beginPath();
       targetCtx.moveTo(-100, 0);
       targetCtx.quadraticCurveTo(-140, tailWiggle * 1.5, -190, tailWiggle);
@@ -230,13 +221,11 @@ export function FishStudio({ onSaveFish, selectedSpecies = 'neon_angler', setSel
       targetCtx.stroke();
 
     } else if (activeSpecies === 'mecha_puffer') {
-      // Puffer Sphere
       targetCtx.beginPath();
       targetCtx.arc(0, 0, 80, 0, Math.PI * 2);
       targetCtx.fill();
       targetCtx.stroke();
 
-      // Protective Spikes
       for (let a = 0; a < Math.PI * 2; a += Math.PI / 6) {
         const sx = Math.cos(a) * 80;
         const sy = Math.sin(a) * 80;
@@ -251,7 +240,6 @@ export function FishStudio({ onSaveFish, selectedSpecies = 'neon_angler', setSel
       }
 
     } else {
-      // Colossal Whale
       targetCtx.beginPath();
       targetCtx.moveTo(130, -10);
       targetCtx.quadraticCurveTo(40, -70, -110, -35);
@@ -265,7 +253,6 @@ export function FishStudio({ onSaveFish, selectedSpecies = 'neon_angler', setSel
       targetCtx.stroke();
     }
 
-    // Cybernetic Augmentation Overlays
     if (cyberMod === 'sonar_radar') {
       targetCtx.beginPath();
       targetCtx.arc(55, -20, 8, 0, Math.PI * 2);
@@ -344,161 +331,164 @@ export function FishStudio({ onSaveFish, selectedSpecies = 'neon_angler', setSel
   };
 
   return (
-    <div className="w-full max-w-6xl mx-auto py-2 select-none">
-      
-      {/* Header */}
-      <div className="text-left mb-6 space-y-1.5">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#040914]/80 border border-cyan-500/30 text-[11px] font-mono text-cyan-300">
-          <Waves className="w-3.5 h-3.5 text-[#00d2ff]" />
-          <span>02 / CYBER-AQUATIC DNA STUDIO</span>
-        </div>
-        <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white font-heading">
-          Configure Creature DNA & Visuals
-        </h2>
-        <p className="text-slate-300 text-xs sm:text-sm">
-          Select an archetype, adjust bioluminescent emissions, and synthesize real-time trading DNA for Pump.fun.
-        </p>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        
-        {/* Left Column: Archetype List */}
-        <div className="lg:col-span-5 space-y-4">
-          <div className="p-5 rounded-2xl bg-[#070e1b]/70 border border-cyan-500/20 backdrop-blur-2xl shadow-xl space-y-3">
-            <div className="flex items-center justify-between border-b border-cyan-500/15 pb-2.5 text-xs font-mono">
-              <span className="text-slate-200 font-semibold">SPECIES ARCHETYPE</span>
-              <button
-                onClick={randomizeDNA}
-                className="text-cyan-400 hover:text-cyan-300 flex items-center gap-1.5 transition-colors"
-              >
-                <Dices className="w-3.5 h-3.5" /> Randomize
-              </button>
-            </div>
-
-            <div className="space-y-2 max-h-[360px] overflow-y-auto pr-1">
-              {SPECIES_LIST.map((species) => {
-                const isSelected = activeSpecies === species.id;
-                return (
-                  <button
-                    key={species.id}
-                    onClick={() => handleSpeciesChange(species.id)}
-                    className={`w-full text-left p-3 rounded-xl border transition-all flex items-start gap-3 ${
-                      isSelected
-                        ? 'bg-[#08152b] border-[#00d2ff] shadow-[0_0_20px_rgba(0,210,255,0.2)]'
-                        : 'bg-[#040812]/80 border-cyan-500/15 hover:border-cyan-400/40'
-                    }`}
-                  >
-                    <span className="text-xl p-2 rounded-lg bg-[#03060d] border border-cyan-500/20 shrink-0">
-                      {species.icon}
-                    </span>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between">
-                        <strong className="text-white text-xs font-heading">{species.name}</strong>
-                        <span className="text-[10px] font-mono text-[#00d2ff] font-semibold">{species.role.split(' ')[0]}</span>
-                      </div>
-                      <p className="text-[11px] text-slate-400 mt-0.5 line-clamp-2 leading-relaxed font-sans">
-                        {species.desc}
-                      </p>
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Controls */}
-          <div className="p-5 rounded-2xl bg-[#070e1b]/70 border border-cyan-500/20 backdrop-blur-2xl shadow-xl space-y-4 font-mono text-xs">
-            <div>
-              <span className="text-slate-200 font-semibold block border-b border-cyan-500/15 pb-2 mb-2.5">
-                EMISSION AURA
-              </span>
-              <div className="flex items-center gap-2.5 flex-wrap">
-                {['#00e5ff', '#00ffa3', '#38bdf8', '#ffb703', '#ff2a85', '#3b82f6'].map((c) => (
-                  <button
-                    key={c}
-                    onClick={() => setBioColor(c)}
-                    className={`w-7 h-7 rounded-full border-2 transition-transform ${
-                      bioColor === c ? 'scale-125 border-white shadow-[0_0_12px_currentColor]' : 'border-transparent'
-                    }`}
-                    style={{ backgroundColor: c, color: c }}
-                  />
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <span className="text-slate-400 text-[11px] block mb-2">CYBERNETIC AUGMENTATION</span>
-              <div className="grid grid-cols-2 gap-2 text-[11px]">
-                {[
-                  { id: 'sonar_radar', label: 'Sonar Radar', icon: <Radio className="w-3 h-3" /> },
-                  { id: 'laser_sensor', label: 'Laser Sensor', icon: <Eye className="w-3 h-3" /> },
-                  { id: 'plasma_fins', label: 'Plasma Fins', icon: <Zap className="w-3 h-3" /> },
-                  { id: 'neural_core', label: 'Neural Core', icon: <Cpu className="w-3 h-3" /> }
-                ].map((mod) => (
-                  <button
-                    key={mod.id}
-                    onClick={() => setCyberMod(mod.id)}
-                    className={`p-2.5 rounded-lg border text-left transition-all flex items-center gap-2 ${
-                      cyberMod === mod.id
-                        ? 'bg-[#08152b] border-[#00d2ff] text-[#00d2ff] font-bold shadow-sm'
-                        : 'bg-[#040812]/80 border-cyan-500/15 text-slate-400 hover:text-slate-200'
-                    }`}
-                  >
-                    {mod.icon}
-                    <span>{mod.label}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        {/* Right Column: Live Viewport & Synthesis CTA */}
-        <div className="lg:col-span-7 flex flex-col gap-4">
+    <div className="w-full max-w-5xl mx-auto my-auto select-none">
+      <BorderGlow
+        edgeSensitivity={35}
+        glowColor="190 100 65"
+        backgroundColor="rgba(6, 16, 36, 0.45)"
+        borderRadius={24}
+        glowRadius={36}
+        glowIntensity={1.2}
+        coneSpread={28}
+        animated={false}
+        colors={['#00d2ff', '#00ffa3', '#38bdf8']}
+        className="w-full backdrop-blur-xl border border-cyan-400/30 shadow-[0_20px_50px_rgba(0,0,0,0.5),0_0_30px_rgba(0,210,255,0.08)]"
+      >
+        <div className="p-6 sm:p-7 space-y-4">
           
-          <div className="relative w-full aspect-square max-h-[440px] rounded-2xl overflow-hidden border border-cyan-400/25 bg-[#02060d] shadow-[0_15px_40px_rgba(0,0,0,0.8),inset_0_0_30px_rgba(0,210,255,0.08)] flex items-center justify-center">
-            
-            <canvas
-              ref={canvasRef}
-              width={600}
-              height={600}
-              className="w-full h-full object-contain"
-            />
-
-            {/* Live Indicator Overlay */}
-            <div className="absolute top-3 left-3 z-20 flex items-center gap-2 px-2.5 py-1 rounded-full bg-[#02060d]/80 border border-cyan-500/30 text-[10px] font-mono text-cyan-300 backdrop-blur-md">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#00ffa3] shadow-[0_0_6px_#00ffa3]"></span>
-              <span>LIVE ORGANISM SIMULATION</span>
-            </div>
-
-            <div className="absolute bottom-3 right-3 z-20 flex items-center gap-1 text-[10px] font-mono text-slate-400 bg-[#02060d]/80 px-2.5 py-1 rounded-full border border-cyan-500/20 backdrop-blur-md">
-              <span>SEED: 0x{activeSpecies.slice(0, 4)}89F</span>
-            </div>
-          </div>
-
-          {/* Action Card */}
-          <div className="p-4 rounded-2xl bg-[#070e1b]/70 border border-cyan-500/20 backdrop-blur-2xl shadow-xl flex items-center justify-between gap-4">
-            <div className="font-mono text-xs">
-              <span className="text-slate-400 block text-[11px]">Selected Entity:</span>
-              <strong className="text-white text-sm font-heading">
-                {SPECIES_LIST.find(s => s.id === activeSpecies)?.name}
-              </strong>
+          {/* Header */}
+          <div className="flex items-center justify-between border-b border-cyan-500/20 pb-3">
+            <div>
+              <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-[#040a16]/80 border border-cyan-400/40 text-[10px] font-mono text-cyan-300 mb-1">
+                <Waves className="w-3 h-3 text-[#00d2ff]" />
+                <span>02 / CYBER-AQUATIC DNA STUDIO</span>
+              </div>
+              <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-white font-heading">
+                Configure Creature DNA & Visuals
+              </h2>
             </div>
 
             <button
-              onClick={() => exportFishImage()}
-              className="btn-primary text-xs font-bold px-6 py-3 shadow-[0_0_20px_rgba(0,210,255,0.25)]"
+              onClick={randomizeDNA}
+              className="px-3 py-1.5 rounded-xl bg-[#040a16]/80 hover:bg-[#08152b] border border-cyan-500/30 text-cyan-300 text-xs font-mono flex items-center gap-1.5 transition-all shadow-sm"
             >
-              <Zap className="w-3.5 h-3.5" />
-              <span>Lock DNA & Configure Strategy</span>
+              <Dices className="w-3.5 h-3.5" /> Randomize
             </button>
           </div>
 
-        </div>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-center">
+            
+            {/* Left Column: Archetype List */}
+            <div className="lg:col-span-5 space-y-3">
+              <div className="space-y-1.5 max-h-[260px] overflow-y-auto pr-1">
+                {SPECIES_LIST.map((species) => {
+                  const isSelected = activeSpecies === species.id;
+                  return (
+                    <button
+                      key={species.id}
+                      onClick={() => handleSpeciesChange(species.id)}
+                      className={`w-full text-left p-2.5 rounded-xl border transition-all flex items-center gap-2.5 ${
+                        isSelected
+                          ? 'bg-[#08152b]/90 border-[#00d2ff] shadow-[0_0_15px_rgba(0,210,255,0.2)]'
+                          : 'bg-[#040812]/75 border-cyan-500/15 hover:border-cyan-400/40'
+                      }`}
+                    >
+                      <span className="text-lg p-1.5 rounded-lg bg-[#020610] border border-cyan-500/25 shrink-0">
+                        {species.icon}
+                      </span>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between">
+                          <strong className="text-white text-xs font-heading">{species.name}</strong>
+                          <span className="text-[10px] font-mono text-[#00d2ff] font-semibold">{species.role.split(' ')[0]}</span>
+                        </div>
+                        <p className="text-[10px] text-slate-400 line-clamp-1 leading-tight font-sans mt-0.5">
+                          {species.desc}
+                        </p>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
 
-      </div>
+              {/* Controls */}
+              <div className="p-3.5 rounded-xl bg-[#030914]/75 border border-cyan-400/25 backdrop-blur-md space-y-3 font-mono text-xs">
+                <div>
+                  <span className="text-slate-300 font-semibold block text-[11px] mb-1.5">
+                    EMISSION AURA
+                  </span>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    {['#00d2ff', '#00ffa3', '#38bdf8', '#ffb703', '#ff2a85', '#3b82f6'].map((c) => (
+                      <button
+                        key={c}
+                        onClick={() => setBioColor(c)}
+                        className={`w-6 h-6 rounded-full border-2 transition-transform ${
+                          bioColor === c ? 'scale-125 border-white shadow-[0_0_10px_currentColor]' : 'border-transparent'
+                        }`}
+                        style={{ backgroundColor: c, color: c }}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <span className="text-slate-400 text-[10px] block mb-1.5">AUGMENTATION</span>
+                  <div className="grid grid-cols-2 gap-1.5 text-[10px]">
+                    {[
+                      { id: 'sonar_radar', label: 'Sonar Radar', icon: <Radio className="w-3 h-3" /> },
+                      { id: 'laser_sensor', label: 'Laser Sensor', icon: <Eye className="w-3 h-3" /> },
+                      { id: 'plasma_fins', label: 'Plasma Fins', icon: <Zap className="w-3 h-3" /> },
+                      { id: 'neural_core', label: 'Neural Core', icon: <Cpu className="w-3 h-3" /> }
+                    ].map((mod) => (
+                      <button
+                        key={mod.id}
+                        onClick={() => setCyberMod(mod.id)}
+                        className={`p-1.5 rounded-lg border text-left transition-all flex items-center gap-1.5 ${
+                          cyberMod === mod.id
+                            ? 'bg-[#08152b] border-[#00d2ff] text-[#00d2ff] font-bold'
+                            : 'bg-[#040812]/80 border-cyan-500/15 text-slate-400 hover:text-slate-200'
+                        }`}
+                      >
+                        {mod.icon}
+                        <span>{mod.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Right Column: Live Viewport & Action */}
+            <div className="lg:col-span-7 flex flex-col gap-3">
+              <div className="relative w-full aspect-square max-h-[340px] rounded-2xl overflow-hidden border border-cyan-400/25 bg-[#02060d] shadow-[0_15px_40px_rgba(0,0,0,0.8),inset_0_0_30px_rgba(0,210,255,0.08)] flex items-center justify-center mx-auto">
+                <canvas
+                  ref={canvasRef}
+                  width={600}
+                  height={600}
+                  className="w-full h-full object-contain"
+                />
+
+                <div className="absolute top-2.5 left-2.5 z-20 flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#02060d]/80 border border-cyan-500/30 text-[10px] font-mono text-cyan-300 backdrop-blur-md">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#00ffa3] shadow-[0_0_6px_#00ffa3]"></span>
+                  <span>LIVE ORGANISM</span>
+                </div>
+              </div>
+
+              {/* Action */}
+              <div className="p-3 rounded-xl bg-[#030914]/75 border border-cyan-400/25 flex items-center justify-between gap-3">
+                <div className="font-mono text-xs">
+                  <span className="text-slate-400 block text-[10px]">Active Entity:</span>
+                  <strong className="text-white text-xs font-heading">
+                    {SPECIES_LIST.find(s => s.id === activeSpecies)?.name}
+                  </strong>
+                </div>
+
+                <button
+                  onClick={() => exportFishImage()}
+                  className="btn-primary text-xs font-bold px-5 py-2.5 shadow-[0_0_20px_rgba(0,210,255,0.25)] rounded-xl"
+                >
+                  <Zap className="w-3.5 h-3.5" />
+                  <span>Lock DNA & Configure Strategy</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </BorderGlow>
     </div>
   );
 }
+
 export default FishStudio;
