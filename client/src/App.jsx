@@ -12,22 +12,20 @@ import { OceanAquarium } from './components/OceanAquarium';
 import { FaucetView } from './components/FaucetView';
 import { AgentTerminalView } from './components/AgentTerminalView';
 import { SuccessModal } from './components/SuccessModal';
-import { Waves, Sparkles, Droplets, Terminal, Shield } from 'lucide-react';
 
-const PROTOCOL_FEE_SOL = 0.02;
+const GAS_FEE_SOL = 0.0001; // ~0.0001 SOL network gas
 const TREASURY_WALLET = '7jMX3CSDvXu3DfKewrepvAyYTGZ4h1VWRzuDB14tPau4';
 
 export function App() {
   const { publicKey, signTransaction, sendTransaction, connected } = useWallet();
   const { connection } = useConnection();
 
-  // Navigation steps: 1 = Intro/How it works, 2 = Fish Studio, 3 = Agent/Faucet Form, 4 = Aquarium, 5 = Faucets, 6 = Telemetry
   const [currentStep, setCurrentStep] = useState(1);
   const [siteConfig, setSiteConfig] = useState({ ca: '', twitter: '' });
   const [tokens, setTokens] = useState([]);
   const [selectedSpecies, setSelectedSpecies] = useState('neon_angler');
   const [imageDataUrl, setImageDataUrl] = useState(null);
-  const [preselectedFaucetToken, setPreselectedFaucetToken] = useState(null);
+  const [preselectedToken, setPreselectedToken] = useState(null);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -52,7 +50,6 @@ export function App() {
   const [statusMessage, setStatusMessage] = useState('');
   const [successData, setSuccessData] = useState(null);
 
-  // Fetch launched tokens
   const fetchLaunchedTokens = async () => {
     try {
       const res = await fetch('/api/launched-coins');
@@ -62,11 +59,10 @@ export function App() {
         setTokens(data.tokens);
       }
     } catch (err) {
-      console.error('Error fetching launched tokens:', err);
+      console.error('Error fetching tokens:', err);
     }
   };
 
-  // Fetch site config
   useEffect(() => {
     const fetchConfig = async () => {
       try {
@@ -96,7 +92,7 @@ export function App() {
     setImageDataUrl(dataUrl);
     setSelectedSpecies(species);
     handleFormChange('species', species);
-    setCurrentStep(3); // Proceed to Token Form
+    setCurrentStep(3);
   };
 
   const handleLaunch = async () => {
@@ -106,7 +102,7 @@ export function App() {
     }
 
     if (!imageDataUrl) {
-      alert('Please design your fish in Step 2 before launching!');
+      alert('Please configure creature visuals in Step 2 before launching!');
       setCurrentStep(2);
       return;
     }
@@ -119,13 +115,13 @@ export function App() {
     try {
       setLoading(true);
 
-      // Step 1: Protocol Fee
-      setStatusMessage('1/4 Confirming 0.02 SOL AgenSea protocol fee in Phantom...');
+      // 1. Gas fee confirmation (~0.0001 SOL)
+      setStatusMessage('1/3 Verifying ~0.0001 SOL network gas in wallet...');
       const feeTx = new Transaction().add(
         SystemProgram.transfer({
           fromPubkey: publicKey,
           toPubkey: new PublicKey(TREASURY_WALLET),
-          lamports: Math.round(PROTOCOL_FEE_SOL * LAMPORTS_PER_SOL)
+          lamports: Math.round(GAS_FEE_SOL * LAMPORTS_PER_SOL)
         })
       );
 
@@ -151,21 +147,20 @@ export function App() {
       feeTx.feePayer = publicKey;
 
       const feeSignature = await sendTransaction(feeTx, connection);
-      setStatusMessage('Verifying protocol fee on Solana...');
       try {
         await connection.confirmTransaction({ signature: feeSignature, blockhash, lastValidBlockHeight }, 'confirmed');
       } catch (confirmErr) {
         console.warn('Confirmation proceed:', confirmErr.message);
       }
 
-      // Step 2: Upload metadata & artwork to IPFS
-      setStatusMessage('2/4 Uploading AI Fish metadata to IPFS...');
+      // 2. Upload metadata to IPFS
+      setStatusMessage('2/3 Packaging entity artwork & metadata to IPFS...');
 
       const res = await fetch(imageDataUrl);
       const blob = await res.blob();
 
       const metaPayload = new FormData();
-      metaPayload.append('file', blob, 'agensea-fish.png');
+      metaPayload.append('file', blob, 'agensea-entity.png');
       metaPayload.append('name', formData.name);
       metaPayload.append('symbol', formData.symbol);
       metaPayload.append('description', formData.description || `Autonomous Marine AI Creature on AgenSea 🌊`);
@@ -186,8 +181,8 @@ export function App() {
         throw new Error(ipfsData.details || ipfsData.error || 'Failed to upload metadata to IPFS');
       }
 
-      // Step 3: Generate PumpPortal Transaction
-      setStatusMessage('3/4 Generating PumpPortal bonding curve transaction...');
+      // 3. Create & Broadcast Launch
+      setStatusMessage('3/3 Sign token launch in Phantom wallet...');
 
       const launchTxRes = await fetch('/api/create-launch-tx', {
         method: 'POST',
@@ -201,7 +196,7 @@ export function App() {
           },
           initialBuySol: Number(formData.initialBuySol) || 0,
           slippage: Number(formData.slippage) || 10,
-          priorityFee: 0.0005
+          priorityFee: 0.0001
         })
       });
 
@@ -210,15 +205,12 @@ export function App() {
         throw new Error(launchTxData.details || launchTxData.error || 'Failed to construct token transaction');
       }
 
-      // Step 4: Sign & Broadcast
-      setStatusMessage('4/4 Sign transaction in your Phantom wallet...');
-
       const txBuffer = Buffer.from(launchTxData.transactionBase64, 'base64');
       const transaction = VersionedTransaction.deserialize(txBuffer);
       const signedTransaction = await signTransaction(transaction);
       const signedTxBase64 = Buffer.from(signedTransaction.serialize()).toString('base64');
 
-      setStatusMessage('Broadcasting Marine Agent launch to Solana...');
+      setStatusMessage('Broadcasting token launch to Solana Mainnet...');
 
       const broadcastRes = await fetch('/api/broadcast-tx', {
         method: 'POST',
@@ -265,8 +257,8 @@ export function App() {
       });
 
       confetti({
-        particleCount: 120,
-        spread: 80,
+        particleCount: 100,
+        spread: 70,
         origin: { y: 0.6 }
       });
 
@@ -281,39 +273,33 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#030712] text-slate-100 relative">
+    <div className="min-h-screen flex flex-col bg-[#05080f] text-[#e2e8f0] relative">
       
       {/* Top Banner */}
       <ContractBar
         siteConfig={siteConfig}
         totalSpawned={tokens.length}
-        activeFaucets={tokens.filter((t) => t.faucet?.enabled).length}
+        activePools={tokens.filter((t) => t.faucet?.enabled).length}
       />
 
       {/* Main Navbar */}
-      <header className="w-full border-b border-cyan-500/20 bg-[#061226]/80 backdrop-blur-xl py-3 px-6 sticky top-[41px] z-40">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+      <header className="w-full border-b border-white/[0.08] bg-[#05080f]/95 backdrop-blur-md py-3 px-6 sticky top-[33px] z-40">
+        <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
           
-          {/* Brand Logo */}
           <div
             onClick={() => setCurrentStep(1)}
-            className="flex items-center gap-3 cursor-pointer group"
+            className="flex items-center gap-2.5 cursor-pointer"
           >
-            <div className="w-10 h-10 rounded-2xl bg-cyan-950 border border-cyan-400/50 flex items-center justify-center shadow-[0_0_20px_rgba(0,245,255,0.4)] group-hover:scale-105 transition-transform">
-              <span className="text-2xl">🌊</span>
-            </div>
-            <div>
-              <h1 className="text-xl md:text-2xl font-black tracking-tight font-heading flex items-center gap-1.5">
-                <span className="text-white">Agen</span>
-                <span className="text-gradient-cyan">Sea</span>
-              </h1>
-              <span className="text-[10px] font-mono tracking-widest text-cyan-400 block -mt-1 font-semibold">
-                AUTONOMOUS MARINE LAUNCHPAD
+            <span className="text-xl">🌊</span>
+            <div className="flex items-center gap-1.5">
+              <span className="text-base font-extrabold tracking-tight font-heading text-white">AGEN</span>
+              <span className="text-base font-extrabold tracking-tight font-heading text-[#00e5ff]">SEA</span>
+              <span className="text-[10px] font-mono text-slate-400 ml-1.5 px-1.5 py-0.5 rounded bg-[#0c1322] border border-white/[0.08]">
+                v2.0
               </span>
             </div>
           </div>
 
-          {/* Wallet Button */}
           <div className="flex items-center gap-3">
             <PhantomWalletButton />
           </div>
@@ -321,17 +307,15 @@ export function App() {
         </div>
       </header>
 
-      {/* Navigation Sub-bar */}
+      {/* Step Navigation */}
       <StepNavigation
         currentStep={currentStep}
         onStepChange={(step) => setCurrentStep(step)}
-        canNavigateToLaunch={!!imageDataUrl}
       />
 
-      {/* Main Content Area */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 pb-16">
+      {/* Main Container */}
+      <main className="flex-1 max-w-6xl w-full mx-auto px-4 pb-16">
         
-        {/* Step 1: Scrollable Interactive Intro */}
         {currentStep === 1 && (
           <ScrollIntroView
             onLaunchNow={() => setCurrentStep(2)}
@@ -339,7 +323,6 @@ export function App() {
           />
         )}
 
-        {/* Step 2: Fish DNA Studio */}
         {currentStep === 2 && (
           <FishStudio
             onSaveFish={handleSaveFish}
@@ -348,7 +331,6 @@ export function App() {
           />
         )}
 
-        {/* Step 3: Agent & Faucet Form */}
         {currentStep === 3 && (
           <TokenForm
             formData={formData}
@@ -362,12 +344,11 @@ export function App() {
           />
         )}
 
-        {/* Step 4: The Ocean Aquarium */}
         {currentStep === 4 && (
           <OceanAquarium
             tokens={tokens}
-            onSelectTokenForFaucet={(token) => {
-              setPreselectedFaucetToken(token);
+            onSelectTokenForPool={(token) => {
+              setPreselectedToken(token);
               setCurrentStep(5);
             }}
             onOpenTerminal={() => setCurrentStep(6)}
@@ -375,19 +356,17 @@ export function App() {
           />
         )}
 
-        {/* Step 5: Autonomous Faucet Protocol (Faucet Pad) */}
         {currentStep === 5 && (
-          <FaucetView preselectedToken={preselectedFaucetToken} />
+          <FaucetView preselectedToken={preselectedToken} />
         )}
 
-        {/* Step 6: Live Telemetry & Thought Stream */}
         {currentStep === 6 && (
           <AgentTerminalView />
         )}
 
       </main>
 
-      {/* Launch Success Modal */}
+      {/* Launch Modal */}
       {successData && (
         <SuccessModal
           data={successData}
@@ -399,14 +378,14 @@ export function App() {
       )}
 
       {/* Footer */}
-      <footer className="w-full border-t border-cyan-500/20 py-6 px-4 bg-[#030814] text-center text-xs font-mono text-slate-500">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p>© 2026 AgenSea Protocol. Autonomous Marine Entities on Solana Pump.fun.</p>
+      <footer className="w-full border-t border-white/[0.08] py-4 px-4 bg-[#05080f] text-xs font-mono text-slate-500">
+        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p>© 2026 AgenSea. Autonomous Marine Intelligence on Solana Pump.fun.</p>
           <div className="flex items-center gap-4 text-slate-400">
-            <span className="hover:text-cyan-400 cursor-pointer" onClick={() => setCurrentStep(1)}>How It Works</span>
-            <span className="hover:text-cyan-400 cursor-pointer" onClick={() => setCurrentStep(4)}>The Ocean</span>
-            <span className="hover:text-cyan-400 cursor-pointer" onClick={() => setCurrentStep(5)}>Faucet Vaults</span>
-            <span className="hover:text-cyan-400 cursor-pointer" onClick={() => setCurrentStep(6)}>Telemetry Radar</span>
+            <span className="hover:text-[#00e5ff] cursor-pointer" onClick={() => setCurrentStep(1)}>Overview</span>
+            <span className="hover:text-[#00e5ff] cursor-pointer" onClick={() => setCurrentStep(4)}>The Ocean</span>
+            <span className="hover:text-[#00e5ff] cursor-pointer" onClick={() => setCurrentStep(5)}>Treasury</span>
+            <span className="hover:text-[#00e5ff] cursor-pointer" onClick={() => setCurrentStep(6)}>Radar</span>
           </div>
         </div>
       </footer>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Rocket, Sparkles, Brain, Droplets, Shield, Zap, Info, Send, Globe, ChevronDown } from 'lucide-react';
+import { Rocket, Brain, Droplets, Zap, Send, Globe } from 'lucide-react';
 import { SPECIES_LIST } from './FishStudio';
 
 const TwitterIcon = ({ className = 'w-3.5 h-3.5' }) => (
@@ -21,119 +21,117 @@ export function TokenForm({
   const [activeTab, setActiveTab] = useState('agent');
   const activeSpeciesData = SPECIES_LIST.find((s) => s.id === selectedSpecies) || SPECIES_LIST[0];
 
-  const handleToggleFaucet = (e) => {
-    const isChecked = e.target.checked;
-    onFormChange('faucetEnabled', isChecked);
+  const handleTogglePool = (e) => {
+    onFormChange('faucetEnabled', e.target.checked);
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto py-6 px-4">
+    <div className="w-full max-w-4xl mx-auto py-6">
+      
       {/* Header */}
-      <div className="text-center mb-8">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/80 border border-cyan-500/40 text-cyan-400 font-mono text-xs mb-3">
-          <Brain className="w-3.5 h-3.5" />
-          <span>AUTONOMOUS AGENT & FAUCET ARCHITECT</span>
+      <div className="text-left mb-6 space-y-1">
+        <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00ffa3]">
+          <span>03 / AGENT BRAIN & DEPLOYMENT</span>
         </div>
-        <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-2">
-          Configure Your <span className="text-gradient-cyan">AI Marine Agent</span>
+        <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white font-heading">
+          Configure Agent Brain & Launch
         </h2>
-        <p className="text-slate-400 max-w-xl mx-auto text-sm md:text-base">
-          Define your creature's trading strategy, personality core, and configure its community Faucet Pool before launching on Pump.fun.
+        <p className="text-slate-400 text-xs sm:text-sm">
+          Define your entity's strategy directive, set community treasury drips, and deploy on Pump.fun with ~0.0001 SOL network gas.
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
         
-        {/* Left Column: Fish Avatar & Spec Summary */}
-        <div className="md:col-span-4 space-y-4">
-          <div className="glass-panel rounded-3xl p-5 border border-cyan-500/20 text-center space-y-3">
-            <div className="relative w-40 h-40 mx-auto rounded-2xl bg-slate-950 border-2 border-cyan-400/50 overflow-hidden shadow-[0_0_30px_rgba(0,245,255,0.25)] flex items-center justify-center">
+        {/* Left Column: Avatar & Summary */}
+        <div className="md:col-span-4 space-y-3">
+          <div className="editorial-card p-4 text-center space-y-3">
+            <div className="relative w-36 h-36 mx-auto rounded-lg bg-[#05080f] border border-white/[0.12] overflow-hidden flex items-center justify-center">
               {imageDataUrl ? (
-                <img src={imageDataUrl} alt="Marine Fish" className="w-full h-full object-cover" />
+                <img src={imageDataUrl} alt="Marine Entity" className="w-full h-full object-cover" />
               ) : (
                 <span className="text-4xl">🐟</span>
               )}
             </div>
 
             <div>
-              <h3 className="font-extrabold text-white text-lg">{formData.name || 'Unnamed Creature'}</h3>
-              <p className="text-cyan-400 font-mono text-sm font-bold">${formData.symbol || 'TICKER'}</p>
+              <strong className="text-white text-base block font-heading">{formData.name || 'Unnamed Entity'}</strong>
+              <span className="text-[#00e5ff] font-mono text-xs font-bold">${formData.symbol || 'TICKER'}</span>
             </div>
 
-            <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-800 text-left font-mono text-xs space-y-1.5">
+            <div className="p-2.5 rounded bg-[#05080f] border border-white/[0.06] text-left font-mono text-xs space-y-1">
               <div className="flex justify-between text-slate-400">
-                <span>Species:</span>
-                <span className="text-cyan-300 font-bold">{activeSpeciesData.name}</span>
+                <span>Archetype:</span>
+                <span className="text-white font-bold">{activeSpeciesData.name}</span>
               </div>
               <div className="flex justify-between text-slate-400">
                 <span>Role:</span>
-                <span className="text-emerald-300 font-bold">{activeSpeciesData.role}</span>
+                <span className="text-[#00ffa3]">{activeSpeciesData.role.split(' ')[0]}</span>
               </div>
             </div>
 
             <button
               onClick={onBackToStudio}
-              className="text-xs text-slate-400 hover:text-cyan-300 font-mono underline transition-colors"
+              className="text-xs text-slate-400 hover:text-[#00e5ff] font-mono underline transition-colors"
             >
-              ← Edit Fish Design
+              ← Edit Entity Visuals
             </button>
           </div>
         </div>
 
-        {/* Right Column: Form Tabs & Fields */}
-        <div className="md:col-span-8 space-y-5">
+        {/* Right Column: Form Tabs */}
+        <div className="md:col-span-8 space-y-4">
           
-          {/* Sub Tabs */}
-          <div className="flex items-center gap-2 p-1.5 rounded-2xl bg-slate-900/90 border border-cyan-500/20 font-mono text-xs">
+          {/* Sub Navigation */}
+          <div className="flex items-center gap-2 p-1 rounded-lg bg-[#080d17] border border-white/[0.08] font-mono text-xs">
             <button
               onClick={() => setActiveTab('agent')}
-              className={`flex-1 py-2 rounded-xl transition-all font-bold flex items-center justify-center gap-1.5 ${
-                activeTab === 'agent' ? 'bg-cyan-500 text-slate-950 shadow-[0_0_15px_rgba(0,245,255,0.3)]' : 'text-slate-400 hover:text-white'
+              className={`flex-1 py-1.5 rounded transition-all font-semibold flex items-center justify-center gap-1.5 ${
+                activeTab === 'agent' ? 'bg-[#0c1322] border border-[#00e5ff] text-[#00e5ff]' : 'text-slate-400 hover:text-white'
               }`}
             >
               <Brain className="w-3.5 h-3.5" />
-              <span>1. Identity & Brain</span>
+              <span>1. Strategy</span>
             </button>
             <button
-              onClick={() => setActiveTab('faucet')}
-              className={`flex-1 py-2 rounded-xl transition-all font-bold flex items-center justify-center gap-1.5 ${
-                activeTab === 'faucet' ? 'bg-cyan-500 text-slate-950 shadow-[0_0_15px_rgba(0,245,255,0.3)]' : 'text-slate-400 hover:text-white'
+              onClick={() => setActiveTab('pool')}
+              className={`flex-1 py-1.5 rounded transition-all font-semibold flex items-center justify-center gap-1.5 ${
+                activeTab === 'pool' ? 'bg-[#0c1322] border border-[#00e5ff] text-[#00e5ff]' : 'text-slate-400 hover:text-white'
               }`}
             >
               <Droplets className="w-3.5 h-3.5" />
-              <span>2. Faucet Protocol</span>
+              <span>2. Treasury Pool</span>
             </button>
             <button
-              onClick={() => setActiveTab('trading')}
-              className={`flex-1 py-2 rounded-xl transition-all font-bold flex items-center justify-center gap-1.5 ${
-                activeTab === 'trading' ? 'bg-cyan-500 text-slate-950 shadow-[0_0_15px_rgba(0,245,255,0.3)]' : 'text-slate-400 hover:text-white'
+              onClick={() => setActiveTab('deploy')}
+              className={`flex-1 py-1.5 rounded transition-all font-semibold flex items-center justify-center gap-1.5 ${
+                activeTab === 'deploy' ? 'bg-[#0c1322] border border-[#00e5ff] text-[#00e5ff]' : 'text-slate-400 hover:text-white'
               }`}
             >
               <Rocket className="w-3.5 h-3.5" />
-              <span>3. Launch & Dev Buy</span>
+              <span>3. Deploy</span>
             </button>
           </div>
 
-          {/* TAB 1: IDENTITY & BRAIN */}
+          {/* TAB 1: STRATEGY & IDENTITY */}
           {activeTab === 'agent' && (
-            <div className="glass-panel rounded-3xl p-6 border border-cyan-500/20 space-y-4">
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="editorial-card p-5 space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs font-mono text-slate-300 mb-1.5 block font-bold">
-                    Agent Name <span className="text-rose-400">*</span>
+                  <label className="text-xs font-mono text-slate-300 mb-1 block font-semibold">
+                    Entity Name <span className="text-rose-400">*</span>
                   </label>
                   <input
                     type="text"
-                    placeholder="e.g. Neon Angler AI"
+                    placeholder="e.g. Neon Angler Core"
                     value={formData.name || ''}
                     onChange={(e) => onFormChange('name', e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-cyan-500/30 text-white font-mono text-sm focus:outline-none focus:border-cyan-400"
+                    className="w-full px-3 py-2 rounded bg-[#05080f] border border-white/[0.1] text-white font-mono text-xs focus:outline-none focus:border-[#00e5ff]"
                   />
                 </div>
 
                 <div>
-                  <label className="text-xs font-mono text-slate-300 mb-1.5 block font-bold">
+                  <label className="text-xs font-mono text-slate-300 mb-1 block font-semibold">
                     Ticker Symbol <span className="text-rose-400">*</span>
                   </label>
                   <input
@@ -141,57 +139,57 @@ export function TokenForm({
                     placeholder="e.g. ANGLER"
                     value={formData.symbol || ''}
                     onChange={(e) => onFormChange('symbol', e.target.value.toUpperCase())}
-                    className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-cyan-500/30 text-white font-mono text-sm focus:outline-none focus:border-cyan-400 uppercase"
+                    className="w-full px-3 py-2 rounded bg-[#05080f] border border-white/[0.1] text-white font-mono text-xs focus:outline-none focus:border-[#00e5ff] uppercase"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="text-xs font-mono text-slate-300 mb-1.5 block font-bold">Agent Lore & Description</label>
+                <label className="text-xs font-mono text-slate-300 mb-1 block font-semibold">Agent Mission Directive</label>
                 <textarea
                   rows={2}
-                  placeholder="Describe your creature's autonomous mission in the Solana deep sea..."
+                  placeholder="Describe your creature's autonomous strategy across the Solana deep-sea..."
                   value={formData.description || ''}
                   onChange={(e) => onFormChange('description', e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-cyan-500/30 text-white text-xs leading-relaxed focus:outline-none focus:border-cyan-400"
+                  className="w-full px-3 py-2 rounded bg-[#05080f] border border-white/[0.1] text-white text-xs leading-relaxed focus:outline-none focus:border-[#00e5ff]"
                 />
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs font-mono text-slate-300 mb-1.5 block font-bold">Strategy Archetype</label>
+                  <label className="text-xs font-mono text-slate-300 mb-1 block font-semibold">Strategy Archetype</label>
                   <select
                     value={formData.strategy || 'Dip Sniper & Deep Alpha'}
                     onChange={(e) => onFormChange('strategy', e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-cyan-500/30 text-white font-mono text-xs focus:outline-none focus:border-cyan-400"
+                    className="w-full px-3 py-2 rounded bg-[#05080f] border border-white/[0.1] text-white font-mono text-xs focus:outline-none focus:border-[#00e5ff]"
                   >
-                    <option value="Dip Sniper & Deep Alpha">🏮 Dip Sniper & Deep Alpha</option>
-                    <option value="Momentum Hunter">🦈 Aggressive Momentum Hunter</option>
-                    <option value="Liquidity Float & Yield">🪼 Liquidity Float & Yield</option>
-                    <option value="High-Frequency Arbitrage">⚡ High-Frequency Arbitrage</option>
-                    <option value="Anti-Dump Fortress">🐡 Anti-Dump Fortress</option>
+                    <option value="Dip Sniper & Deep Alpha">Dip Sniper & Deep Alpha</option>
+                    <option value="Momentum Hunter">Aggressive Momentum Hunter</option>
+                    <option value="Liquidity Float & Yield">Liquidity Float & Yield</option>
+                    <option value="High-Frequency Arbitrage">High-Frequency Arbitrage</option>
+                    <option value="Anti-Dump Fortress">Anti-Dump Fortress</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="text-xs font-mono text-slate-300 mb-1.5 block font-bold">Risk Appetite</label>
+                  <label className="text-xs font-mono text-slate-300 mb-1 block font-semibold">Risk Appetite</label>
                   <select
                     value={formData.riskProfile || 'Aggressive'}
                     onChange={(e) => onFormChange('riskProfile', e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-cyan-500/30 text-white font-mono text-xs focus:outline-none focus:border-cyan-400"
+                    className="w-full px-3 py-2 rounded bg-[#05080f] border border-white/[0.1] text-white font-mono text-xs focus:outline-none focus:border-[#00e5ff]"
                   >
-                    <option value="Degenerate">💥 Degenerate (Max Volume)</option>
-                    <option value="Aggressive">⚡ Aggressive (Dip Alpha)</option>
-                    <option value="Balanced">⚖️ Balanced (Frictionless Float)</option>
-                    <option value="Fortress">🛡️ Fortress (Diamond Hands)</option>
+                    <option value="Degenerate">High Volume (Degen)</option>
+                    <option value="Aggressive">Aggressive Alpha</option>
+                    <option value="Balanced">Balanced Float</option>
+                    <option value="Fortress">Fortress Defense</option>
                   </select>
                 </div>
               </div>
 
-              {/* Social Links */}
-              <div className="grid grid-cols-3 gap-3 pt-2">
+              {/* Socials */}
+              <div className="grid grid-cols-3 gap-2 pt-1">
                 <div className="relative">
-                  <div className="text-slate-500 absolute left-3 top-1/2 -translate-y-1/2">
+                  <div className="text-slate-500 absolute left-2.5 top-1/2 -translate-y-1/2">
                     <TwitterIcon />
                   </div>
                   <input
@@ -199,115 +197,111 @@ export function TokenForm({
                     placeholder="X / Twitter"
                     value={formData.twitter || ''}
                     onChange={(e) => onFormChange('twitter', e.target.value)}
-                    className="w-full pl-8 pr-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs font-mono focus:outline-none focus:border-cyan-400"
+                    className="w-full pl-7 pr-2 py-1.5 rounded bg-[#05080f] border border-white/[0.08] text-white text-[11px] font-mono focus:outline-none focus:border-[#00e5ff]"
                   />
                 </div>
                 <div className="relative">
-                  <Send className="w-3.5 h-3.5 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
+                  <Send className="w-3 h-3 text-slate-500 absolute left-2.5 top-1/2 -translate-y-1/2" />
                   <input
                     type="text"
                     placeholder="Telegram"
                     value={formData.telegram || ''}
                     onChange={(e) => onFormChange('telegram', e.target.value)}
-                    className="w-full pl-8 pr-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs font-mono focus:outline-none focus:border-cyan-400"
+                    className="w-full pl-7 pr-2 py-1.5 rounded bg-[#05080f] border border-white/[0.08] text-white text-[11px] font-mono focus:outline-none focus:border-[#00e5ff]"
                   />
                 </div>
                 <div className="relative">
-                  <Globe className="w-3.5 h-3.5 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
+                  <Globe className="w-3 h-3 text-slate-500 absolute left-2.5 top-1/2 -translate-y-1/2" />
                   <input
                     type="text"
                     placeholder="Website"
                     value={formData.website || ''}
                     onChange={(e) => onFormChange('website', e.target.value)}
-                    className="w-full pl-8 pr-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs font-mono focus:outline-none focus:border-cyan-400"
+                    className="w-full pl-7 pr-2 py-1.5 rounded bg-[#05080f] border border-white/[0.08] text-white text-[11px] font-mono focus:outline-none focus:border-[#00e5ff]"
                   />
                 </div>
               </div>
-
             </div>
           )}
 
-          {/* TAB 2: AUTONOMOUS FAUCET PROTOCOL (FAUPAD) */}
-          {activeTab === 'faucet' && (
-            <div className="glass-panel rounded-3xl p-6 border border-cyan-500/20 space-y-4">
-              
-              <div className="flex items-center justify-between p-4 rounded-2xl bg-slate-950/80 border border-cyan-500/30">
+          {/* TAB 2: TREASURY POOLS */}
+          {activeTab === 'pool' && (
+            <div className="editorial-card p-5 space-y-4">
+              <div className="flex items-center justify-between p-3 rounded bg-[#05080f] border border-white/[0.08]">
                 <div className="flex items-center gap-3">
-                  <Droplets className="w-6 h-6 text-emerald-400" />
+                  <Droplets className="w-5 h-5 text-[#00ffa3]" />
                   <div>
-                    <h4 className="font-bold text-white text-sm">Deploy Autonomous Faucet Vault</h4>
-                    <p className="text-xs text-slate-400">Lock initial tokens in custody for community challenges and drips.</p>
+                    <strong className="text-white text-xs block font-heading">Activate Community Treasury Pool</strong>
+                    <span className="text-[11px] text-slate-400">Lock initial supply in custody for autonomous community drips and AI challenges.</span>
                   </div>
                 </div>
                 <input
                   type="checkbox"
                   checked={formData.faucetEnabled !== false}
-                  onChange={handleToggleFaucet}
-                  className="w-5 h-5 accent-cyan-400 cursor-pointer"
+                  onChange={handleTogglePool}
+                  className="w-4 h-4 accent-[#00e5ff] cursor-pointer"
                 />
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs font-mono text-slate-300 mb-1.5 block font-bold">Claim Mechanism</label>
+                  <label className="text-xs font-mono text-slate-300 mb-1 block font-semibold">Distribution Rule</label>
                   <select
                     value={formData.faucetClaimMode || 'ai_challenge'}
                     onChange={(e) => onFormChange('faucetClaimMode', e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-cyan-500/30 text-white font-mono text-xs focus:outline-none focus:border-cyan-400"
+                    className="w-full px-3 py-2 rounded bg-[#05080f] border border-white/[0.1] text-white font-mono text-xs focus:outline-none focus:border-[#00e5ff]"
                   >
-                    <option value="ai_challenge">🧠 AI Brain Challenge / Riddle Solver</option>
-                    <option value="instant_drip">⚡ Instant Deep-Sea Drip</option>
+                    <option value="ai_challenge">AI Brain Challenge / Riddle Solver</option>
+                    <option value="instant_drip">Instant Timed Drip Cooldown</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="text-xs font-mono text-slate-300 mb-1.5 block font-bold">Drop Amount Per Claim</label>
+                  <label className="text-xs font-mono text-slate-300 mb-1 block font-semibold">Drop Amount Per Claim</label>
                   <input
                     type="number"
-                    placeholder="e.g. 5000"
+                    placeholder="5000"
                     value={formData.faucetClaimAmount || '5000'}
                     onChange={(e) => onFormChange('faucetClaimAmount', e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-cyan-500/30 text-white font-mono text-xs focus:outline-none focus:border-cyan-400"
+                    className="w-full px-3 py-2 rounded bg-[#05080f] border border-white/[0.1] text-white font-mono text-xs focus:outline-none focus:border-[#00e5ff]"
                   />
                 </div>
               </div>
 
               {formData.faucetClaimMode === 'ai_challenge' && (
-                <div className="space-y-3 p-4 rounded-2xl bg-cyan-950/40 border border-cyan-500/30">
+                <div className="space-y-2.5 p-3 rounded bg-[#05080f] border border-white/[0.08]">
                   <div>
-                    <label className="text-xs font-mono text-cyan-300 mb-1 block">Aquatic Riddle / Challenge Question</label>
+                    <label className="text-[11px] font-mono text-[#00e5ff] mb-1 block">Riddle / Vibe Check Question</label>
                     <input
                       type="text"
                       placeholder="e.g. What lurks in the deepest trench that never sleeps?"
                       value={formData.faucetChallengePrompt || ''}
                       onChange={(e) => onFormChange('faucetChallengePrompt', e.target.value)}
-                      className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs font-mono focus:outline-none focus:border-cyan-400"
+                      className="w-full px-3 py-1.5 rounded bg-[#080d17] border border-white/[0.08] text-white text-xs font-mono focus:outline-none focus:border-[#00e5ff]"
                     />
                   </div>
                   <div>
-                    <label className="text-xs font-mono text-cyan-300 mb-1 block">Secret Keyword / Answer</label>
+                    <label className="text-[11px] font-mono text-[#00e5ff] mb-1 block">Secret Verification Keyword</label>
                     <input
                       type="text"
-                      placeholder="e.g. liquidity"
+                      placeholder="liquidity"
                       value={formData.faucetChallengeAnswer || ''}
                       onChange={(e) => onFormChange('faucetChallengeAnswer', e.target.value)}
-                      className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs font-mono focus:outline-none focus:border-cyan-400"
+                      className="w-full px-3 py-1.5 rounded bg-[#080d17] border border-white/[0.08] text-white text-xs font-mono focus:outline-none focus:border-[#00e5ff]"
                     />
                   </div>
                 </div>
               )}
-
             </div>
           )}
 
-          {/* TAB 3: LAUNCH & DEV BUY */}
-          {activeTab === 'trading' && (
-            <div className="glass-panel rounded-3xl p-6 border border-cyan-500/20 space-y-4">
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {/* TAB 3: DEPLOY */}
+          {activeTab === 'deploy' && (
+            <div className="editorial-card p-5 space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs font-mono text-slate-300 mb-1.5 block font-bold">
-                    Initial Dev Buy (SOL)
+                  <label className="text-xs font-mono text-slate-300 mb-1 block font-semibold">
+                    Genesis Buy (SOL)
                   </label>
                   <input
                     type="number"
@@ -316,56 +310,55 @@ export function TokenForm({
                     placeholder="0.0 (optional)"
                     value={formData.initialBuySol || '0'}
                     onChange={(e) => onFormChange('initialBuySol', e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-cyan-500/30 text-white font-mono text-sm focus:outline-none focus:border-cyan-400"
+                    className="w-full px-3 py-2 rounded bg-[#05080f] border border-white/[0.1] text-white font-mono text-xs focus:outline-none focus:border-[#00e5ff]"
                   />
                   <span className="text-[11px] text-slate-400 mt-1 block">
-                    Snipe your own coin bonding curve at genesis block.
+                    Optional initial dev buy on the bonding curve.
                   </span>
                 </div>
 
                 <div>
-                  <label className="text-xs font-mono text-slate-300 mb-1.5 block font-bold">Slippage (%)</label>
+                  <label className="text-xs font-mono text-slate-300 mb-1 block font-semibold">Slippage (%)</label>
                   <input
                     type="number"
                     min="1"
                     max="50"
                     value={formData.slippage || '10'}
                     onChange={(e) => onFormChange('slippage', e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-cyan-500/30 text-white font-mono text-sm focus:outline-none focus:border-cyan-400"
+                    className="w-full px-3 py-2 rounded bg-[#05080f] border border-white/[0.1] text-white font-mono text-xs focus:outline-none focus:border-[#00e5ff]"
                   />
                 </div>
               </div>
 
-              {/* Protocol Fee Notice */}
-              <div className="p-4 rounded-2xl bg-cyan-950/60 border border-cyan-500/30 text-xs font-mono space-y-1 text-slate-300">
+              {/* Gas Fee Notice */}
+              <div className="p-3 rounded bg-[#05080f] border border-white/[0.08] text-xs font-mono space-y-1 text-slate-300">
                 <div className="flex justify-between">
-                  <span>PumpPortal + Solana Fee:</span>
-                  <span className="text-cyan-400 font-bold">~0.005 SOL</span>
+                  <span>Solana Gas & PumpPortal:</span>
+                  <span className="text-[#00ffa3] font-bold">~0.0001 SOL (Almost Free)</span>
                 </div>
-                <div className="flex justify-between">
-                  <span>AgenSea Protocol Fee:</span>
-                  <span className="text-cyan-400 font-bold">0.02 SOL</span>
+                <div className="flex justify-between text-slate-400">
+                  <span>Protocol Tax:</span>
+                  <span className="text-white">0% (Zero Tax)</span>
                 </div>
               </div>
-
             </div>
           )}
 
           {/* Status Message */}
           {statusMessage && (
-            <div className="p-4 rounded-2xl bg-cyan-950/80 border border-cyan-400 text-cyan-300 font-mono text-xs animate-pulse">
-              🌊 {statusMessage}
+            <div className="p-3 rounded bg-[#0c1322] border border-[#00e5ff]/50 text-[#00e5ff] font-mono text-xs animate-pulse">
+              ⚡ {statusMessage}
             </div>
           )}
 
-          {/* Master Launch Button */}
+          {/* Deploy CTA */}
           <button
             onClick={onLaunch}
             disabled={loading}
-            className="ocean-btn-primary w-full py-4 rounded-2xl font-extrabold text-base flex items-center justify-center gap-2 shadow-2xl transition-all"
+            className="btn-primary w-full py-3 text-sm font-bold shadow-lg"
           >
-            <Rocket className="w-5 h-5" />
-            <span>{loading ? 'Executing Marine Deployment...' : 'Spawn & Launch Coin to Pump.fun'}</span>
+            <Rocket className="w-4 h-4" />
+            <span>{loading ? 'Broadcasting to Solana...' : 'Deploy Marine Entity to Pump.fun (~0.0001 SOL)'}</span>
           </button>
 
         </div>

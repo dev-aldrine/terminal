@@ -1,36 +1,22 @@
 @import '@solana/wallet-adapter-react-ui/styles.css';
 
 :root {
-  /* AgenSea Deep Oceanic Palette */
-  --ocean-abyss: #030712;
-  --ocean-deep: #071326;
-  --ocean-card: #0b1f3b;
-  --ocean-card-hover: #102d54;
-  --ocean-border: rgba(0, 245, 255, 0.18);
-  --ocean-border-glow: rgba(0, 245, 255, 0.45);
+  --bg-primary: #05080f;
+  --bg-secondary: #080d17;
+  --bg-card: #0c1322;
+  --bg-card-hover: #111b2e;
   
-  /* Bioluminescent Accents */
-  --bio-cyan: #00f5ff;
-  --bio-emerald: #05ffa1;
-  --bio-purple: #a855f7;
-  --bio-pink: #ff2a85;
-  --bio-amber: #ffb703;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(0, 229, 255, 0.35);
   
-  --solana-green: #14f195;
-  --pump-orange: #f97316;
+  --accent-cyan: #00e5ff;
+  --accent-lime: #00ffa3;
   --text-main: #f8fafc;
-  --text-muted: #94a3b8;
-  --text-dim: #64748b;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
 
-  /* Glow Shadows */
-  --glow-cyan: 0 0 25px rgba(0, 245, 255, 0.35);
-  --glow-emerald: 0 0 25px rgba(5, 255, 161, 0.35);
-  --glow-pink: 0 0 25px rgba(255, 42, 133, 0.35);
-  --glow-card: 0 8px 32px 0 rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(0, 245, 255, 0.15);
-
-  /* Typography */
-  --font-main: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-heading: 'Space Grotesk', sans-serif;
+  --font-main: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-heading: 'Outfit', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 }
 
@@ -41,21 +27,19 @@
 }
 
 body {
-  background-color: var(--ocean-abyss);
-  background-image: 
-    radial-gradient(ellipse at 50% 0%, rgba(0, 245, 255, 0.08) 0%, transparent 60%),
-    radial-gradient(circle at 10% 40%, rgba(168, 85, 247, 0.06) 0%, transparent 40%),
-    radial-gradient(circle at 90% 80%, rgba(5, 255, 161, 0.05) 0%, transparent 50%),
-    linear-gradient(rgba(0, 245, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 245, 255, 0.02) 1px, transparent 1px);
-  background-size: 100% 100%, 100% 100%, 100% 100%, 32px 32px, 32px 32px;
-  background-attachment: fixed;
+  background-color: var(--bg-primary);
   color: var(--text-main);
   font-family: var(--font-main);
-  font-size: 16px;
+  font-size: 15px;
+  line-height: 1.6;
   min-height: 100vh;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-attachment: fixed;
 }
 
 /* Hide Scrollbars */
@@ -71,143 +55,102 @@ body {
   background: transparent;
 }
 
-/* 🌊 Animated Ocean Waves & Floating Bubbles */
-@keyframes bubble-rise {
-  0% { transform: translateY(100vh) scale(0.6); opacity: 0; }
-  20% { opacity: 0.6; }
-  80% { opacity: 0.8; }
-  100% { transform: translateY(-20vh) scale(1.2); opacity: 0; }
+/* Editorial Glass & Surface Panels */
+.editorial-card {
+  background: #080d17;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  transition: border-color 0.2s ease, transform 0.2s ease;
 }
 
-@keyframes fish-swim {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  25% { transform: translateY(-6px) rotate(1.5deg); }
-  50% { transform: translateY(0px) rotate(0deg); }
-  75% { transform: translateY(6px) rotate(-1.5deg); }
+.editorial-card:hover {
+  border-color: rgba(0, 229, 255, 0.3);
 }
 
-@keyframes fin-flutter {
-  0%, 100% { transform: rotate(0deg) skewY(0deg); }
-  50% { transform: rotate(-8deg) skewY(-4deg); }
+.editorial-card-highlight {
+  background: #0c1322;
+  border: 1px solid rgba(0, 229, 255, 0.35);
+  border-radius: 14px;
+  box-shadow: 0 0 25px rgba(0, 229, 255, 0.06);
 }
 
-@keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(0, 245, 255, 0.3); }
-  50% { box-shadow: 0 0 35px rgba(0, 245, 255, 0.6), 0 0 10px rgba(5, 255, 161, 0.4); }
-}
-
-@keyframes scanline {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(1000%); }
-}
-
-/* Glassmorphism Class Utilities */
-.glass-panel {
-  background: rgba(11, 31, 59, 0.65);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(0, 245, 255, 0.18);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-}
-
-.glass-panel-glow {
-  background: rgba(11, 31, 59, 0.75);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(0, 245, 255, 0.35);
-  box-shadow: 0 0 30px rgba(0, 245, 255, 0.15), inset 0 0 15px rgba(0, 245, 255, 0.05);
+.text-accent {
+  color: #00e5ff;
 }
 
 .text-gradient-cyan {
-  background: linear-gradient(135deg, #ffffff 0%, #00f5ff 50%, #05ffa1 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #00e5ff;
 }
 
-.text-gradient-pink {
-  background: linear-gradient(135deg, #ffffff 0%, #ff2a85 60%, #a855f7 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.text-gradient-gold {
-  background: linear-gradient(135deg, #ffffff 0%, #ffb703 60%, #f97316 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.ocean-btn-primary {
-  background: linear-gradient(135deg, #00f5ff 0%, #0284c7 100%);
-  color: #030712;
+.btn-primary {
+  background: #00e5ff;
+  color: #05080f;
   font-family: var(--font-heading);
   font-weight: 700;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 0 20px rgba(0, 245, 255, 0.4);
+  border-radius: 10px;
+  padding: 10px 22px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
-.ocean-btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 35px rgba(0, 245, 255, 0.7);
-  background: linear-gradient(135deg, #38bdf8 0%, #00f5ff 100%);
+.btn-primary:hover {
+  background: #33ebff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(0, 229, 255, 0.3);
 }
 
-.ocean-btn-emerald {
-  background: linear-gradient(135deg, #05ffa1 0%, #059669 100%);
-  color: #030712;
+.btn-secondary {
+  background: #0c1322;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #f8fafc;
   font-family: var(--font-heading);
-  font-weight: 700;
-  transition: all 0.25s ease;
-  box-shadow: 0 0 20px rgba(5, 255, 161, 0.4);
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 10px 20px;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
-.ocean-btn-emerald:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 35px rgba(5, 255, 161, 0.7);
+.btn-secondary:hover {
+  background: #111b2e;
+  border-color: rgba(0, 229, 255, 0.4);
+  color: #00e5ff;
 }
 
 /* Wallet Adapter Custom Overrides */
 .wallet-adapter-button {
   font-family: var(--font-heading) !important;
-  background: rgba(11, 31, 59, 0.8) !important;
-  border: 1px solid rgba(0, 245, 255, 0.4) !important;
-  color: #00f5ff !important;
-  border-radius: 9999px !important;
+  background: #0c1322 !important;
+  border: 1px solid rgba(0, 229, 255, 0.3) !important;
+  color: #00e5ff !important;
+  border-radius: 8px !important;
   font-weight: 700 !important;
-  font-size: 14px !important;
-  padding: 8px 20px !important;
-  height: 42px !important;
-  transition: all 0.25s ease !important;
-  box-shadow: 0 0 15px rgba(0, 245, 255, 0.2) !important;
+  font-size: 13px !important;
+  padding: 8px 18px !important;
+  height: 38px !important;
+  transition: all 0.2s ease !important;
 }
 
 .wallet-adapter-button:hover {
-  background: #00f5ff !important;
-  color: #030712 !important;
-  box-shadow: 0 0 25px rgba(0, 245, 255, 0.6) !important;
+  background: #00e5ff !important;
+  color: #05080f !important;
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.35) !important;
 }
 
 .wallet-adapter-button-trigger {
-  background: linear-gradient(135deg, rgba(0, 245, 255, 0.15) 0%, rgba(5, 255, 161, 0.15) 100%) !important;
+  background: #0c1322 !important;
 }
 
-/* Cyber Terminal Styling */
+/* Data Terminal Window */
 .terminal-window {
-  background: #030a16;
-  border: 1px solid rgba(0, 245, 255, 0.25);
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(0, 245, 255, 0.05);
+  background: #05080f;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
   font-family: var(--font-mono);
-}
-
-.scanline-overlay {
-  background: linear-gradient(
-    rgba(18, 16, 16, 0) 50%, 
-    rgba(0, 0, 0, 0.25) 50%
-  ), linear-gradient(
-    90deg,
-    rgba(255, 0, 0, 0.03),
-    rgba(0, 255, 0, 0.01),
-    rgba(0, 0, 255, 0.03)
-  );
-  background-size: 100% 3px, 6px 100%;
-  pointer-events: none;
 }
