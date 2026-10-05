@@ -6,17 +6,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="AgenSea - The Autonomous Marine AI Launchpad & Faucet Protocol on Solana pump.fun" />
     <title>AgenSea 🌊 | Autonomous Marine AI Launchpad & Faucet Protocol</title>
+    
     <!-- Modern Cyber & Oceanic Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Outfit:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              ocean: {
+                abyss: '#030712',
+                deep: '#071326',
+                card: '#0b1f3b',
+                hover: '#102d54',
+              },
+              bio: {
+                cyan: '#00f5ff',
+                emerald: '#05ffa1',
+                purple: '#a855f7',
+                pink: '#ff2a85',
+                amber: '#ffb703',
+              }
+            },
+            fontFamily: {
+              sans: ['Outfit', 'sans-serif'],
+              heading: ['Space Grotesk', 'sans-serif'],
+              mono: ['JetBrains Mono', 'monospace'],
+            }
+          }
+        }
+      }
+    </script>
+
     <script>
       // Suppress Lit dev mode warning globally
       window.litDisableDevMode = true;
       globalThis.litDisableDevMode = true;
     </script>
   </head>
-  <body class="bg-[#030712] text-slate-100 antialiased overflow-x-hidden">
+  <body class="bg-[#030712] text-slate-100 antialiased overflow-x-hidden min-h-screen">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
